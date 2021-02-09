@@ -1,4 +1,4 @@
-import { get, post, put, del } from '@/plugins/modules/request'
+import { del, get, post, put } from '@/plugins/modules/request'
 
 export const getCartList = params => get('/cart/cart', params)
 

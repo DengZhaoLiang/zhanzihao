@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { BASE_URL, SUCCESS_CODE, EMPTY_PARAM_CODE, INVALID_PARAM_CODE, TIMEOUT } from '@/config'
-import { emptyParam, invalidParam, error as errorTip } from './../tips/tips'
+import { BASE_URL, EMPTY_PARAM_CODE, INVALID_PARAM_CODE, SUCCESS_CODE, TIMEOUT } from '@/config'
+import { emptyParam, error as errorTip, invalidParam } from './../tips/tips'
 import dataStore from '@utils/dataStore'
 import Vue from '@/main'
 import qs from 'qs'

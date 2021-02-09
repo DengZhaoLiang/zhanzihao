@@ -1,4 +1,3 @@
-// 短评
 export const pGetBriefList = Object.seal({
     goodsId: ''
 })

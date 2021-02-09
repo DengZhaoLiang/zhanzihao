@@ -1,69 +1,55 @@
 <template>
-    <div class="order">
+    <div class='order'>
         <c-head></c-head>
-        <c-timeline :cur-step="step"></c-timeline>
-        <div class="step-group">
-            <div v-if="step === 1" class="group-1 yx-center">
-                <div class="address-container" :class="(5 % 3) !== 0 ? 'fill-space' : ''">
-                    <c-address :is-selected="index === selectedAddressIndex" v-for="(item, index) in addressList"
-                               :key="index"
-                               :address="item" @click.native="selectedAddressIndex = index"/>
-                    <c-new-address/>
+        <c-timeline :cur-step='step'></c-timeline>
+        <div class='step-group'>
+            <div v-if='step === 1' class='group-1 yx-center'>
+                <div :class="(5 % 3) !== 0 ? 'fill-space' : ''" class='address-container'>
+                    <c-address v-for='(item, index) in addressList' :key='index'
+                               :address='item'
+                               :is-selected='index === selectedAddressIndex'
+                               @click.native='selectedAddressIndex = index' />
+                    <c-new-address />
                 </div>
-                <div class="down-more">
+                <div class='down-more'>
                     <span>更多地址</span>
-                    <img src="../../../../public/images/order/down-more.png"/>
+                    <img src='../../../../public/images/order/down-more.png' />
                 </div>
-                <button class="button-next" @click="changeStep(2)">下一步</button>
+                <button class='button-next' @click='changeStep(2)'>下一步</button>
             </div>
-            <div v-if="step === 2" class="group-2">
-                <c-good-list class="c-good-list" :show-check-box="false"/>
-                <div class="btn-group1">
-                    <button @click="changeStep(1)">返回</button>
-                    <button @click="changeStep(3)">提交订单</button>
-                </div>
-            </div>
-            <div v-if="step === 3" class="group-3 xy-center">
-                <c-order-success :order-id="orderId" :total-amount="totalAmount" :is-payed="false"/>
-                <div class="btn-group2">
+            <div v-if='step === 2' class='group-2'>
+                <c-good-list :show-check-box='false' class='c-good-list' />
+                <div class='btn-group1'>
+                    <button @click='changeStep(1)'>返回</button>
+                    <button @click='changeStep(3)'>提交订单</button>
                 </div>
             </div>
-            <div v-if="step === 4" class="group-3 xy-center">
-                <c-order-success :order-id="orderId" :total-amount="totalAmount" :is-payed="true"/>
-                <div class="btn-group2">
-                    <button @click="goBack">继续购物</button>
-                    <button @click="goToMy">查看订单</button>
+            <div v-if='step === 3' class='group-3 xy-center'>
+                <c-order-success :is-payed='false' :order-id='orderId' :total-amount='totalAmount' />
+                <div class='btn-group2'>
+                </div>
+            </div>
+            <div v-if='step === 4' class='group-3 xy-center'>
+                <c-order-success :is-payed='true' :order-id='orderId' :total-amount='totalAmount' />
+                <div class='btn-group2'>
+                    <button @click='goBack'>继续购物</button>
+                    <button @click='goToMy'>查看订单</button>
                 </div>
             </div>
         </div>
-        <div class="bottom-line"></div>
+        <div class='bottom-line'></div>
         <c-foot></c-foot>
-        <c-pay-modal v-if="showPay" :show-pay="showPay" :is-clear-arr="isClearArr" @hide="hidePayModal"
-                     :should-pay-money="totalAmount" @password="payForOrder" @clear="isClearArr = false"
-                     @forgot="onForgotKey"/>
-        <c-pay-modal v-if="showSetKey" :is-set-key="true" @hide="hideSetModal" @set="onSet"/>
-        <c-modal v-if="showModal"
-                 width="400px"
-                 title="温馨提示"
-                 context="您有未支付的订单，忍心离开吗"
-                 confirm-text="去支付"
-                 cancel-text="残忍离开"
-                 :is-show-cancel="true"
-                 :is-show-modal="showModal"
-                 :show-close="false"
-                 v-on:confirm="onConfirm"
-                 v-on:cancel="onCancel"/>
-        <c-modal v-if="showSetKeyTip"
-                 width="400px"
-                 title="温馨提示"
-                 context="首次使用需要设置支付密码，请先设置"
-                 confirm-text="设置"
-                 cancel-text="取消"
-                 :is-show-cancel="true"
-                 :is-show-modal="showSetKeyTip"
-                 :show-close="false"
-                 v-on:confirm="onSetKeyTipConfirm"
-                 v-on:cancel="showSetKeyTip = false"/>
+        <c-modal v-if='showModal'
+                 :is-show-cancel='true'
+                 :is-show-modal='showModal'
+                 :show-close='false'
+                 cancel-text='残忍离开'
+                 confirm-text='去支付'
+                 context='您有未支付的订单，忍心离开吗'
+                 title='温馨提示'
+                 width='400px'
+                 v-on:cancel='onCancel'
+                 v-on:confirm='onConfirm' />
     </div>
 </template>
 
@@ -72,13 +58,12 @@
     import CFoot from '@components/public/c-foot'
     import CTimeline from './components/c-timeline'
     import CAddress from '@components/public/c-address'
-    import CPayModal from '@components/public/c-pay-modal'
     import CNewAddress from './components/c-new-address'
     import COrderSuccess from './components/c-order-success'
-    import CGoodList from '../cart/components/c-good-list'
+    import CGoodList from '../cart/c-good-list'
     import CModal from '@components/public/c-modal'
 
-    import { pCreateOrderItem, pCreateOrder, pPayForOrder } from '@api/order/params'
+    import { pCreateOrder, pCreateOrderItem, pPayForOrder } from '@api/order/params'
     import { pGetGoodsInfoList } from '@api/goods/params'
 
     export default {
@@ -91,7 +76,6 @@
             CNewAddress,
             COrderSuccess,
             CGoodList,
-            CPayModal,
             CModal
         },
         data() {
@@ -104,9 +88,6 @@
                 totalAmount: 0, // 待支付的金额
                 showModal: false,
                 isPayed: false,
-                hasPaykey: false,
-                showSetKey: false,
-                showSetKeyTip: false, // 显示设置密码提示框
                 isClearArr: false, // 是否清空密码输入框
                 isForgot: false // 是否为忘记密码
             }
@@ -124,9 +105,6 @@
                     case 3:
                         this.createOrder()
                         break
-                }
-                if (!this.hasPaykey && step === 3) {
-                    return
                 }
                 this.step = step
             },
@@ -151,10 +129,6 @@
                 })
             },
             createOrder() {
-                if (!this.hasPaykey) {
-                    this.showSetKeyTip = true
-                    return
-                }
                 pCreateOrder.addressId = this.addressList[this.selectedAddressIndex].addressId
                 this.$api.order.createOrder(pCreateOrder).then(res => {
                     console.log(res)
@@ -187,34 +161,6 @@
                 this.goBack()
                 console.log('跳转至下一步')
             },
-            onSetKeyTipConfirm() {
-                this.showSetKeyTip = false
-                this.showSetKey = true
-            },
-            // 监听设置密码事件
-            onSet() {
-                this.showSetKey = false
-                this.hasPaykey = true
-                if (this.isForgot) {
-                    this.showPay = true
-                    this.isForgot = false
-                }
-            },
-            hidePayModal() {
-                this.$nextTick(() => {
-                    this.showPay = false
-                    this.showModal = true
-                })
-            },
-            hideSetModal() {
-                this.$nextTick(() => {
-                    this.showSetKey = false
-                    if (this.isForgot) {
-                        this.showPay = true
-                        this.isForgot = false
-                    }
-                })
-            },
             goToMy() {
                 if (this.$route.query.orderId) {
                     this.$router.replace('/my')
@@ -225,24 +171,6 @@
             goBack() {
                 this.$router.go(-1)
             },
-            // 监听忘记密码
-            onForgotKey() {
-                this.$nextTick(() => {
-                    this.isForgot = true
-                    this.showPay = false
-                    setTimeout(() => {
-                        this.showSetKey = true
-                    }, 10)
-                    // this.showSetKey = true
-                })
-            },
-            // _paySuccess(obj) {
-            //     setTimeout(() => {
-            //         obj.close()
-            //         this.$tips.success('支付成功')
-            //         this._controllerPayModal(false)
-            //     },500)
-            // },
             // 检查收获地址是否存在
             _checkAddressIsExist() {
                 if (!this.addressList.length) {
@@ -269,18 +197,11 @@
             // 显示密码输入框
             _controllerPayModal(isShow) {
                 this.showPay = isShow
-            },
-            // 检查是否已经设置了支付密码
-            _checkHasPaykey() {
-                this.$api.account.checkHasPaykey().then(res => {
-                    this.hasPaykey = res.hasPaykey
-                })
             }
         },
         mounted() {
             console.log(this.$route.query)
             pCreateOrder.orderList = []
-            this._checkHasPaykey()
             if (this.$route.query.purchaseList) {
                 pCreateOrder.orderList = this.$route.query.purchaseList
             } else if (this.$route.query.orderId) {
@@ -306,112 +227,112 @@
     }
 </script>
 
-<style scoped lang="scss">
-    .order {
-        width: 100%;
-        /*background: #42b983;*/
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+<style lang='scss' scoped>
+.order {
+    width: 100%;
+    /*background: #42b983;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-        .bread {
-            width: 100%;
-            background: #F2F2F2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    .bread {
+        width: 100%;
+        background: #F2F2F2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .step-group {
+        width: 1150px;
+        padding: 0 25px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        margin-bottom: 20px;
+
+        button {
+            width: 183px;
+            height: 45px;
+            line-height: 45px;
+            background: #FF4400;
+            color: #fff;
+            font-size: 18px;
+            border-radius: 2px;
+            outline: none;
+            border: 0;
         }
 
-        .step-group {
-            width: 1150px;
-            padding: 0 25px;
+        .button-next {
+            margin-left: auto;
+        }
+
+        button:active {
+            animation: fade .4s infinite;
+            -webkit-animation: fade .4s infinite;
+        }
+
+        .group-2 {
+            width: 1200px;
             display: flex;
             flex-direction: column;
-            flex: 1;
-            margin-bottom: 20px;
 
-            button {
-                width: 183px;
-                height: 45px;
-                line-height: 45px;
-                background: #FF4400;
-                color: #fff;
-                font-size: 18px;
-                border-radius: 2px;
-                outline: none;
-                border: 0;
+            .c-good-list {
+                margin-top: 20px;
             }
 
-            .button-next {
-                margin-left: auto;
-            }
-
-            button:active {
-                animation: fade .4s infinite;
-                -webkit-animation: fade .4s infinite;
-            }
-
-            .group-2 {
-                width: 1200px;
+            .btn-group1 {
+                width: 1150px;
                 display: flex;
-                flex-direction: column;
-
-                .c-good-list {
-                    margin-top: 20px;
-                }
-
-                .btn-group1 {
-                    width: 1150px;
-                    display: flex;
-                    justify-content: space-between;
-                }
+                justify-content: space-between;
             }
+        }
 
-            .group-3 {
-                width: 100%;
+        .group-3 {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+
+            .btn-group2 {
+                width: 550px;
                 margin-top: 20px;
                 display: flex;
-                flex-direction: column;
-
-                .btn-group2 {
-                    width: 550px;
-                    margin-top: 20px;
-                    display: flex;
-                    justify-content: space-between;
-                }
+                justify-content: space-between;
             }
-
         }
 
-        .address-container {
-            width: 950px;
-            margin: 20px auto;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
+    }
 
-        .fill-space::after {
-            content: "";
-            width: 294px;
-            height: 167px;
-        }
+    .address-container {
+        width: 950px;
+        margin: 20px auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
 
-        .down-more {
-            width: 950px;
-            margin: 0 auto 20px auto;
-            text-align: left;
-            font-size: 14px;
-            font-weight: 300;
-            color: rgba(136, 136, 136, 1);
+    .fill-space::after {
+        content: "";
+        width: 294px;
+        height: 167px;
+    }
 
-            img {
-                margin-left: 5px;
-                width: 12px;
-                height: 7px;
-            }
+    .down-more {
+        width: 950px;
+        margin: 0 auto 20px auto;
+        text-align: left;
+        font-size: 14px;
+        font-weight: 300;
+        color: rgba(136, 136, 136, 1);
+
+        img {
+            margin-left: 5px;
+            width: 12px;
+            height: 7px;
         }
     }
+}
 
 </style>

@@ -1,64 +1,64 @@
 <template>
-    <div class="login xy-center">
+    <div class='login xy-center'>
         <el-dialog
-                :title="isLogin ? '登录' : isResetPassword ? '重置密码' : '注册'"
-                :visible.sync="dialogVisible"
-                width="300px">
+            :title="isLogin ? '登录' : isResetPassword ? '重置密码' : '注册'"
+            :visible.sync='dialogVisible'
+            width='300px'>
             <div>
                 <el-input
-                        placeholder="请输入邮箱"
-                        v-model="input.email">
-                    <img slot="prefix" src="./../../../public/images/public/email.png"/>
+                    v-model='input.email'
+                    placeholder='请输入邮箱'>
+                    <img slot='prefix' src='./../../../public/images/public/email.png' />
                 </el-input>
-                <div class="err-tip" v-show="errTip[0]">
-                    <i class="el-icon-warning">邮箱格式不正确</i>
+                <div v-show='errTip[0]' class='err-tip'>
+                    <i class='el-icon-warning'>邮箱格式不正确</i>
                 </div>
                 <el-input
-                        :placeholder="isResetPassword ? '请输入新密码'  : '请输入新密码'"
-                        :type="isShowPwd ? 'text' : 'password'"
-                        v-model="input.password">
-                    <img slot="prefix" src="./../../../public/images/public/pwd.png"/>
-                    <img slot="suffix" @click="isShowPwd = !isShowPwd"
-                         :src="require(`./../../../public/images/public/show${isShowPwd}.png`)"/>
+                    v-model='input.password'
+                    :placeholder="isResetPassword ? '请输入新密码'  : '请输入新密码'"
+                    :type="isShowPwd ? 'text' : 'password'">
+                    <img slot='prefix' src='./../../../public/images/public/pwd.png' />
+                    <img slot='suffix' :src='require(`./../../../public/images/public/show${isShowPwd}.png`)'
+                         @click='isShowPwd = !isShowPwd' />
                 </el-input>
-                <div class="err-tip" v-show="errTip[1]">
-                    <i class="el-icon-warning">账号密码格式不正确</i>
+                <div v-show='errTip[1]' class='err-tip'>
+                    <i class='el-icon-warning'>账号密码格式不正确</i>
                 </div>
-                <el-input v-if="!isLogin"
-                          placeholder="请再次输入密码"
+                <el-input v-if='!isLogin'
+                          v-model='input.repeatPwd'
                           :type="isShowPwd ? 'text' : 'password'"
-                          v-model="input.repeatPwd">
-                    <img slot="prefix" src="./../../../public/images/public/pwd.png"/>
-                    <img slot="suffix" @click="isShowPwd = !isShowPwd"
-                         :src="require(`./../../../public/images/public/show${isShowPwd}.png`)"/>
+                          placeholder='请再次输入密码'>
+                    <img slot='prefix' src='./../../../public/images/public/pwd.png' />
+                    <img slot='suffix' :src='require(`./../../../public/images/public/show${isShowPwd}.png`)'
+                         @click='isShowPwd = !isShowPwd' />
                 </el-input>
-                <div class="err-tip" v-show="errTip[2]">
-                    <i class="el-icon-warning">两次密码不一致</i>
+                <div v-show='errTip[2]' class='err-tip'>
+                    <i class='el-icon-warning'>两次密码不一致</i>
                 </div>
-                <el-input v-if="!isLogin"
-                          placeholder="邮箱验证码"
-                          v-model="input.verifyCode">
-                    <img slot="prefix" src="./../../../public/images/public/email.png"/>
-                    <el-button v-if="time === 60" class="get-verify-code" slot="suffix" @click="getVerifyCode"
-                               :loading="getting">获取验证码
+                <el-input v-if='!isLogin'
+                          v-model='input.verifyCode'
+                          placeholder='邮箱验证码'>
+                    <img slot='prefix' src='./../../../public/images/public/email.png' />
+                    <el-button v-if='time === 60' slot='suffix' :loading='getting' class='get-verify-code'
+                               @click='getVerifyCode'>获取验证码
                     </el-button>
-                    <span v-else class="get-verify-code-span" slot="suffix">{{time}}秒再次获取</span>
+                    <span v-else slot='suffix' class='get-verify-code-span'>{{ time }}秒再次获取</span>
                 </el-input>
-                <div class="err-tip" v-show="errTip[3]">
-                    <i class="el-icon-warning">验证码格式不正确</i>
+                <div v-show='errTip[3]' class='err-tip'>
+                    <i class='el-icon-warning'>验证码格式不正确</i>
                 </div>
-                <div class="yx-center">
-                    <el-button round @click="submit">{{isLogin ? '登录' : isResetPassword ? '重置密码' : '注册'}}</el-button>
-                    <div class="footer-btn">
-                        <el-button type="text" @click="changeMode">立即{{isLogin ? '注册' : '登录'}}</el-button>
-                        <el-button type="text" @click="changeResetMode">{{isResetPassword ? '立即注册' : '忘记密码？'}}
+                <div class='yx-center'>
+                    <el-button round @click='submit'>{{ isLogin ? '登录' : isResetPassword ? '重置密码' : '注册' }}</el-button>
+                    <div class='footer-btn'>
+                        <el-button type='text' @click='changeMode'>立即{{ isLogin ? '注册' : '登录' }}</el-button>
+                        <el-button type='text' @click='changeResetMode'>{{ isResetPassword ? '立即注册' : '忘记密码？' }}
                         </el-button>
                     </div>
                 </div>
             </div>
         </el-dialog>
-        <c-modal :context="isLogin ? '登录成功' : '注册成功'" :is-show-cancel="false" @hide="showToast = false"
-                 :is-show-modal="showToast"/>
+        <c-modal :context="isLogin ? '登录成功' : '注册成功'" :is-show-cancel='false' :is-show-modal='showToast'
+                 @hide='showToast = false' />
     </div>
 </template>
 
@@ -226,103 +226,103 @@
     }
 </script>
 
-<style lang="scss">
-    .login {
+<style lang='scss'>
+.login {
 
-        .el-dialog__header {
-            text-align: center;
+    .el-dialog__header {
+        text-align: center;
+    }
+
+    .el-dialog {
+        border-radius: 10px;
+    }
+
+    .el-dialog__title {
+        font-size: 26px;
+    }
+
+    .el-input {
+        input {
+            border: none;
+            border-bottom: 1px solid #ccc;
+            color: #ee4400;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-radius: 0;
         }
 
-        .el-dialog {
-            border-radius: 10px;
+        img {
+            width: 22px;
+            height: 22px;
+            padding-top: 7px;
         }
 
-        .el-dialog__title {
-            font-size: 26px;
+        .el-input__inner {
+            padding-left: 40px;
         }
 
-        .el-input {
-            input {
-                border: none;
-                border-bottom: 1px solid #ccc;
-                color: #ee4400;
-                margin-bottom: 15px;
-                font-size: 16px;
-                border-radius: 0;
-            }
-
-            img {
-                width: 22px;
-                height: 22px;
-                padding-top: 7px;
-            }
-
-            .el-input__inner {
-                padding-left: 40px;
-            }
-
-            .get-verify-code {
-                margin-top: 4px;
-                background: #ff4400;
-                color: #fff;
-                padding: 8px 10px;
-                font-size: 12px;
-                border-radius: 20px;
-                display: inline-block;
-                border: none;
-                outline: none;
-
-                &:active {
-                    animation: fade .6s infinite;
-                    -moz-animation: fade .6s infinite;
-                }
-            }
-
-            .get-verify-code-span {
-                padding: 10px 0;
-                font-size: 14px;
-                color: #ff4400;
-                display: inline-block;
-            }
-        }
-
-        .el-button.is-round {
-            width: 85%;
-            margin-top: 15px;
-            background: #ff6900;
+        .get-verify-code {
+            margin-top: 4px;
+            background: #ff4400;
             color: #fff;
+            padding: 8px 10px;
+            font-size: 12px;
+            border-radius: 20px;
+            display: inline-block;
+            border: none;
             outline: none;
-            font-size: 18px;
 
             &:active {
-                border: 1px solid #ff6900;
-            }
-
-        }
-
-        .footer-btn {
-            width: 85%;
-            display: flex;
-            justify-content: space-between;
-            margin: {
-                top: 10px;
-                bottom: -20px;
-                left: auto;
-                right: auto;
-            };
-
-            .el-button--text {
-                color: #ff4400;
+                animation: fade .6s infinite;
+                -moz-animation: fade .6s infinite;
             }
         }
 
-        .err-tip {
-            text-align: left;
-            margin-bottom: 2px;
-            margin-top: -5px;
-            padding-left: 8px;
-            color: #F56C6C;
+        .get-verify-code-span {
+            padding: 10px 0;
+            font-size: 14px;
+            color: #ff4400;
+            display: inline-block;
+        }
+    }
+
+    .el-button.is-round {
+        width: 85%;
+        margin-top: 15px;
+        background: #ff6900;
+        color: #fff;
+        outline: none;
+        font-size: 18px;
+
+        &:active {
+            border: 1px solid #ff6900;
         }
 
     }
+
+    .footer-btn {
+        width: 85%;
+        display: flex;
+        justify-content: space-between;
+        margin: {
+            top: 10px;
+            bottom: -20px;
+            left: auto;
+            right: auto;
+        };
+
+        .el-button--text {
+            color: #ff4400;
+        }
+    }
+
+    .err-tip {
+        text-align: left;
+        margin-bottom: 2px;
+        margin-top: -5px;
+        padding-left: 8px;
+        color: #F56C6C;
+    }
+
+}
 </style>

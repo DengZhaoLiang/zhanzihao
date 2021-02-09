@@ -1,30 +1,25 @@
 <template>
-    <div class="card">
+    <div class='card'>
         <c-head></c-head>
-        <div class="bread">
-            <div class="card-title y-center">
-                <span>购物车</span>
-            </div>
-        </div>
-        <div v-if="isLoadedCartList">
-            <c-good-list v-if="cartList.length" :is-show-account="true"></c-good-list>
-            <div v-else class="none-data yx-center">
-                <img src="../../../../public/images/cart/none-data.svg">
+        <div v-if='isLoadedCartList'>
+            <c-good-list v-if='cartList.length' :is-show-account='true'></c-good-list>
+            <div v-else class='none-data yx-center'>
+                <img src='../../../../public/images/cart/none-data.svg'>
                 <span>购物车暂无数据，赶快去逛逛吧~</span>
             </div>
         </div>
-        <div class="load-infinite infinite-list" v-infinite-scroll="loadMore"
-             infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-            <img src="../../../assets/loading-svg/dual-ball.svg" v-show="loading">
+        <div v-infinite-scroll='loadMore' class='load-infinite infinite-list'
+             infinite-scroll-disabled='busy' infinite-scroll-distance='10'>
+            <img v-show='loading' src='../../../assets/loading-svg/dual-ball.svg'>
         </div>
-        <c-foot class="cart-foot"></c-foot>
+        <c-foot class='cart-foot'></c-foot>
     </div>
 </template>
 
 <script>
     import CHead from '@components/public/c-head'
     import CFoot from '@components/public/c-foot'
-    import CGoodList from './components/c-good-list'
+    import CGoodList from './c-good-list'
     import { pGetCartList } from '@api/cart/params'
     import { pBatchGoodsInfo } from '@api/goods/params'
 
@@ -72,7 +67,7 @@
                 })
             },
             loadMore() {
-                console.log('自动地加载')
+                console.log('自动加载')
                 this.busy = true
                 this.loading = true
                 setTimeout(() => {
@@ -110,63 +105,63 @@
     }
 </script>
 
-<style scoped lang="scss">
-    .card {
+<style lang='scss' scoped>
+.card {
+    width: 100%;
+    /*background: #42b983;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .bread {
         width: 100%;
-        /*background: #42b983;*/
+        background: #F2F2F2;
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         flex-direction: column;
+        padding: 10px 0;
 
-        .bread {
-            width: 100%;
-            background: #F2F2F2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 10px 0;
-
-            .card-title {
-                width: 1200px;
-                height: 53px;
-                font-size: 16px;
-                font-family: Source Han Sans CN;
-                color: rgba(102, 102, 102, 1);
-                background: #fff;
-
-                span {
-                    margin-left: 10px;
-                }
-
-            }
-        }
-
-    }
-
-    .load-infinite {
-        margin-top: 50px;
-        height: 100px;
-        text-align: center;
-
-        img {
-            width: 50px;
-            height: 50px;
-        }
-    }
-
-    .cart-foot {
-        border-top: 10px solid #f0f0f0;
-    }
-
-    .none-data {
-        margin-top: 80px;
-
-        span {
+        .card-title {
+            width: 1200px;
+            height: 53px;
             font-size: 16px;
-            color: #aaa;
-            font-weight: 300;
+            font-family: Source Han Sans CN;
+            color: rgba(102, 102, 102, 1);
+            background: #fff;
+
+            span {
+                margin-left: 10px;
+            }
+
         }
     }
+
+}
+
+.load-infinite {
+    margin-top: 50px;
+    height: 100px;
+    text-align: center;
+
+    img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.cart-foot {
+    border-top: 10px solid #f0f0f0;
+}
+
+.none-data {
+    margin-top: 80px;
+
+    span {
+        font-size: 16px;
+        color: #aaa;
+        font-weight: 300;
+    }
+}
 </style>

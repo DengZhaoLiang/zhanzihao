@@ -1,28 +1,28 @@
 <template>
-    <div class="c-edit-address" v-if="isShow">
-        <c-modal :title="'编辑收货地址'" :is-show-confirm="false"
-                 :is-show-modal="isShow" :is-custom="true" :width="'640px'" bg-color="#fff" @hide="hide">
-            <div class="edit-address" slot="custom">
-                <el-form :model="pAddAddress" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                    <el-form-item label="联系人" prop="name">
-                        <el-input v-model="pAddAddress.name"></el-input>
+    <div v-if='isShow' class='c-edit-address'>
+        <c-modal :is-custom='true' :is-show-confirm='false'
+                 :is-show-modal='isShow' :title="'编辑收货地址'" :width="'640px'" bg-color='#fff' @hide='hide'>
+            <div slot='custom' class='edit-address'>
+                <el-form ref='ruleForm' :model='pAddAddress' :rules='rules' class='demo-ruleForm' label-width='100px'>
+                    <el-form-item label='联系人' prop='name'>
+                        <el-input v-model='pAddAddress.name'></el-input>
                     </el-form-item>
-                    <el-form-item label="联系方式" prop="phone">
-                        <el-input v-model="pAddAddress.phone"></el-input>
+                    <el-form-item label='联系方式' prop='phone'>
+                        <el-input v-model='pAddAddress.phone'></el-input>
                     </el-form-item>
-                    <el-form-item label="收货地址" prop="regionList">
+                    <el-form-item label='收货地址' prop='regionList'>
                         <el-cascader
-                                size="large"
-                                :options="regionOptions"
-                                v-model="pAddAddress.regionList"
-                                @change="handleChange">
+                            v-model='pAddAddress.regionList'
+                            :options='regionOptions'
+                            size='large'
+                            @change='handleChange'>
                         </el-cascader>
                     </el-form-item>
-                    <el-form-item class="detail-address" label="详细地址" prop="detailedAddress">
-                        <el-input v-model="pAddAddress.detailedAddress"></el-input>
+                    <el-form-item class='detail-address' label='详细地址' prop='detailedAddress'>
+                        <el-input v-model='pAddAddress.detailedAddress'></el-input>
                     </el-form-item>
                 </el-form>
-                <button class="save" @click="submitForm('ruleForm')">保存</button>
+                <button class='save' @click="submitForm('ruleForm')">保存</button>
             </div>
         </c-modal>
     </div>
@@ -53,7 +53,7 @@
             const validatePhone = (rule, value, callback) => {
                 const reg = /^[0-9(\-)]{5,11}$/
                 if (!reg.test(value)) {
-                    callback(new Error('长度在5到11个字符，电话号码不正确'))
+                    callback(new Error('长度11个字符，电话号码不正确'))
                 } else {
                     callback()
                 }
@@ -64,8 +64,6 @@
                 rules: {
                     name: [{
                         required: true, message: '请输入收货人姓名', trigger: 'blur'
-                    }, {
-                        min: 2, max: 6, message: '长度在3到5个字符', trigger: 'blur'
                     }],
                     phone: [{
                         required: true, message: '请输入您的联系电话', trigger: 'blur'
@@ -174,77 +172,77 @@
     }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 
-    .edit-address {
-        display: flex;
-        flex-direction: column;
+.edit-address {
+    display: flex;
+    flex-direction: column;
+    margin: {
+        top: 20px;
+        bottom: 20px;
+    }
+    width: 560px;
+    /*height: 400px;*/
+    padding: 0 20px;
+    background: #fff;
+
+    .save {
+        width: 200px;
+        height: 50px;
+        line-height: 50px;
+        color: #fff;
+        border-radius: 8px;
+        background: #ff6900;
+        border: 0;
+        outline: none;
+        font-size: 22px;
         margin: {
-            top: 20px;
-            bottom: 20px;
-        }
-        width: 560px;
-        /*height: 400px;*/
-        padding: 0 20px;
-        background: #fff;
+            top: 60px;
+            left: auto;
+            right: auto;
+        };
+    }
 
-        .save {
-            width: 200px;
-            height: 50px;
-            line-height: 50px;
-            color: #fff;
-            border-radius: 8px;
-            background: #ff6900;
-            border: 0;
-            outline: none;
-            font-size: 22px;
-            margin: {
-                top: 60px;
-                left: auto;
-                right: auto;
-            };
+    .el-form-item {
+        display: flex;
+        margin-bottom: 25px !important;
+        /*border-bottom: 1px solid #DCDFE6;*/
+
+        .el-form-item__label {
+            font-weight: bold;
         }
 
-        .el-form-item {
-            display: flex;
-            margin-bottom: 25px !important;
-            /*border-bottom: 1px solid #DCDFE6;*/
-
-            .el-form-item__label {
-                font-weight: bold;
-            }
-
-            .el-form-item__error {
-                padding-top: 6px;
-            }
-
-            .el-form-item__content {
-                margin-left: 0 !important;
-
-                .el-input {
-                    .el-input__inner {
-                        width: 200px;
-                        height: 35px;
-                        line-height: 35px;
-                        border-radius: 2px;
-                    }
-                }
-            }
+        .el-form-item__error {
+            padding-top: 6px;
         }
 
-        .detail-address {
+        .el-form-item__content {
+            margin-left: 0 !important;
+
             .el-input {
                 .el-input__inner {
-                    width: 400px !important;
+                    width: 200px;
+                    height: 35px;
+                    line-height: 35px;
+                    border-radius: 2px;
                 }
             }
         }
     }
 
-    .el-cascader__dropdown {
-        .el-cascader-menu {
-            min-width: 150px !important;
+    .detail-address {
+        .el-input {
+            .el-input__inner {
+                width: 400px !important;
+            }
         }
     }
+}
+
+.el-cascader__dropdown {
+    .el-cascader-menu {
+        min-width: 150px !important;
+    }
+}
 
 </style>

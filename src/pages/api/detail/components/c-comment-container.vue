@@ -1,36 +1,36 @@
 <template>
-    <div class="c-comment-container">
-        <div class="comment-container">
-            <div class="comment-header">
-                <span>评论(<span class="comment-num">{{totalCommentNum}}</span>)</span>
+    <div class='c-comment-container'>
+        <div class='comment-container'>
+            <div class='comment-header'>
+                <span>评论(<span class='comment-num'>{{ totalCommentNum }}</span>)</span>
             </div>
-            <div class="brief-comment-container">
-                <div class="brief-left">
-                    <c-star :star="avgRate" :edit="false"/>
-                    <span class="brief-left-span">短评</span>
+            <div class='brief-comment-container'>
+                <div class='brief-left'>
+                    <c-star :edit='false' :star='avgRate' />
+                    <span class='brief-left-span'>短评</span>
                 </div>
-                <div class="brief-right">
-                    <c-barrage :brief-list="briefList" :goods-id="goodsId"/>
+                <div class='brief-right'>
+                    <c-barrage :brief-list='briefList' :goods-id='goodsId' />
                 </div>
             </div>
-            <div class="comment-area">
-                <div v-if="commentList.length">
-                    <c-comment-item v-for="(item, index) in commentList" :key="index" :comment="item"
-                                    :goods-id="goodsId" :comment-index="index" :comment-like-list="commentLikeList"/>
+            <div class='comment-area'>
+                <div v-if='commentList.length'>
+                    <c-comment-item v-for='(item, index) in commentList' :key='index' :comment='item'
+                                    :comment-index='index' :comment-like-list='commentLikeList' :goods-id='goodsId' />
                 </div>
-                <div v-else-if="isLoadedComment" class="no-comment yx-center">
-                    <img src="../../../../../public/images/detail/no-comment.png">
+                <div v-else-if='isLoadedComment' class='no-comment yx-center'>
+                    <img src='../../../../../public/images/detail/no-comment.png'>
                     <p>暂时没有评论哦，赶快来抢沙发吧~</p>
                 </div>
             </div>
-            <div class="comment-bottom xy-center">
-                <img :src="masterImg">
-                <c-star class="c-comment-star" :star="customRate" :edit="true" @star="onStarChange"/>
-                <el-input class="xy-center" v-model="commentText" placeholder="说说你对猫咪的评价吧"
-                          @keyup.enter.native="writeComment">
-                    <i class="el-input__icon iconfont icon-error-1" slot="suffix" @click="clearInput"></i>
+            <div class='comment-bottom xy-center'>
+                <img :src='masterImg'>
+                <c-star :edit='true' :star='customRate' class='c-comment-star' @star='onStarChange' />
+                <el-input v-model='commentText' class='xy-center' placeholder='说说你对猫咪的评价吧'
+                          @keyup.enter.native='writeComment'>
+                    <i slot='suffix' class='el-input__icon iconfont icon-error-1' @click='clearInput'></i>
                 </el-input>
-                <el-button @click="writeComment">发送评论</el-button>
+                <el-button @click='writeComment'>发送评论</el-button>
             </div>
         </div>
     </div>
@@ -128,148 +128,148 @@
     }
 </script>
 
-<style lang="scss">
-    $border: 1px solid #f2f2f2;
+<style lang='scss'>
+$border: 1px solid #f2f2f2;
 
-    .c-comment-container {
-        width: 1200px;
-        margin-top: 20px;
+.c-comment-container {
+    width: 1200px;
+    margin-top: 20px;
+}
+
+.comment-container {
+    width: 92%;
+    /*height: 95vh;*/
+    margin-left: 3%;
+    position: relative;
+    border: $border;
+    border-radius: 5px;
+
+    .comment-header {
+        background: #e8e8e8;
+        text-align: center;
+        padding: 8px 0;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+
+        span {
+            font-size: 26px;
+            font-family: Source Han Sans CN;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .comment-num {
+            color: #FF4400;
+        }
     }
 
-    .comment-container {
-        width: 92%;
-        /*height: 95vh;*/
-        margin-left: 3%;
-        position: relative;
-        border: $border;
-        border-radius: 5px;
+    .brief-comment-container {
+        display: flex;
+        width: 100%;
+        justify-content: center;
 
-        .comment-header {
-            background: #e8e8e8;
-            text-align: center;
-            padding: 8px 0;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-
-            span {
-                font-size: 26px;
-                font-family: Source Han Sans CN;
-                font-weight: 500;
-                color: #333;
-            }
-
-            .comment-num {
-                color: #FF4400;
-            }
-        }
-
-        .brief-comment-container {
+        .brief-left {
             display: flex;
-            width: 100%;
+            align-items: center;
             justify-content: center;
+            height: 110px;
+            width: 17%;
 
-            .brief-left {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 110px;
-                width: 17%;
-
-                .brief-left-span {
-                    height: 90px;
-                    display: inline-block;
-                    border-left: 2px dashed #666;
-                    writing-mode: vertical-lr;
-                    margin: 0 20px;
-                    padding-left: 10px;
-                    font-size: 25px;
-                    font-family: Source Han Sans CN;
-                    font-weight: 400;
-                    color: #ff4400;
-                    letter-spacing: 3px;
-                    text-align: center;
-                }
-            }
-
-            .brief-right {
-                width: 80%;
-                padding-top: 20px;
-            }
-
-        }
-
-        .comment-area {
-            width: 100%;
-            /*margin-top: 20px;*/
-            /*height: 50vh;*/
-            overflow: auto;
-
-            .no-comment {
-                margin-top: 20px;
-                color: #B2B2B2;
-                font-weight: 300;
-                font-size: 18px;
-
-                img {
-                    width: 100px;
-                    height: 100px;
-                    margin-bottom: 10px;
-                }
+            .brief-left-span {
+                height: 90px;
+                display: inline-block;
+                border-left: 2px dashed #666;
+                writing-mode: vertical-lr;
+                margin: 0 20px;
+                padding-left: 10px;
+                font-size: 25px;
+                font-family: Source Han Sans CN;
+                font-weight: 400;
+                color: #ff4400;
+                letter-spacing: 3px;
+                text-align: center;
             }
         }
 
-        .comment-bottom {
-            /*position: absolute;*/
-            /*bottom: 10px;*/
-            display: flex;
-            /*padding-top: 10px;*/
-            padding: 10px 0;
-            width: 100%;
+        .brief-right {
+            width: 80%;
+            padding-top: 20px;
+        }
+
+    }
+
+    .comment-area {
+        width: 100%;
+        /*margin-top: 20px;*/
+        /*height: 50vh;*/
+        overflow: auto;
+
+        .no-comment {
+            margin-top: 20px;
+            color: #B2B2B2;
+            font-weight: 300;
+            font-size: 18px;
 
             img {
-                width: 90px;
-                height: 90px;
-            }
-
-            .c-comment-star {
-                margin: 0 10px;
-            }
-
-            .xy-center {
-                width: 750px;
-
-                .el-input__inner {
-                    height: 40px;
-                    color: #333;
-                    font-family: Source Han Sans CN;
-                    border-radius: 0;
-
-                    &:active, &:focus {
-                        border-color: red !important;
-                    }
-                }
-
-                i {
-                    font-size: 20px;
-                    margin-right: 5px;
-
-                    &:hover {
-                        color: #ff4400;
-                    }
-                }
-            }
-
-            button {
-                height: 40px;
-                background: #ff4400;
-                color: #fff;
-                margin-left: 33px;
-                border-radius: 0;
-
-                &:active {
-                    border-color: #ff4400;
-                }
+                width: 100px;
+                height: 100px;
+                margin-bottom: 10px;
             }
         }
     }
+
+    .comment-bottom {
+        /*position: absolute;*/
+        /*bottom: 10px;*/
+        display: flex;
+        /*padding-top: 10px;*/
+        padding: 10px 0;
+        width: 100%;
+
+        img {
+            width: 90px;
+            height: 90px;
+        }
+
+        .c-comment-star {
+            margin: 0 10px;
+        }
+
+        .xy-center {
+            width: 750px;
+
+            .el-input__inner {
+                height: 40px;
+                color: #333;
+                font-family: Source Han Sans CN;
+                border-radius: 0;
+
+                &:active, &:focus {
+                    border-color: red !important;
+                }
+            }
+
+            i {
+                font-size: 20px;
+                margin-right: 5px;
+
+                &:hover {
+                    color: #ff4400;
+                }
+            }
+        }
+
+        button {
+            height: 40px;
+            background: #ff4400;
+            color: #fff;
+            margin-left: 33px;
+            border-radius: 0;
+
+            &:active {
+                border-color: #ff4400;
+            }
+        }
+    }
+}
 </style>

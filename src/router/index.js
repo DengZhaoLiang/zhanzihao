@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from '@pages/api/home/index.vue'
-import cart from '@pages/api/cart/index'
+import home from '@pages/api/home/home.vue'
+import cart from '@pages/api/cart/cart'
 import detail from '@pages/api/detail/index'
-import my from '@pages/api/my/index'
+import my from '@pages/api/user/user'
 import order from '@pages/api/order/index'
 
 Vue.use(Router)

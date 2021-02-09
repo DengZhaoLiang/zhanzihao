@@ -1,4 +1,4 @@
-import { get, post, del, put } from '@/plugins/modules/request'
+import { del, get, post, put } from '@/plugins/modules/request'
 
 export const login = params => post('/user/login', params, {
     showTip: true,

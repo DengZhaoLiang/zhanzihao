@@ -1,17 +1,17 @@
 <template>
-    <div class="c-star">
-        <div class="star-score">
-            <span>{{getStarNum}}</span>
+    <div class='c-star'>
+        <div class='star-score'>
+            <span>{{ getStarNum }}</span>
         </div>
-        <div class="star-line">
-            <div v-for="item in 5" :key="item" class="star-item">
+        <div class='star-line'>
+            <div v-for='item in 5' :key='item' class='star-item'>
                 <div>
-                    <i class="iconfont icon-start1"></i>
+                    <i class='iconfont icon-start1'></i>
                 </div>
                 <div :class="(item - 1 < starNum && !edit) || item <= selected ? 'cover-star' : ''"
                      :style="(item - 1 < starNum && item > starNum && !edit) ? getSurplusWidth : ''"
-                     @click="select(item)">
-                    <i class="iconfont icon-start1"></i>
+                     @click='select(item)'>
+                    <i class='iconfont icon-start1'></i>
                 </div>
             </div>
         </div>
@@ -74,57 +74,57 @@
     }
 </script>
 
-<style scoped lang="scss">
-    .c-star {
-        width: 80px;
-    }
+<style lang='scss' scoped>
+.c-star {
+    width: 80px;
+}
 
-    .star-score {
-        font-size: 40px;
-        font-family: Source Han Sans CN;
-        font-weight: 800;
-        color: #ff4400;
-        text-align: center;
-    }
+.star-score {
+    font-size: 40px;
+    font-family: Source Han Sans CN;
+    font-weight: 800;
+    color: #ff4400;
+    text-align: center;
+}
 
-    .star-line {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
+.star-line {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 
-        .star-item {
-            $size: 16px;
-            position: relative;
+    .star-item {
+        $size: 16px;
+        position: relative;
+        width: $size;
+        height: $size;
+
+        div {
+            position: absolute;
             width: $size;
             height: $size;
+            overflow: hidden;
+            color: #ccc;
 
-            div {
-                position: absolute;
+            i {
+                display: inline-block;
                 width: $size;
                 height: $size;
-                overflow: hidden;
-                color: #ccc;
-
-                i {
-                    display: inline-block;
-                    width: $size;
-                    height: $size;
-                    font-size: $size;
-                    top: 0;
-                    left: 0;
-                    position: absolute;
-                }
+                font-size: $size;
+                top: 0;
+                left: 0;
+                position: absolute;
             }
-
-            /*整个填充*/
-            .cover-star {
-                width: $size;
-                overflow-x: hidden;
-                z-index: 10;
-                color: gold;
-            }
-
         }
+
+        /*整个填充*/
+        .cover-star {
+            width: $size;
+            overflow-x: hidden;
+            z-index: 10;
+            color: gold;
+        }
+
     }
+}
 
 </style>

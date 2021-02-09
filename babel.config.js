@@ -6,12 +6,12 @@ if (process.env.NODE_ENV === 'production') {
 plugins.push([
     '@babel/plugin-transform-modules-commonjs',
     {
-        allowTopLevelThis: true,
-    },
+        allowTopLevelThis: true
+    }
 ])
 module.exports = {
-  presets: [
-    '@vue/app'
-  ],
-  plugins
+    presets: [
+        '@vue/app'
+    ],
+    plugins
 }

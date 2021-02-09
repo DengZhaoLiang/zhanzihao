@@ -178,15 +178,15 @@ export const upload = (url, {
     file = '',
     formData = {}
 } = {}, {
-    showTip = false,
-    tipMsg = '',
-    isAutoThrow = true, // 是否自动抛异常
-    tipType = 'success',
-    isSerializerParams = false,
-    isShowLoading = false,
-    loadingText = '上传中',
-    loadingSuccessText = '上传成功'
-} = {}) => {
+                           showTip = false,
+                           tipMsg = '',
+                           isAutoThrow = true, // 是否自动抛异常
+                           tipType = 'success',
+                           isSerializerParams = false,
+                           isShowLoading = false,
+                           loadingText = '上传中',
+                           loadingSuccessText = '上传成功'
+                       } = {}) => {
     const configOptions = {
         showTip,
         tipMsg,

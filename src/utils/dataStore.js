@@ -1,14 +1,14 @@
 class DataStore {
+    constructor() {
+        this.token = this._getTokenFromLocal()
+        this.userInfo = this._getUserInfoFromLocal()
+    }
+
     static getInstance() {
         if (!DataStore.instance) {
             DataStore.instance = new DataStore()
         }
         return DataStore.instance
-    }
-
-    constructor() {
-        this.token = this._getTokenFromLocal()
-        this.userInfo = this._getUserInfoFromLocal()
     }
 
     // 保存token

@@ -1,8 +1,8 @@
 <template>
-    <div class="c-barrage">
-        <c-tag v-for="(item,index) in tempBriefList" :key="index" :detail="item" :goods-id="goodsId" :index="index"
-               @change="onLikeNumChange"/>
-        <c-input-tag class="c-input-tag" @inputTag="onTagInput"/>
+    <div class='c-barrage'>
+        <c-tag v-for='(item,index) in tempBriefList' :key='index' :detail='item' :goods-id='goodsId' :index='index'
+               @change='onLikeNumChange' />
+        <c-input-tag class='c-input-tag' @inputTag='onTagInput' />
     </div>
 </template>
 
@@ -73,15 +73,15 @@
     }
 </script>
 
-<style scoped lang="scss">
-    .c-barrage {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
+<style lang='scss' scoped>
+.c-barrage {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
 
-        .c-input-tag {
-            display: inline-block;
-        }
+    .c-input-tag {
+        display: inline-block;
     }
+}
 </style>

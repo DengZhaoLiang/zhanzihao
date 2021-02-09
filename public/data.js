@@ -14,7 +14,7 @@ const goods = [
             'https://gd2.alicdn.com/imgextra/i3/2200828121620/O1CN018Anp4u1Nq0BYAaqyv_!!2200828121620.jpg_50x50.jpg_.webp',
             'https://gd4.alicdn.com/imgextra/i4/2200828121620/O1CN01sqP54e1Nq0BW6v1Y8_!!2200828121620.jpg_50x50.jpg_.webp',
             'https://gd3.alicdn.com/imgextra/i3/2200828121620/O1CN01yxZFXi1Nq0BYAbBsY_!!2200828121620.jpg_50x50.jpg_.webp',
-            'https://gd2.alicdn.com/imgextra/i2/2200828121620/O1CN0189cqJN1Nq0BQMGA4i_!!2200828121620.jpg_50x50.jpg_.webp',
+            'https://gd2.alicdn.com/imgextra/i2/2200828121620/O1CN0189cqJN1Nq0BQMGA4i_!!2200828121620.jpg_50x50.jpg_.webp'
         ],
         address: '上海'
     },
@@ -98,7 +98,7 @@ const goods = [
             'https://gd1.alicdn.com/imgextra/i3/3968164891/O1CN01t6RFQd1m07kRE7I0C_!!3968164891.jpg_50x50.jpg_.webp',
             'https://gd4.alicdn.com/imgextra/i4/3968164891/O1CN01UbXnPm1m07kQr1Il7_!!3968164891.jpg_50x50.jpg_.webp',
             'https://gd4.alicdn.com/imgextra/i4/3968164891/O1CN01YFsYgm1m07kRE85ul_!!3968164891.jpg_50x50.jpg_.webp',
-            'https://gd4.alicdn.com/imgextra/i4/3968164891/O1CN01D5PzRS1m07kV3Ua5j_!!3968164891.jpg_50x50.jpg_.webp',
+            'https://gd4.alicdn.com/imgextra/i4/3968164891/O1CN01D5PzRS1m07kV3Ua5j_!!3968164891.jpg_50x50.jpg_.webp'
         ],
         address: '苏州'
     },
@@ -114,7 +114,7 @@ const goods = [
             'https://gd1.alicdn.com/imgextra/i1/2200775366029/O1CN014CT6gN1uPKPsmcGNu_!!2200775366029.jpg_50x50.jpg_.webp',
             'https://gd2.alicdn.com/imgextra/i2/2200775366029/O1CN01I90NqK1uPKPwwBMCY_!!2200775366029.jpg_50x50.jpg_.webp',
             'https://gd3.alicdn.com/imgextra/i3/2200775366029/O1CN01Gwnysh1uPKPwFDewo_!!2200775366029.jpg_50x50.jpg_.webp',
-            'https://gd1.alicdn.com/imgextra/i1/2200775366029/O1CN01rH54Wh1uPKPtiaiDV_!!2200775366029.jpg_50x50.jpg_.webp',
+            'https://gd1.alicdn.com/imgextra/i1/2200775366029/O1CN01rH54Wh1uPKPtiaiDV_!!2200775366029.jpg_50x50.jpg_.webp'
         ],
         address: '杭州'
     },
@@ -130,7 +130,7 @@ const goods = [
             'https://gd3.alicdn.com/imgextra/i4/3316892311/O1CN0169Mr9S1SwTtlhU49Y_!!3316892311.jpg_50x50.jpg_.webp',
             'https://gd1.alicdn.com/imgextra/i1/3316892311/O1CN01ILNXKo1SwTtj7nGlv_!!3316892311.jpg_50x50.jpg_.webp',
             'https://gd1.alicdn.com/imgextra/i1/3316892311/O1CN01cEEhEu1SwTtiki9m6_!!3316892311.jpg_50x50.jpg_.webp',
-            'https://gd2.alicdn.com/imgextra/i2/3316892311/O1CN01HJUBkF1SwTthS4Jte_!!3316892311.jpg_50x50.jpg_.webp',
+            'https://gd2.alicdn.com/imgextra/i2/3316892311/O1CN01HJUBkF1SwTthS4Jte_!!3316892311.jpg_50x50.jpg_.webp'
         ],
         address: '上海'
     },
@@ -162,7 +162,7 @@ const goods = [
         imgList: [
             'https://gd4.alicdn.com/imgextra/i1/2201241610038/O1CN01vNPAAD1C9RbQIR2iD_!!2201241610038.jpg_50x50.jpg_.webp',
             'https://gd3.alicdn.com/imgextra/i3/2201241610038/O1CN015Tq77w1C9RbSSbQmQ_!!2201241610038.jpg_50x50.jpg_.webp',
-            'https://gd2.alicdn.com/imgextra/i2/2201241610038/O1CN01zdvn2B1C9RbSSfFqK_!!2201241610038.jpg_50x50.jpg_.webp',
+            'https://gd2.alicdn.com/imgextra/i2/2201241610038/O1CN01zdvn2B1C9RbSSfFqK_!!2201241610038.jpg_50x50.jpg_.webp'
         ],
         address: '广州'
     },
@@ -211,7 +211,7 @@ const goods = [
         imgList: [
             'https://gd1.alicdn.com/imgextra/i2/2201203844242/O1CN01xkIEgb1hCshCOdb6j_!!2201203844242.jpg_50x50.jpg_.webp',
             'https://gd4.alicdn.com/imgextra/i4/2201203844242/O1CN01kr7BEX1hCshEEsZ6A_!!2201203844242.jpg_50x50.jpg_.webp',
-            'https://gd2.alicdn.com/imgextra/i2/2201203844242/O1CN019NGZ3k1hCshEEshQO_!!2201203844242.png_50x50.jpg_.webp',
+            'https://gd2.alicdn.com/imgextra/i2/2201203844242/O1CN019NGZ3k1hCshEEshQO_!!2201203844242.png_50x50.jpg_.webp'
         ],
         address: '四川成都'
     },
@@ -278,7 +278,7 @@ const goods = [
             'https://gd3.alicdn.com/imgextra/i2/1868725912/O1CN01JWp9d81tXk7UdOsZE_!!1868725912.png_50x50.jpg_.webp',
             'https://gd4.alicdn.com/imgextra/i4/1868725912/O1CN01qcNkNG1tXk7S82kpx_!!1868725912.png_50x50.jpg_.webp',
             'https://gd3.alicdn.com/imgextra/i3/1868725912/O1CN01biPHKu1tXk7SHoNMC_!!1868725912.jpg_50x50.jpg_.webp',
-            'https://gd2.alicdn.com/imgextra/i2/1868725912/O1CN01bi4jzO1tXk7UbMCIL_!!1868725912.png_50x50.jpg_.webp',
+            'https://gd2.alicdn.com/imgextra/i2/1868725912/O1CN01bi4jzO1tXk7UbMCIL_!!1868725912.png_50x50.jpg_.webp'
         ],
         address: '广东深圳'
     },
@@ -310,7 +310,7 @@ const goods = [
         imgList: [
             'https://gd4.alicdn.com/imgextra/i4/2206709760453/O1CN01QR4SxS1FDVzv9CxEb_!!2206709760453.jpg_50x50.jpg_.webp',
             'https://gd1.alicdn.com/imgextra/i1/2206709760453/O1CN0183wzWY1FDVzr7uqX0_!!2206709760453.jpg_50x50.jpg_.webp',
-            'https://gd3.alicdn.com/imgextra/i3/2206709760453/O1CN01VmnGzR1FDVzvI5GH9_!!2206709760453.jpg_50x50.jpg_.webp',
+            'https://gd3.alicdn.com/imgextra/i3/2206709760453/O1CN01VmnGzR1FDVzvI5GH9_!!2206709760453.jpg_50x50.jpg_.webp'
         ],
         address: '四川成都'
     },
@@ -326,8 +326,8 @@ const goods = [
             'https://gd1.alicdn.com/imgextra/i1/3435629636/O1CN01uyLDbu2L3L1k30L1b_!!3435629636.png_50x50.jpg_.webp',
             'https://gd3.alicdn.com/imgextra/i3/3435629636/O1CN01Pgthek2L3L1k6oBMo_!!3435629636.png_50x50.jpg_.webp',
             'https://gd4.alicdn.com/imgextra/i4/3435629636/O1CN01ERtZgQ2L3L1k6o7C9_!!3435629636.png_50x50.jpg_.webp',
-            'https://gd3.alicdn.com/imgextra/i3/3435629636/O1CN01FmnNmF2L3L1kufKDz_!!3435629636.png_50x50.jpg_.webp',
+            'https://gd3.alicdn.com/imgextra/i3/3435629636/O1CN01FmnNmF2L3L1kufKDz_!!3435629636.png_50x50.jpg_.webp'
         ],
         address: '天津'
-    },
+    }
 ]

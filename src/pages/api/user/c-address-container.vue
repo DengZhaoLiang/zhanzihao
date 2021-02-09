@@ -1,13 +1,13 @@
 <template>
-    <div class="address-container">
-        <c-address v-for="(item, index) in addressList" :key="index" :address="item"/>
-        <c-new-address/>
+    <div class='address-container'>
+        <c-address v-for='(item, index) in addressList' :key='index' :address='item' />
+        <c-new-address />
     </div>
 </template>
 
 <script>
     import CAddress from '@components/public/c-address'
-    import CNewAddress from '../../order/components/c-new-address'
+    import CNewAddress from '../order/components/c-new-address'
 
     export default {
         name: 'CAddressContainer',
@@ -37,13 +37,13 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
-    .address-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        width: 600px;
-        margin: 0 auto;
-    }
+.address-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 600px;
+    margin: 0 auto;
+}
 </style>

@@ -1,11 +1,4 @@
-import {
-    formatMoney,
-    formatLikeNum,
-    formatString,
-    formatDate,
-    formatNickName,
-    addImagePrefix
-} from './filters.js'
+import { addImagePrefix, formatDate, formatLikeNum, formatMoney, formatNickName, formatString } from './filters.js'
 
 const Filters = {
     install(Vue) {

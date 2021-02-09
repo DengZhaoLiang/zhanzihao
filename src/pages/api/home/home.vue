@@ -1,21 +1,21 @@
 <template>
-    <div class="home">
+    <div class='home'>
         <c-head></c-head>
-        <div class="goods-list-container">
-            <div class="goods-list">
-                <div class="good-container" v-if="goodsList.length"
-                     :class="(goodsList.length % 5) !== 0 ? 'fill-space' : ''">
-                    <c-good-item v-for="(item, key) in goodsList" :key="key" :goods-item="item"/>
+        <div class='goods-list-container'>
+            <div class='goods-list'>
+                <div v-if='goodsList.length' :class="(goodsList.length % 5) !== 0 ? 'fill-space' : ''"
+                     class='good-container'>
+                    <c-good-item v-for='(item, key) in goodsList' :key='key' :goods-item='item' />
                 </div>
                 <!--                <c-paging class="paging"/>-->
-                <div class="load-infinite infinite-list" v-infinite-scroll="loadMore"
-                     infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-                    <img src="../../../assets/loading-svg/dual-ball-gray.svg" v-show="loading">
+                <div v-infinite-scroll='loadMore' class='load-infinite infinite-list'
+                     infinite-scroll-disabled='busy' infinite-scroll-distance='10'>
+                    <img v-show='loading' src='../../../assets/loading-svg/dual-ball-gray.svg'>
                 </div>
             </div>
         </div>
-        <c-foot/>
-        <c-modal width="400px" :is-show-modal="isShowModal" v-on:confirm="onConfirm" v-on:cancel="onCancel"></c-modal>
+        <c-foot />
+        <c-modal :is-show-modal='isShowModal' width='400px' v-on:cancel='onCancel' v-on:confirm='onConfirm'></c-modal>
     </div>
 </template>
 
@@ -23,7 +23,7 @@
     import CHead from '@components/public/c-head'
     import CFoot from '@components/public/c-foot'
     import CModal from '@components/public/c-modal'
-    import CGoodItem from './components/c-good-item'
+    import CGoodItem from './c-good-item'
     import { SORT_TYPE } from '@/config/constant'
     import { pGetGoodsList } from '@api/goods/params'
 
@@ -137,78 +137,78 @@
     }
 </script>
 
-<style scoped lang="scss">
-    .home {
+<style lang='scss' scoped>
+.home {
+    width: 100%;
+    /*background: #42b983;*/
+    background: rgba(246, 246, 246, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .bread {
         width: 100%;
-        /*background: #42b983;*/
-        background: rgba(246, 246, 246, 1);
+        background: #F2F2F2;
         display: flex;
-        justify-content: center;
         align-items: center;
-        flex-direction: column;
+        justify-content: center;
+    }
 
-        .bread {
-            width: 100%;
-            background: #F2F2F2;
+    .goods-list-container {
+        width: 100%;
+        display: flex;
+        justify-content: left;
+        margin-left: 250px;
+        margin-top: 10px;
+
+        .goods-list {
             display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+            flex-direction: column;
 
-        .goods-list-container {
-            width: 100%;
-            display: flex;
-            justify-content: left;
-            margin-left: 250px;
-            margin-top: 10px;
+            .sort-container {
+                width: 920px;
+                height: 53px;
+                margin-left: 26px;
+                justify-content: flex-end;
+                background: #fff;
 
-            .goods-list {
-                display: flex;
-                flex-direction: column;
-
-                .sort-container {
-                    width: 920px;
-                    height: 53px;
-                    margin-left: 26px;
-                    justify-content: flex-end;
-                    background: #fff;
-
-                    .goods-sort {
-                        margin-right: 30px;
-                    }
+                .goods-sort {
+                    margin-right: 30px;
                 }
-
-                .good-container {
-                    width: 1560px;
-                    margin-left: 26px;
-                    display: flex;
-                    justify-content: space-between;
-                    flex-wrap: wrap;
-                }
-
-                .fill-space:after {
-                    content: "";
-                    width: 288px;
-                    height: 496px;
-                }
-
-                .paging {
-                    margin: 0 auto;
-                }
-
             }
+
+            .good-container {
+                width: 1560px;
+                margin-left: 26px;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .fill-space:after {
+                content: "";
+                width: 288px;
+                height: 496px;
+            }
+
+            .paging {
+                margin: 0 auto;
+            }
+
         }
     }
+}
 
-    .load-infinite {
-        margin-top: 50px;
-        height: 100px;
-        text-align: center;
-        /*background: ;*/
+.load-infinite {
+    margin-top: 50px;
+    height: 100px;
+    text-align: center;
+    /*background: ;*/
 
-        img {
-            width: 50px;
-            height: 50px;
-        }
+    img {
+        width: 50px;
+        height: 50px;
     }
+}
 </style>

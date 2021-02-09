@@ -1,11 +1,11 @@
 <template>
-    <div class="c-paging">
-        <button @click="previous">上一页</button>
-        <button v-for="(item, index) in tempPage" :key="index" @click="selectPage(index)"
-                :class="selectedIndex === index ? 'selected-btn' : ''">
-            {{item}}
+    <div class='c-paging'>
+        <button @click='previous'>上一页</button>
+        <button v-for='(item, index) in tempPage' :key='index' :class="selectedIndex === index ? 'selected-btn' : ''"
+                @click='selectPage(index)'>
+            {{ item }}
         </button>
-        <button @click="next">下一页</button>
+        <button @click='next'>下一页</button>
     </div>
 </template>
 
@@ -103,36 +103,36 @@
     }
 </script>
 
-<style scoped lang="scss">
-    .c-paging {
-        display: flex;
+<style lang='scss' scoped>
+.c-paging {
+    display: flex;
 
-        button {
-            width: 28px;
-            height: 28px;
-            background: rgba(255, 255, 255, 1);
-            border: 1px solid rgba(217, 217, 217, 1);
-            margin: 0 15px;
-            font-size: 14px;
-            font-family: Source Han Sans CN;
-            color: rgba(102, 102, 102, 1);
+    button {
+        width: 28px;
+        height: 28px;
+        background: rgba(255, 255, 255, 1);
+        border: 1px solid rgba(217, 217, 217, 1);
+        margin: 0 15px;
+        font-size: 14px;
+        font-family: Source Han Sans CN;
+        color: rgba(102, 102, 102, 1);
+        outline: none;
+
+        &:nth-child(1), &:nth-last-child(1) {
+            width: 63px;
+        }
+
+        &:active {
+            border: 0;
             outline: none;
-
-            &:nth-child(1), &:nth-last-child(1) {
-                width: 63px;
-            }
-
-            &:active {
-                border: 0;
-                outline: none;
-            }
         }
-
-        .selected-btn {
-            background: #FF7C25;
-            border-color: #FF7C25;
-            color: #fff;
-        }
-
     }
+
+    .selected-btn {
+        background: #FF7C25;
+        border-color: #FF7C25;
+        color: #fff;
+    }
+
+}
 </style>

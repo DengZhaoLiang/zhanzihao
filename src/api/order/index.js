@@ -1,4 +1,4 @@
-import { get, post, del } from '@/plugins/modules/request'
+import { del, get, post } from '@/plugins/modules/request'
 
 export const createOrder = params => post('/order/create-order', params)
 
