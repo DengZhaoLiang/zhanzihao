@@ -2,16 +2,16 @@
     <div class='c-good-parent xy-center'>
         <div class='c-good-item' @click='goToDetail'>
             <div class='cat-img'>
-                <img :src='productsInfo.image'>
+                <img :src='product.image'>
             </div>
             <div class='good-brief'>
                 <div class='good-name'>
-                    <span>{{ productsInfo.name }}</span>
+                    <span>{{ product.name }}</span>
                     <span>包邮</span>
                 </div>
             </div>
             <div class='good-price'>
-                <c-money :money='productsInfo.price' />
+                <c-money :money='product.price' />
             </div>
             <div class='add-to-card xy-center'>
                 <button @click.stop='addToCart'>加入购物车</button>
@@ -35,8 +35,12 @@
         data() {
             return {
                 showToast: false,
-                productsInfo: {},
-                id: '',
+                product: {},
+                cartInfo: {
+                    id: '',
+                    product: {},
+                    purchaseNum: 1
+                },
                 purchaseNum: 1
             }
         },
@@ -50,7 +54,7 @@
         },
         watch: {
             productsItem() {
-                this.productsInfo = this.productsItem
+                this.product = this.productsItem
             }
         },
         methods: {
@@ -59,14 +63,31 @@
                 this.$router.push('/cart')
             },
             addToCart() {
+                this.cartInfo.id = this.product.id
+                this.cartInfo.product = this.product
+
+                let old = this.$store.state.Carts
+                let append = true
+                old.forEach((cur, index) => {
+                    if (cur.id === this.cartInfo.id) {
+                        old[index].purchaseNum = old[index].purchaseNum + this.purchaseNum
+                        append = false
+                    }
+                })
+                if (append) {
+                    old.push(this.cartInfo)
+                }
+
+                this.$store.dispatch('setCarts', old)
+                this.showToast = true
             },
             // 去详情
             goToDetail() {
-                this.$router.push({ path: `/detail?id=${this.productsInfo.id}` })
+                this.$router.push({ path: `/detail?id=${this.product.id}` })
             }
         },
         mounted() {
-            this.productsInfo = this.productsItem
+            this.product = this.productsItem
         }
     }
 </script>

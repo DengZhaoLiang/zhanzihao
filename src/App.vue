@@ -5,26 +5,19 @@
 </template>
 
 <script>
-    import tokenInstance from '@utils/dataStore'
+    import dataStore from '@utils/dataStore'
 
     export default {
         // 监听路由的变化，有变化就加入path数组里面
-        watch: {
-            $route(to, from) {
-                this.$store.dispatch('changeRouter', {
-                    to: to.path,
-                    from: from.path,
-                    fullPath: this.$route.fullPath
-                })
-            }
-        },
+        watch: {},
         methods: {
             getCartList() {
 
             }
         },
         mounted() {
-            this.$store.dispatch('saveUserInfo', tokenInstance.getUserInfo())
+            this.$store.dispatch('saveUserInfo', dataStore.getUserInfo())
+            this.$store.dispatch('setCarts', dataStore.getCarts())
             this.getCartList()
             this.$bus.$on('updateCartLength', () => {
                 this.getCartList()

@@ -45,11 +45,11 @@
                 }, 500)
             },
             // 向商品列表中加入购买数量
-            _addNumToGoodsList(productsInfo) {
+            _addNumToGoodsList(product) {
                 this.cartList.forEach(item => {
-                    item = Object.assign(item, productsInfo.find(elem => item.productsId === elem.productsId))
+                    item = Object.assign(item, product.find(elem => item.productsId === elem.productsId))
                 })
-                this.$store.dispatch('setGoodsInfoList', this.cartList)
+                this.$store.dispatch('setCarts', this.cartList)
             },
             _getGoodsIdList(arr) {
                 const temp = []
@@ -66,7 +66,7 @@
             })
         },
         destroyed() {
-            this.$store.dispatch('setGoodsInfoList', [])
+            this.$store.dispatch('setCarts', [])
         }
     }
 </script>

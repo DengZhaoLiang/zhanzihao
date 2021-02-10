@@ -53,8 +53,12 @@
             return {
                 isShowModal: false,
                 product: {},
-                totalCommentNum: 0,
                 showToast: false,
+                cartInfo: {
+                    id: '',
+                    product: {},
+                    purchaseNum: 1
+                },
                 purchaseNum: 1
             }
         },
@@ -70,10 +74,24 @@
             goToOrder() {
                 this.$router.push(`/order?id=${this.product.id}&purchaseNum=${this.purchaseNum}`)
             },
-            onTotalCommentNum(num) {
-                this.totalCommentNum = num
-            },
             addToCart() {
+                this.cartInfo.id = this.product.id
+                this.cartInfo.product = this.product
+
+                let old = this.$store.state.Carts
+                let append = true
+                old.forEach((cur, index) => {
+                    if (cur.id === this.cartInfo.id) {
+                        old[index].purchaseNum = old[index].purchaseNum + this.purchaseNum
+                        append = false
+                    }
+                })
+                if (append) {
+                    old.push(this.cartInfo)
+                }
+
+                this.$store.dispatch('setCarts', old)
+                this.showToast = true
             }
         },
         created() {

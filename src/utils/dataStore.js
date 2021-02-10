@@ -51,6 +51,14 @@ class DataStore {
         const temp = localStorage.getItem('userInfo')
         return temp ? JSON.parse(temp) : null
     }
+
+    saveCarts(cartInfo) {
+        localStorage.setItem('carts', JSON.stringify(cartInfo))
+    }
+
+    getCarts() {
+        return JSON.parse(localStorage.getItem('carts'))
+    }
 }
 
 const dataStore = DataStore.getInstance()

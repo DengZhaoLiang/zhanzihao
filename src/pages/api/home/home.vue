@@ -14,14 +14,12 @@
             </div>
         </div>
         <c-foot />
-        <c-modal :is-show-modal='isShowModal' width='400px' v-on:cancel='onCancel' v-on:confirm='onConfirm'></c-modal>
     </div>
 </template>
 
 <script>
     import CHead from '@components/public/c-head'
     import CFoot from '@components/public/c-foot'
-    import CModal from '@components/public/c-modal'
     import CGoodItem from './c-good-item'
     import request from '@utils/request'
 
@@ -30,12 +28,11 @@
         components: {
             CHead,
             CFoot,
-            CModal,
             CGoodItem
         },
         data() {
             return {
-                isShowModal: false,
+                isShowModal: true,
                 productsList: [],
                 loading: false,
                 busy: false,
@@ -52,17 +49,6 @@
             })
         },
         methods: {
-            onConfirm() {
-                this.isShowModal = false
-                console.log('确认')
-            },
-            onCancel(type) {
-                this.isShowModal = false
-                if (type === 'close') {
-                    return
-                }
-                console.log('取消')
-            },
             // 是否重置
             getGoodsList(isReset = false) {
                 if (isReset) {
@@ -96,10 +82,6 @@
                         this.getGoodsList()
                     }, 500)
                 }
-            },
-            // 重置页码
-            _resetPageNum() {
-                this.getGoodsList(true)
             }
         },
         destroyed() {

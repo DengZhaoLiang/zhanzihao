@@ -2,7 +2,7 @@
     <div class='c-good-list-item'>
         <div>
             <el-checkbox-group v-model='checkedGoods' @change='handleCheckedGoodsChange'>
-                <div v-for='(item,key) in getGoodsInfoList' :key='key' class='c-row-container'>
+                <div v-for='(item,key) in getProducts' :key='key' class='c-row-container'>
                     <el-row class='c-row'>
                         <el-col v-if='showCheckBox' :span='isShowAccount ? 1 : 2'>
                             <el-checkbox :label='item.productsId'></el-checkbox>
@@ -126,9 +126,9 @@
                     return index >= this.leftIndex && index < this.rightIndex
                 })
             },
-            getGoodsInfoList() {
+            getProducts() {
                 /* eslint-disable */
-                this.products = this.$store.getters.getGoodsInfoList
+                this.products = this.$store.getters.getProducts
                 console.log(Object.deepCopy(this.products))
                 return this.products
             },
@@ -139,12 +139,12 @@
                 this.imgList = []
                 this.purchaseList = []
                 this.checkedGoods.forEach(productsId => {
-                    const productsInfo = this.products.find(item => item.productsId === productsId)
-                    this.totalMoney += productsInfo.discountPrice * productsInfo.productsNum
-                    this.imgList.push(productsInfo.masterImg)
+                    const product = this.products.find(item => item.productsId === productsId)
+                    this.totalMoney += product.discountPrice * product.productsNum
+                    this.imgList.push(product.masterImg)
                     this.purchaseList.push({
-                        productsId: productsInfo.productsId,
-                        purchaseNum: productsInfo.productsNum
+                        productsId: product.productsId,
+                        purchaseNum: product.productsNum
                     })
                 })
                 this.totalMoney = parseFloat(this.totalMoney.toFixed(2))
