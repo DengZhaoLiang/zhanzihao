@@ -1,6 +1,6 @@
 <template>
     <div class='c-order-success yx-center'>
-        <img src='../../../../../public/images/order/order-success.png' />
+        <img src='../../../../public/images/order/order-success.png' />
         <span class='span1'>恭喜您！</span>
         <span class='span1'>{{ isPayed ? '您已成功支付' : '您已成功下单,请支付' }}</span>
         <div>

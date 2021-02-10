@@ -11,7 +11,7 @@
         props: {
             money: {
                 type: Number,
-                default: 800
+                default: 0
             },
             size: String,
             color: {

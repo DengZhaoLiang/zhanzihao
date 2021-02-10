@@ -20,8 +20,6 @@
     import CHead from '@components/public/c-head'
     import CFoot from '@components/public/c-foot'
     import CGoodList from './c-good-list'
-    import { pGetCartList } from '@api/cart/params'
-    import { pBatchGoodsInfo } from '@api/goods/params'
 
     export default {
         name: 'cart',
@@ -39,53 +37,24 @@
             }
         },
         methods: {
-            // 是否清理数组，清理就置空数组看
-            getCartList(isClearArr = false, isDel = false) {
-                this.$api.cart.getCartList(pGetCartList).then(res => {
-                    console.log(res)
-                    this.loading = false
-                    this.busy = false
-                    if (res.cartList.length) {
-                        pBatchGoodsInfo.goodsIdList = this._getGoodsIdList(res.cartList)
-                        if (isClearArr) {
-                            this.cartList = []
-                        }
-                        this.cartList = this.cartList.concat(res.cartList)
-                        this.getGoodsInfoList()
-                    } else {
-                        if (isDel) {
-                            this.cartList = []
-                        }
-                        this.busy = true
-                    }
-                    this.isLoadedCartList = true
-                })
-            },
-            getGoodsInfoList() {
-                this.$api.goods.batchGetGoodsInfo(pBatchGoodsInfo).then(res => {
-                    this._addNumToGoodsList(res.goodsInfoList)
-                })
-            },
             loadMore() {
-                console.log('自动加载')
                 this.busy = true
                 this.loading = true
                 setTimeout(() => {
-                    ++pGetCartList.curPage
                     this.getCartList()
                 }, 500)
             },
             // 向商品列表中加入购买数量
-            _addNumToGoodsList(goodsInfo) {
+            _addNumToGoodsList(productsInfo) {
                 this.cartList.forEach(item => {
-                    item = Object.assign(item, goodsInfo.find(elem => item.goodsId === elem.goodsId))
+                    item = Object.assign(item, productsInfo.find(elem => item.productsId === elem.productsId))
                 })
                 this.$store.dispatch('setGoodsInfoList', this.cartList)
             },
             _getGoodsIdList(arr) {
                 const temp = []
                 arr.forEach(item => {
-                    temp.push(item.goodsId)
+                    temp.push(item.productsId)
                 })
                 return temp
             }
@@ -93,13 +62,10 @@
         mounted() {
             this.getCartList()
             this.$bus.$on('getCartList', (isDel = false) => {
-                // 如果删除了某条数据，则获取到当前的长度
-                pGetCartList.curPage = 0
                 this.getCartList(true, isDel)
             })
         },
         destroyed() {
-            pGetCartList.curPage = 0
             this.$store.dispatch('setGoodsInfoList', [])
         }
     }

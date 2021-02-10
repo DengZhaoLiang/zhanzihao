@@ -1,5 +1,3 @@
-import { IMAGE_BASE_URL } from '@/config'
-
 /**
  * 过滤器
  */
@@ -59,16 +57,10 @@ const formatNickName = (nickName) => {
     return `${nickName.substring(0, 1)}***${nickName.substring(nickName.length - 1)}`
 }
 
-// 照片路径加上前缀
-const addImagePrefix = (imgUrl) => {
-    return IMAGE_BASE_URL + imgUrl
-}
-
 module.exports = {
     formatMoney,
     formatLikeNum,
     formatString,
     formatDate,
-    formatNickName,
-    addImagePrefix
+    formatNickName
 }

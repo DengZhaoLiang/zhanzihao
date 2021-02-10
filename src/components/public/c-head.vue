@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class='head-right'>
-                <c-header-image v-if='userInfo.nickName' />
+                <c-header-image v-if='userInfo.id' />
                 <div v-else>
                     <el-button class='head-right-btn' type='primary' @click='showLogin(true)'>登录</el-button>
                     <el-button class='head-right-btn' type='primary' @click='showLogin(false)'>注册</el-button>

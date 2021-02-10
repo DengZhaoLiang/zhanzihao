@@ -7,7 +7,7 @@ import qs from 'qs'
 
 // 不拦截的路由列表
 const unLessList = [
-    '/user/goods-like-list'
+    '/user/products-like-list'
 ]
 
 const httpInstance = axios.create({

@@ -5,7 +5,7 @@ import dataStore from '@utils/dataStore'
 
 const defaultRouter = {
     path: '/',
-    name: '宠物列表',
+    name: '商品列表',
     query: {}
 }
 
@@ -15,8 +15,7 @@ export default new Vuex.Store({
     state: {
         routerList: [routerList['/'], defaultRouter],
         userInfo: {},
-        goodsInfoList: [],
-        goodsLikeList: []
+        products: []
     },
     mutations: {
         changeRouter(state, list) {
@@ -36,11 +35,11 @@ export default new Vuex.Store({
             }
             dataStore.saveUserInfo(state.userInfo)
         },
-        setGoodsInfoList(state, goodsInfoList) {
-            state.goodsInfoList = goodsInfoList
+        setGoodsInfoList(state, products) {
+            state.products = products
         },
-        setGoodsLikeList(state, goodsLikeList) {
-            state.goodsLikeList = goodsLikeList
+        setGoodsLikeList(state, productsLikeList) {
+            state.productsLikeList = productsLikeList
         }
     },
     getters: {
@@ -51,10 +50,7 @@ export default new Vuex.Store({
             return state.userInfo
         },
         getGoodsInfoList: state => {
-            return state.goodsInfoList
-        },
-        getGoodsLikeList: state => {
-            return state.goodsLikeList
+            return state.products
         }
     },
     actions: {
@@ -85,11 +81,8 @@ export default new Vuex.Store({
         saveUserInfo(context, data) {
             context.commit('saveUserInfo', data)
         },
-        setGoodsInfoList(context, goodsInfoList) {
-            context.commit('setGoodsInfoList', goodsInfoList)
-        },
-        setGoodsLikeList(context, goodsLikeList) {
-            context.commit('setGoodsLikeList', goodsLikeList)
+        setGoodsInfoList(context, products) {
+            context.commit('setGoodsInfoList', products)
         }
     }
 })

@@ -1,4 +1,4 @@
-import { addImagePrefix, formatDate, formatLikeNum, formatMoney, formatNickName, formatString } from './filters.js'
+import { formatDate, formatLikeNum, formatMoney, formatNickName, formatString } from './filters.js'
 
 const Filters = {
     install(Vue) {
@@ -7,7 +7,6 @@ const Filters = {
         Vue.filter('formatString', formatString)
         Vue.filter('formatDate', formatDate)
         Vue.filter('formatNickName', formatNickName)
-        Vue.filter('addImagePrefix', addImagePrefix)
     }
 }
 

@@ -5,12 +5,11 @@
 </template>
 
 <script>
-    import { pLikeForBrief } from '@api/comment/params'
 
     export default {
         name: 'CTag',
         props: {
-            goodsId: String,
+            productsId: String,
             detail: Object,
             index: Number
         },
@@ -29,15 +28,6 @@
         },
         methods: {
             likeForBrief() {
-                pLikeForBrief.briefId = this.detail.briefId
-                pLikeForBrief.goodsId = this.goodsId
-                this.$api.comment.likeForBrief(pLikeForBrief).then(res => {
-                    this.isShowLikeAnimation = true
-                    this.$emit('change', this.index, res.briefItem.likeNum)
-                    setTimeout(() => {
-                        this.isShowLikeAnimation = false
-                    }, 700)
-                })
             }
         }
     }

@@ -2,19 +2,18 @@
     <div class='c-like-pro'>
         <div @click="like('LIKE')">
             <i v-if="likeStatus === 'UNSELECTED' || likeStatus === 'UNLIKE'" class='iconfont icon-zan-up-0'></i>
-            <img v-else-if="likeStatus === 'LIKE'" src='../../../../../public/images/detail/zan-up-1.svg'>
+            <img v-else-if="likeStatus === 'LIKE'" src='../../../../public/images/detail/zan-up-1.svg'>
             <span>{{ this.tempLikeNum }}</span>
         </div>
         <div @click="like('UNLIKE')">
             <i v-if="likeStatus === 'UNSELECTED' || likeStatus === 'LIKE'" class='iconfont icon-zan-down-0'></i>
-            <img v-else-if="likeStatus === 'UNLIKE'" src='../../../../../public/images/detail/zan-down-1.svg'>
+            <img v-else-if="likeStatus === 'UNLIKE'" src='../../../../public/images/detail/zan-down-1.svg'>
             <span>{{ this.tempUnLikeNum }}</span>
         </div>
     </div>
 </template>
 
 <script>
-    import { pLikeForComment } from '@api/comment/params'
 
     export default {
         name: 'CLikePro',
@@ -35,7 +34,7 @@
                 type: Number,
                 default: 0
             },
-            goodsId: String,
+            productsId: String,
             commentId: String,
             commentListId: String,
             commentIndex: Number,
@@ -48,70 +47,14 @@
             },
             unLikeNum(val) {
                 this.tempUnLikeNum = val
-            },
-            commentLikeList() {
-                this.checkIsLiked()
             }
         },
         mounted() {
             this.tempLikeNum = this.likeNum
             this.tempUnLikeNum = this.unLikeNum
             this.tempCommentLikeList = this.commentLikeList
-            this.checkIsLiked()
         },
-        methods: {
-            // like (index) {
-            //     if (this.likeStatus === index) {
-            //         this.likeStatus = 'UNSELECTED'
-            //         if (index === 'LIKE') {
-            //             this.tempLikeNum -= 1
-            //         }
-            //         if (index === 'UNLIKE') {
-            //             this.tempUnLikeNum -= 1
-            //         }
-            //         return
-            //     }
-            //     if (index === 'LIKE') {
-            //         this.tempLikeNum += 1
-            //         // 如果已经点赞了，则取消另一个点赞
-            //         this.tempUnLikeNum += this.likeStatus === 'UNLIKE' ? 0 : -1
-            //     }
-            //     if (index === 'UNLIKE') {
-            //         this.tempUnLikeNum += 1
-            //         // 如果已经点赞了，则取消另一个点赞
-            //         this.tempLikeNum += this.likeStatus === 'LIKE' ? 0 : -1
-            //     }
-            //     this.likeStatus = index
-            // },
-            like(status) {
-                this.likeStatus = status
-                pLikeForComment.likeState = status
-                this.likeForComment()
-            },
-            likeForComment() {
-                pLikeForComment.goodsId = this.goodsId
-                pLikeForComment.commentId = this.commentId
-                pLikeForComment.commentListId = this.commentListId
-                this.$api.comment.likeForComment(pLikeForComment).then(res => {
-                    this.$bus.$emit('commentLikeChange', {
-                        commentIndex: this.commentIndex,
-                        commentListIndex: this.commentListIndex,
-                        likeNum: res.likeNum,
-                        unLikeNum: res.unLikeNum
-                    })
-                }).catch(err => {
-                    console.error(err)
-                    this.likeStatus = 'UNSELECTED'
-                })
-            },
-            // 检查是否已经点赞
-            checkIsLiked() {
-                const commentItem = this.commentLikeList.find(item => item.commentId === this.commentId && item.commentListId === this.commentListId)
-                if (commentItem) {
-                    this.likeStatus = commentItem.likeState
-                }
-            }
-        }
+        methods: {}
     }
 </script>
 

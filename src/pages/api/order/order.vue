@@ -56,15 +56,12 @@
 <script>
     import CHead from '@components/public/c-head'
     import CFoot from '@components/public/c-foot'
-    import CTimeline from './components/c-timeline'
+    import CTimeline from './c-timeline'
     import CAddress from '@components/public/c-address'
-    import CNewAddress from './components/c-new-address'
-    import COrderSuccess from './components/c-order-success'
+    import CNewAddress from './c-new-address'
+    import COrderSuccess from './c-order-success'
     import CGoodList from '../cart/c-good-list'
     import CModal from '@components/public/c-modal'
-
-    import { pCreateOrder, pCreateOrderItem, pPayForOrder } from '@api/order/params'
-    import { pGetGoodsInfoList } from '@api/goods/params'
 
     export default {
         name: 'order',
@@ -113,15 +110,10 @@
                     console.log(res)
                     this.addressList = res.addressList
                     if (this.addressList.length) {
-                        pCreateOrder.addressId = this.addressList[0].addressId
                     }
                 })
             },
             fetchGoodsInfo() {
-                pGetGoodsInfoList.goodsIdList = this._getGoodsIdList()
-                this.$api.goods.getGoodsInfoList(pGetGoodsInfoList).then(res => {
-                    this.$store.dispatch('setGoodsInfoList', this._addNumToGoodsInfoList(res.goodsInfoList))
-                })
             },
             fetchBalance() {
                 this.$api.account.getBalance().then(res => {
@@ -129,28 +121,10 @@
                 })
             },
             createOrder() {
-                pCreateOrder.addressId = this.addressList[this.selectedAddressIndex].addressId
-                this.$api.order.createOrder(pCreateOrder).then(res => {
-                    console.log(res)
-                    this.orderId = res.orderId
-                    this.totalAmount = res.totalAmount
-                    this._controllerPayModal(true)
-                })
+
             },
             payForOrder(paykey) {
-                pPayForOrder.paykey = paykey
-                pPayForOrder.orderId = this.orderId
-                this.$api.order.payForOrder(pPayForOrder).then(res => {
-                    this.isPayed = true
-                    this.changeStep(4)
-                    setTimeout(() => {
-                        this.$store.dispatch('saveUserInfo', { ...res })
-                        this._controllerPayModal(false)
-                    }, 500)
-                }).catch(err => {
-                    console.log(err)
-                    this.isClearArr = true
-                })
+
             },
             onConfirm() {
                 this.showModal = false
@@ -179,20 +153,14 @@
                 }
                 return true
             },
-            // 获取goodsId列表
+            // 获取productsId列表
             _getGoodsIdList() {
-                const goodsIdList = []
-                pCreateOrder.orderList.forEach(item => {
-                    goodsIdList.push(item.goodsId)
-                })
-                return goodsIdList
+                const productsIdList = []
+                return productsIdList
             },
             // 合并商品信息列表，将购买数量加入商品信息列表中
-            _addNumToGoodsInfoList(goodsInfoList) {
-                goodsInfoList.forEach(item => {
-                    item.goodsNum = pCreateOrder.orderList.find(goods => goods.goodsId === item.goodsId).purchaseNum
-                })
-                return goodsInfoList
+            _addNumToGoodsInfoList(products) {
+                return products
             },
             // 显示密码输入框
             _controllerPayModal(isShow) {
@@ -200,26 +168,6 @@
             }
         },
         mounted() {
-            console.log(this.$route.query)
-            pCreateOrder.orderList = []
-            if (this.$route.query.purchaseList) {
-                pCreateOrder.orderList = this.$route.query.purchaseList
-            } else if (this.$route.query.orderId) {
-                this.orderId = this.$route.query.orderId
-                this.totalAmount = this.$route.query.totalAmount
-                this.step = 3
-                this._controllerPayModal(true)
-                return
-            } else {
-                pCreateOrderItem.goodsId = this.$route.query.goodsId
-                pCreateOrderItem.purchaseNum = this.$route.query.purchaseNum
-                pCreateOrder.orderList.push(pCreateOrderItem)
-            }
-            console.log(pCreateOrder)
-            this.fetchAddressList()
-            this.$bus.$on('updateAddressList', () => {
-                this.fetchAddressList()
-            })
         },
         destroyed() {
             this.$store.dispatch('setGoodsInfoList', [])

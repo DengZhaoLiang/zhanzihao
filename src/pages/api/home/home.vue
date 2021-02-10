@@ -1,16 +1,15 @@
 <template>
     <div class='home'>
         <c-head></c-head>
-        <div class='goods-list-container'>
-            <div class='goods-list'>
-                <div v-if='goodsList.length' :class="(goodsList.length % 5) !== 0 ? 'fill-space' : ''"
+        <div class='products-list-container'>
+            <div class='products-list'>
+                <div v-if='productsList.length' :class="(productsList.length % 5) !== 0 ? 'fill-space' : ''"
                      class='good-container'>
-                    <c-good-item v-for='(item, key) in goodsList' :key='key' :goods-item='item' />
+                    <c-good-item v-for='(item, key) in productsList' :key='key' :products-item='item' />
                 </div>
-                <!--                <c-paging class="paging"/>-->
                 <div v-infinite-scroll='loadMore' class='load-infinite infinite-list'
                      infinite-scroll-disabled='busy' infinite-scroll-distance='10'>
-                    <img v-show='loading' src='../../../assets/loading-svg/dual-ball-gray.svg'>
+                    <img v-show='loading' src='../../../assets/loading-svg/dual-ball-gray.svg' />
                 </div>
             </div>
         </div>
@@ -24,8 +23,7 @@
     import CFoot from '@components/public/c-foot'
     import CModal from '@components/public/c-modal'
     import CGoodItem from './c-good-item'
-    import { SORT_TYPE } from '@/config/constant'
-    import { pGetGoodsList } from '@api/goods/params'
+    import request from '@utils/request'
 
     export default {
         name: 'home',
@@ -38,23 +36,19 @@
         data() {
             return {
                 isShowModal: false,
-                like: {
-                    isLike: false,
-                    likeNum: 9
-                },
-                num: 2,
-                sortType: SORT_TYPE.ASC,
-                goodsList: [],
+                productsList: [],
                 loading: false,
-                busy: false
+                busy: false,
+                load: true, // 是否继续加载
+                query: {
+                    page: 0,
+                    size: 5
+                }
             }
         },
         mounted() {
-            console.log('mounted')
-            this.getGoodsList()
-            this.getGoodsLikeList()
             this.$bus.$on('login', () => {
-                this.getGoodsLikeList()
+                // 待处理
             })
         },
         methods: {
@@ -69,70 +63,46 @@
                 }
                 console.log('取消')
             },
-            onLike() {
-                this.like.likeNum += this.like.isLike ? -1 : 1
-                this.like.isLike = !this.like.isLike
-            },
-            onChange(num) {
-                console.log(num)
-                this.num = num
-            },
-            onPriceChange(priceRange) {
-                console.log(priceRange)
-                pGetGoodsList.priceRange = priceRange
-                this._resetPageNum()
-            },
-            changeSort() {
-                this.sortType = this.sortType === SORT_TYPE.ASC ? SORT_TYPE.DESC : SORT_TYPE.ASC
-                console.log(this.sortType)
-                pGetGoodsList.sortType = this.sortType
-                this._resetPageNum()
-            },
             // 是否重置
             getGoodsList(isReset = false) {
-                this.$api.goods.getGoodsList(pGetGoodsList).then(res => {
-                    console.log(res)
-                    this.loading = false
-                    this.busy = false
-                    if (isReset) {
-                        this.goodsList = []
-                    }
-                    if (res.goodsList.length) {
-                        this.goodsList = this.goodsList.concat(res.goodsList)
-                    } else {
-                        this.busy = true
-                    }
-                })
+                if (isReset) {
+                    this.query.page = 0
+                    this.productsList = []
+                } else {
+                    request.get('api/product', this.query)
+                        .then(res => {
+                            if (res.status === 200) {
+                                let products = res.data.content
+                                if (products.length) {
+                                    this.productsList = this.productsList.concat(products)
+                                } else {
+                                    this.load = false
+                                }
+                            }
+                        }).catch(err => {
+                            console.log(err)
+                            this.load = false
+                        })
+                }
+                this.loading = false
+                this.busy = false
             },
             loadMore() {
-                this.busy = true
-                this.loading = true
-                setTimeout(() => {
-                    ++pGetGoodsList.currentPage
-                    this.getGoodsList()
-                }, 500)
-            },
-            // 获取商品点赞列表
-            getGoodsLikeList() {
-                this.$api.user.getGoodsLikeList().then(res => {
-                    this.$store.dispatch('setGoodsLikeList', res.goodsLikeList)
-                }).catch(err => {
-                    console.error(err)
-                    if (!err.goodsLikeList) {
-                        this.$store.dispatch('setGoodsLikeList', [])
-                    }
-                })
+                if (this.load) {
+                    this.busy = true
+                    this.loading = true
+                    setTimeout(() => {
+                        this.query.page++
+                        this.getGoodsList()
+                    }, 500)
+                }
             },
             // 重置页码
             _resetPageNum() {
-                pGetGoodsList.currentPage = 0
                 this.getGoodsList(true)
             }
         },
         destroyed() {
-            console.log('destoryed')
-            pGetGoodsList.currentPage = 0
-            pGetGoodsList.sortType = 'ASC'
         }
     }
 </script>
@@ -140,7 +110,6 @@
 <style lang='scss' scoped>
 .home {
     width: 100%;
-    /*background: #42b983;*/
     background: rgba(246, 246, 246, 1);
     display: flex;
     justify-content: center;
@@ -155,14 +124,14 @@
         justify-content: center;
     }
 
-    .goods-list-container {
+    .products-list-container {
         width: 100%;
         display: flex;
         justify-content: left;
         margin-left: 250px;
         margin-top: 10px;
 
-        .goods-list {
+        .products-list {
             display: flex;
             flex-direction: column;
 
@@ -173,7 +142,7 @@
                 justify-content: flex-end;
                 background: #fff;
 
-                .goods-sort {
+                .products-sort {
                     margin-right: 30px;
                 }
             }
@@ -204,7 +173,6 @@
     margin-top: 50px;
     height: 100px;
     text-align: center;
-    /*background: ;*/
 
     img {
         width: 50px;

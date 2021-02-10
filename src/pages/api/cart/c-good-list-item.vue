@@ -5,13 +5,13 @@
                 <div v-for='(item,key) in getGoodsInfoList' :key='key' class='c-row-container'>
                     <el-row class='c-row'>
                         <el-col v-if='showCheckBox' :span='isShowAccount ? 1 : 2'>
-                            <el-checkbox :label='item.goodsId'></el-checkbox>
+                            <el-checkbox :label='item.productsId'></el-checkbox>
                         </el-col>
                         <el-col :span='4'>
                             <img :src='item.masterImg'>
                         </el-col>
                         <el-col :span='4'>
-                            <div class='c-good-name'>{{ item.goodsName }}</div>
+                            <div class='c-good-name'>{{ item.productsName }}</div>
                         </el-col>
                         <el-col :span='4'>
                             <div class='yx-center'>
@@ -19,16 +19,16 @@
                             </div>
                         </el-col>
                         <el-col :span='4'>
-                            <c-input-number v-if='isShowAccount' :index='key' :num='item.goodsNum'
+                            <c-input-number v-if='isShowAccount' :index='key' :num='item.productsNum'
                                             @change='onInputChange' />
-                            <span v-else class='account-num'>{{ item.goodsNum }}</span>
+                            <span v-else class='account-num'>{{ item.productsNum }}</span>
                         </el-col>
                         <el-col :span='isShowAccount ? 5 : 6' class='yx-center'>
-                            <c-money :money='item.discountPrice * (item.goodsNum|| item.purchaseNum)'
+                            <c-money :money='item.discountPrice * (item.productsNum|| item.purchaseNum)'
                                      size='sm'></c-money>
                         </el-col>
                         <el-col v-if='isShowAccount' :span='2'>
-                            <div class='c-del-good' @click='showDelModal(item.goodsId)'>
+                            <div class='c-del-good' @click='showDelModal(item.productsId)'>
                             </div>
                         </el-col>
                     </el-row>
@@ -80,7 +80,6 @@
     import CMoney from '@components/public/c-money'
     import CInputNumber from '@components/public/c-input-number'
     import CModal from '@components/public/c-modal.vue'
-    import { pDeleteFromCart, pUpdateCart } from '@api/cart/params'
 
     const maxImgLength = 10
     export default {
@@ -114,7 +113,7 @@
                 leftIndex: 0,
                 rightIndex: maxImgLength,
                 isShowTotal: false, // 是否显示所有所选的
-                goodsInfoList: [],
+                products: [],
                 totalMoney: 0,
                 imgList: [],
                 isShowDel: false,
@@ -129,9 +128,9 @@
             },
             getGoodsInfoList() {
                 /* eslint-disable */
-                this.goodsInfoList = this.$store.getters.getGoodsInfoList
-                console.log(Object.deepCopy(this.goodsInfoList))
-                return this.goodsInfoList
+                this.products = this.$store.getters.getGoodsInfoList
+                console.log(Object.deepCopy(this.products))
+                return this.products
             },
             // 计算已选商品的总金额、图片列表、购买数量
             countTotal() {
@@ -139,13 +138,13 @@
                 this.totalMoney = 0
                 this.imgList = []
                 this.purchaseList = []
-                this.checkedGoods.forEach(goodsId => {
-                    const goodsInfo = this.goodsInfoList.find(item => item.goodsId === goodsId)
-                    this.totalMoney += goodsInfo.discountPrice * goodsInfo.goodsNum
-                    this.imgList.push(goodsInfo.masterImg)
+                this.checkedGoods.forEach(productsId => {
+                    const productsInfo = this.products.find(item => item.productsId === productsId)
+                    this.totalMoney += productsInfo.discountPrice * productsInfo.productsNum
+                    this.imgList.push(productsInfo.masterImg)
                     this.purchaseList.push({
-                        goodsId: goodsInfo.goodsId,
-                        purchaseNum: goodsInfo.goodsNum
+                        productsId: productsInfo.productsId,
+                        purchaseNum: productsInfo.productsNum
                     })
                 })
                 this.totalMoney = parseFloat(this.totalMoney.toFixed(2))
@@ -160,8 +159,8 @@
             },
             handleCheckedGoodsChange(value) {
                 let checkedCount = value.length
-                this.checkAll = checkedCount === this.goodsInfoList.length
-                this.isIndeterminate = checkedCount > 0 && checkedCount < this.goodsInfoList.length
+                this.checkAll = checkedCount === this.products.length
+                this.isIndeterminate = checkedCount > 0 && checkedCount < this.products.length
             },
             load() {
                 console.log('加载中')
@@ -193,15 +192,15 @@
                     this.$bus.$emit('getCartList', true)
                 })
             },
-            showDelModal(goodsId) {
-                pDeleteFromCart.goodsId = goodsId
+            showDelModal(productsId) {
+                pDeleteFromCart.productsId = productsId
                 this.isShowDel = true
             },
             // 监听数量的变化
             onInputChange(num, index) {
-                this.goodsInfoList[index].goodsNum = num
-                pUpdateCart.goodsId = this.goodsInfoList[index].goodsId
-                pUpdateCart.goodsNum = num
+                this.products[index].productsNum = num
+                pUpdateCart.productsId = this.products[index].productsId
+                pUpdateCart.productsNum = num
                 this.updateCart()
             },
             //
@@ -220,8 +219,8 @@
             // 获取商品id列表
             _getGoodsIdList() {
                 const temp = []
-                this.goodsInfoList.forEach(item => {
-                    temp.push(item.goodsId)
+                this.products.forEach(item => {
+                    temp.push(item.productsId)
                 })
                 return temp
             }

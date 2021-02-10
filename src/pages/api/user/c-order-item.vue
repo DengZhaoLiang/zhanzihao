@@ -19,24 +19,22 @@
             <el-row class='y-center'>
                 <el-col :span='16'>
                     <div ref='left'>
-                        <el-row v-for='(item, index) in orderItem.goodsList'
+                        <el-row v-for='(item, index) in orderItem.productsList'
                                 :key='index'
-                                :class="[{'goods-blue-item': orderItem.paymentState !== 'SUCCESSED'},{'none-bottom-border': index === orderItem.goodsList.length - 1}]"
-                                class='y-center goods-item'>
+                                :class="[{'products-blue-item': orderItem.paymentState !== 'SUCCESSED'},{'none-bottom-border': index === orderItem.productsList.length - 1}]"
+                                class='y-center products-item'>
                             <el-col :span='12'>
-                                <div class='goods-info x-center'>
+                                <div class='products-info x-center'>
                                     <div class='master-img-div'>
-                                        <img :src='item.masterImg' @click="goToDetail(item.goodsId, 'custom')">
+                                        <img :src='item.masterImg' @click="goToDetail(item.productsId, 'custom')">
                                     </div>
-                                    <div @click="goToDetail(item.goodsId, 'custom')">
-                                        <span>{{ item.goodsName }}</span>
-                                        <span>{{ item.intro || '锐舞iPhone11钢化膜X苹果11手机iPhoneX全屏XS覆盖XM' }}</span>
+                                    <div @click="goToDetail(item.productsId, 'custom')">
+                                        <span>{{ item.productsName }}</span>
                                     </div>
                                 </div>
                             </el-col>
                             <el-col :span='6' class='yx-center'>
                                 <div class='yx-center'>
-                                    <c-money :money='item.unitPrice' size='d-xs'></c-money>
                                     <c-money :money='item.totalPrice' size='sm'></c-money>
                                 </div>
                             </el-col>
@@ -60,9 +58,9 @@
                                         <i class='iconfont icon-location'></i>
                                         <c-address-popover :address='orderItem.address || {}' class='address-popover' />
                                     </div>
-                                    <div v-for='(item, index) in orderItem.goodsList' :key='index'>
+                                    <div v-for='(item, index) in orderItem.productsList' :key='index'>
                                         <div v-if="orderItem.paymentState === 'SUCCESSED'" class='state-item'
-                                             @click="goToDetail(item.goodsId, 'anchor')">
+                                             @click="goToDetail(item.productsId, 'anchor')">
                                             <i class='iconfont icon-pingjia'></i>
                                             <span>追加评价</span>
                                         </div>
@@ -86,7 +84,6 @@
     import CMoney from '@components/public/c-money'
     import CAddressPopover from './c-address-popover'
     import CModal from '@components/public/c-modal.vue'
-    import { pDeleteOrder } from '@api/order/params'
 
     export default {
         name: 'COrderItem',
@@ -110,13 +107,10 @@
         },
         methods: {
             deleteOrder() {
-                pDeleteOrder.orderId = this.orderItem.orderId
-                this.$api.order.deleteOrder(pDeleteOrder).then(res => {
-                    this.$emit('del')
-                })
+
             },
-            goToDetail(goodsId, type) {
-                this.$router.push(`/detail?goodsId=${goodsId}&type=${type}`)
+            goToDetail(productsId, type) {
+                this.$router.push(`/detail?productsId=${productsId}&type=${type}`)
             },
             goToOrder() {
                 this.$router.push(`/order?orderId=${this.orderItem.orderId}&totalAmount=${this.orderItem.totalAmount}`)
@@ -188,7 +182,7 @@ $blue-background: #daf3ff;
     font-size: 18px;
     border: $border;
 
-    .goods-info {
+    .products-info {
         margin: 10px 0;
 
         .master-img-div {
@@ -219,7 +213,7 @@ $blue-background: #daf3ff;
 
     }
 
-    .goods-item {
+    .products-item {
         border-bottom: $border;
         border-right: $border;
     }
@@ -271,7 +265,7 @@ $blue-background: #daf3ff;
     border: $blue-border !important;
 }
 
-.goods-blue-item {
+.products-blue-item {
     border-bottom: $blue-border !important;
     border-right: $blue-border !important;
 }

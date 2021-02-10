@@ -36,8 +36,6 @@
 <script>
     import CModal from '@components/public/c-modal'
     import CUpload from './c-upload'
-    import { pCheckFieldCanUse, pUpdateUserInfo } from '@api/user/params'
-    import dataStore from '@utils/dataStore'
 
     export default {
         name: 'CEditInfo',
@@ -94,13 +92,6 @@
                     return
                 }
                 this.searchingNickname = true
-                pCheckFieldCanUse.field = 'nickName'
-                pCheckFieldCanUse.value = val
-                this.$api.user.checkFieldCanUse(pCheckFieldCanUse).then(res => {
-                    console.log(res)
-                    this.nickNameCanUse = res.canUse
-                    this.searchingNickname = false
-                })
             },
             save() {
                 console.log(this.tempUserInfo)
@@ -116,16 +107,7 @@
                 // }, 1000)
             },
             updateUserInfo() {
-                console.log(this.tempUserInfo)
-                pUpdateUserInfo.nickName = this.tempUserInfo.nickName
-                pUpdateUserInfo.gender = this.tempUserInfo.gender
-                pUpdateUserInfo.avatarUrl = this.baseAvatarUrl
-                this.$api.user.updateUserInfo(pUpdateUserInfo).then(res => {
-                    console.log(res)
-                    this.$store.dispatch('saveUserInfo', res)
-                    dataStore.saveUserInfo(res)
-                    this.$emit('hide')
-                })
+
             }
         }
     }

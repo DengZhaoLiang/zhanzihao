@@ -1,6 +1,7 @@
 <template>
     <div class='c-barrage'>
-        <c-tag v-for='(item,index) in tempBriefList' :key='index' :detail='item' :goods-id='goodsId' :index='index'
+        <c-tag v-for='(item,index) in tempBriefList' :key='index' :detail='item' :index='index'
+               :products-id='productsId'
                @change='onLikeNumChange' />
         <c-input-tag class='c-input-tag' @inputTag='onTagInput' />
     </div>
@@ -9,7 +10,6 @@
 <script>
     import CTag from './c-tag'
     import CInputTag from './c-input-tag'
-    import { pWriteBrief } from '@api/comment/params'
 
     export default {
         name: 'CBarrage',
@@ -24,7 +24,7 @@
                     return []
                 }
             },
-            goodsId: {
+            productsId: {
                 type: String,
                 default: ''
             }
@@ -44,15 +44,9 @@
         },
         methods: {
             onTagInput(text, color) {
-                pWriteBrief.brief = text
-                pWriteBrief.color = color
-                pWriteBrief.goodsId = this.goodsId
                 this.writeBrief()
             },
             writeBrief() {
-                this.$api.comment.writeBrief(pWriteBrief).then(res => {
-                    this.updateBriefList(res.briefItem)
-                })
             },
             // 更新短评数组
             updateBriefList(temp) {

@@ -3,63 +3,25 @@
         <c-head></c-head>
         <div class='detail-container'>
             <div class='detail-left'>
-                <c-image-picker v-if='goodsDetail.goodsInfo' :img-list='goodsDetail.goodsInfo.imgList' />
+                <c-image-picker v-if='product' :img='product.image' />
             </div>
             <div class='detail-center'>
                 <div class='up-side'>
-                    <div class='good-name'>{{ goodsDetail.goodsName }}</div>
-                    <div class='good-describe y-center'>
-                        <span v-if='goodsDetail.goodsInfo'>{{ goodsDetail.goodsInfo.intro }}</span>
-                    </div>
-                    <div class='primary-price y-center'>
-                        <span>价格：</span>
-                        <c-money :money='goodsDetail.originalPrice' size='d-xs' />
-                    </div>
+                    <div class='good-name'>{{ product.name }}</div>
                     <div class='discount-price y-center'>
-                        <span>促销价：</span>
-                        <c-money :money='goodsDetail.discountPrice' />
+                        <span>价格：</span>
+                        <c-money :money='product.price' />
                     </div>
-                    <div class='post-address y-center__between'>
-                        <div class='y-center__between'>
-                            <span v-if='goodsDetail.goodsInfo'>{{ goodsDetail.goodsInfo.address }}</span>
-                            <span>至</span>
-                            <span>北京</span>
-                        </div>
-                        <span>|</span>
-                        <span v-if='goodsDetail.goodsInfo'>运费：{{ goodsDetail.goodsInfo.postage }}元</span>
-                    </div>
-                    <div class='good-num y-center__between'>
+                    <div class='good-num y-center__between' style='margin-top: 200px'>
                         <c-input-number @change='onPurchaseNum' />
-                        <span>库存：{{ goodsDetail.inventory }}</span>
-                    </div>
-                </div>
-                <div class='mid-side'>
-                    <div class='xy-center'>
-                        <span>总销量</span>
-                        <span>{{ goodsDetail.saleVolume }}</span>
-                    </div>
-                    <div class='xy-center' @click='isShowModal = true'>
-                        <img src='../../../../public/images/detail/comment.png'>
-                        <span>{{ totalCommentNum }}</span>
-                    </div>
-                    <div class='xy-center mid_last'>
-                        <c-like v-if='goodsDetail.goodsId' :is-like='checkIsLike'
-                                :like-num='goodsDetail.likeNum'
-                                @click.native.stop='likeForGoods(goodsDetail.goodsId)' />
+                        <span>库存：{{ product.inventory }}</span>
                     </div>
                 </div>
                 <div class='down-side y-center__between'>
-                    <el-button :disabled='!goodsDetail.inventory' @click='goToOrder'>立即购买</el-button>
+                    <el-button :disabled='!product.inventory' @click='goToOrder'>立即购买</el-button>
                     <el-button @click='addToCart'>加入购物车</el-button>
                 </div>
             </div>
-            <div class='detail-right'>
-                <c-see-more />
-            </div>
-        </div>
-        <div id='comment'>
-            <c-comment-container v-if='goodsDetail.goodsInfo' :goods-id='goodsId'
-                                 :master-img='goodsDetail.goodsInfo.imgList[0]' @num='onTotalCommentNum' />
         </div>
         <div class='detail-bottom-line'></div>
         <c-foot></c-foot>
@@ -74,13 +36,8 @@
     import CMoney from '@components/public/c-money'
     import CModal from '@components/public/c-modal'
     import CInputNumber from '@components/public/c-input-number'
-    import CImagePicker from './components/c-image-picker'
-    import CSeeMore from './components/c-see-more'
-    import CCommentContainer from './components/c-comment-container'
-
-    import { pGetGoodsDetail } from '@api/goods/params'
-    import { pAddToCart } from '@api/cart/params'
-    import { pCreateOrderItem } from '@api/order/params'
+    import CImagePicker from './c-image-picker'
+    import request from '@utils/request'
 
     export default {
         name: 'detail',
@@ -90,70 +47,45 @@
             CMoney,
             CInputNumber,
             CImagePicker,
-            CSeeMore,
-            CModal,
-            // CCommentModal,
-            CCommentContainer
+            CModal
         },
         data() {
             return {
                 isShowModal: false,
-                goodsDetail: {},
-                createOrderItem: pCreateOrderItem,
-                goodsId: '',
+                product: {},
                 totalCommentNum: 0,
-                showToast: false
+                showToast: false,
+                purchaseNum: 1
             }
         },
         methods: {
-            getGoodsDetail() {
-                this.$api.goods.getGoodsDetail(pGetGoodsDetail).then(res => {
-                    console.log(res)
-                    this.goodsDetail = res
-                })
-            },
             // 监听购买数量
             onPurchaseNum(num) {
-                console.log(num)
-                this.createOrderItem.purchaseNum = num
-                pAddToCart.goodsNum = num
+                this.purchaseNum = num
             },
             goToCart() {
                 this.$router.push('/cart')
             },
             // 去下单
             goToOrder() {
-                this.$router.push(`/order?goodsId=${this.createOrderItem.goodsId}&purchaseNum=${this.createOrderItem.purchaseNum}`)
+                this.$router.push(`/order?id=${this.product.id}&purchaseNum=${this.purchaseNum}`)
             },
             onTotalCommentNum(num) {
                 this.totalCommentNum = num
             },
-            goToAnchor() {
-                setTimeout(() => {
-                    document.getElementById('comment').scrollIntoView()
-                }, 1000)
-            },
             addToCart() {
-                pAddToCart.goodsId = this.goodsDetail.goodsId
-                this.$api.addToCart(pAddToCart).then(res => {
-                    this.showToast = true
-                    this.$bus.$emit('updateCartLength')
-                })
             }
         },
-        mounted() {
-            console.log(this.$route)
-            pGetGoodsDetail.goodsId = this.$route.query.goodsId
-            this.createOrderItem.goodsId = pGetGoodsDetail.goodsId
-            this.createOrderItem.purchaseNum = 1
-            pAddToCart.goodsNum = 1
-            this.goodsId = pGetGoodsDetail.goodsId
-            console.log(this.createOrderItem)
-            console.log(pGetGoodsDetail.goodsId)
-            this.getGoodsDetail()
-            // 评价挑战过来的直接跳转至锚点
-            if (this.$route.query.type === 'anchor') {
-                this.goToAnchor()
+        created() {
+            if (typeof this.$route.query.id !== 'undefined') {
+                request.get(`/api/product/${this.$route.query.id}`)
+                    .then(res => {
+                        if (res.status === 200) {
+                            this.product = res.data
+                        } else {
+                            this.$message.error(res.message)
+                        }
+                    })
             }
         }
     }
@@ -183,26 +115,6 @@
     margin-top: 20px;
     padding: 0 20px;
     display: flex;
-}
-
-.detail-left {
-    /*div {*/
-    /*  &:nth-child(1) {*/
-    /*    width: 372px;*/
-    /*    height: 372px;*/
-    /*    background-image: url("./../../public/images/cat/cat1/cat1_1.jpg");*/
-    /*    background-size: 372px 372px;*/
-    /*    background-position: center;*/
-    /*    background-repeat: no-repeat;*/
-    /*  */
-    /*    .audio {*/
-    /*      width: 100%;*/
-    /*      background: transparent;*/
-    /*      border-radius: 0;*/
-    /*      margin-top: 315px;*/
-    /*    }*/
-    /*  }*/
-    /*}*/
 }
 
 .detail-center {
@@ -356,10 +268,4 @@
     height: 10px;
     background: #f2f2f2;
 }
-
-/*.icon-mima {*/
-/*  font-size: 20px;*/
-/*  color: #ff4400;*/
-/*  font-weight: bolder;*/
-/*}*/
 </style>

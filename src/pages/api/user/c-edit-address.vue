@@ -31,7 +31,6 @@
 <script>
     import CModal from '@components/public/c-modal'
     import { regionData } from 'element-china-area-data'
-    import { pAddAddress } from '@api/user/params'
 
     export default {
         name: 'CEditAddress',
@@ -60,7 +59,6 @@
             }
             return {
                 regionOptions: regionData,
-                pAddAddress,
                 rules: {
                     name: [{
                         required: true, message: '请输入收货人姓名', trigger: 'blur'

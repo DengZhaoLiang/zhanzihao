@@ -103,7 +103,7 @@
                 let distance = 0 // 滑块与点击坐标的绝对距离
                 progress.onclick = (e) => {
                     // 阻止事件冒泡
-                    if (e.target == slider) {
+                    if (e.target === slider) {
                         return
                     }
                     let curX = progress.offsetLeft

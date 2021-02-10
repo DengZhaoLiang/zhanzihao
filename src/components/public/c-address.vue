@@ -28,7 +28,6 @@
 <script>
     import CModal from './c-modal.vue'
     import CEditAddress from '@pages/api/user/c-edit-address'
-    import { pDeleteAddress } from '@api/user/params'
 
     export default {
         name: 'CAddress',
@@ -57,11 +56,7 @@
                 this.isShowDel = false
             },
             deleteAddress() {
-                pDeleteAddress.addressId = this.address.addressId
-                this.$api.user.deleteAddress(pDeleteAddress).then(res => {
-                    console.log(res)
-                    this.$bus.$emit('updateAddressList')
-                })
+
             }
         }
     }

@@ -9,7 +9,7 @@
             <el-col :span='4'>
             </el-col>
             <el-col :span='4'>
-                <span>宠物信息</span>
+                <span>商品信息</span>
             </el-col>
             <el-col :span='4'>
                 <span>单价</span>

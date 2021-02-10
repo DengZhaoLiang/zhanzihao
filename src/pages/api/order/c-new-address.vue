@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import CEditAddress from '../../user/c-edit-address'
+    import CEditAddress from '../user/c-edit-address'
 
     export default {
         name: 'CNewAddress',
@@ -30,7 +30,7 @@
     font-size: 14px;
     font-weight: 300;
     color: #666;
-    background: url("../../../../../public/images/order/border-add.png") center no-repeat;
+    background: url("../../../../public/images/order/border-add.png") center no-repeat;
 
     span {
         margin-top: 140px;

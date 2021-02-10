@@ -2,16 +2,16 @@
     <div class='c-good-parent xy-center'>
         <div class='c-good-item' @click='goToDetail'>
             <div class='cat-img'>
-                <img :src='goodsInfo.masterImg'>
+                <img :src='productsInfo.image'>
             </div>
             <div class='good-brief'>
                 <div class='good-name'>
-                    <span>{{ goodsInfo.goodsName }}</span>
+                    <span>{{ productsInfo.name }}</span>
                     <span>包邮</span>
                 </div>
             </div>
             <div class='good-price'>
-                <c-money :money='goodsInfo.discountPrice' />
+                <c-money :money='productsInfo.price' />
             </div>
             <div class='add-to-card xy-center'>
                 <button @click.stop='addToCart'>加入购物车</button>
@@ -26,8 +26,6 @@
     import CMoney from '@components/public/c-money'
     import CModal from '@components/public/c-modal'
 
-    import { pAddToCart } from '@api/cart/params'
-
     export default {
         name: 'CGoodItem',
         components: {
@@ -37,12 +35,13 @@
         data() {
             return {
                 showToast: false,
-                goodsInfo: {},
-                likeList: []
+                productsInfo: {},
+                id: '',
+                purchaseNum: 1
             }
         },
         props: {
-            goodsItem: {
+            productsItem: {
                 type: Object,
                 default: () => {
                     return {}
@@ -50,8 +49,8 @@
             }
         },
         watch: {
-            goodsItem() {
-                this.goodsInfo = this.goodsItem
+            productsItem() {
+                this.productsInfo = this.productsItem
             }
         },
         methods: {
@@ -60,21 +59,14 @@
                 this.$router.push('/cart')
             },
             addToCart() {
-                pAddToCart.goodsId = this.goodsInfo.goodsId
-                pAddToCart.goodsNum = 1
-                this.$api.cart.addToCart(pAddToCart).then(res => {
-                    this.showToast = true
-                    this.$bus.$emit('updateCartLength')
-                })
             },
             // 去详情
             goToDetail() {
-                console.log('跳转')
-                this.$router.push(`/detail?goodsId=${this.goodsInfo.goodsId}`)
+                this.$router.push({ path: `/detail?id=${this.productsInfo.id}` })
             }
         },
         mounted() {
-            this.goodsInfo = this.goodsItem
+            this.productsInfo = this.productsItem
         }
     }
 </script>

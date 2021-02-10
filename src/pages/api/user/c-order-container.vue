@@ -21,7 +21,6 @@
 
 <script>
     import COrderItem from './c-order-item'
-    import { pGetOrderList } from '@api/order/params'
 
     export default {
         name: 'COrderContainer',
@@ -38,31 +37,13 @@
         },
         methods: {
             fetchOrderList(isClearArr = false, isDel = false) {
-                this.$api.order.getOrderList(pGetOrderList).then(res => {
-                    console.log(res.orderList)
-                    this.loading = false
-                    this.busy = false
-                    if (res.orderList.length) {
-                        if (isClearArr) {
-                            this.orderList = []
-                        }
-                        this.orderList = this.orderList.concat(res.orderList)
-                    } else {
-                        console.log('isDel', isDel)
-                        if (isDel) {
-                            this.orderList = []
-                        }
-                        this.busy = true
-                    }
-                    this.isLoaded = true
-                })
+
             },
             loadMore() {
                 console.log('自动地加载')
                 this.busy = true
                 this.loading = true
                 setTimeout(() => {
-                    ++pGetOrderList.currentPage
                     // ++pGetCartList.curPage
                     this.fetchOrderList()
                 }, 500)
@@ -72,7 +53,6 @@
                 console.log('重置订单')
                 this.busy = false
                 this.loading = false
-                pGetOrderList.currentPage = 0
                 this.fetchOrderList(true, isDel)
             }
         },
@@ -80,7 +60,6 @@
             this.fetchOrderList()
         },
         destroyed() {
-            pGetOrderList.currentPage = 0
         }
     }
 </script>

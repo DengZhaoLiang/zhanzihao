@@ -1,11 +1,7 @@
 <template>
     <div class='c-image-picker'>
         <div class='up-side'>
-            <img :src='imgList[selectedIndex]'>
-        </div>
-        <div class='down-side'>
-            <img v-for='(imgUrl,key) in imgList' :key='key'
-                 :src='imgUrl' @mouseover='selectedIndex = key'>
+            <img :src='img ? img : "http://localhost:9527/static/defaultAvatar.png" '>
         </div>
     </div>
 </template>
@@ -19,11 +15,8 @@
             }
         },
         props: {
-            imgList: {
-                type: Array,
-                default: () => {
-                    return []
-                }
+            img: {
+                type: String
             }
         }
     }

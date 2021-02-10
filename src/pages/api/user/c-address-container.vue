@@ -7,7 +7,7 @@
 
 <script>
     import CAddress from '@components/public/c-address'
-    import CNewAddress from '../order/components/c-new-address'
+    import CNewAddress from '../order/c-new-address'
 
     export default {
         name: 'CAddressContainer',

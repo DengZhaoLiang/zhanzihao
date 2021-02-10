@@ -20,7 +20,6 @@ module.exports = {
             '@pages': resolve('src/pages'),
             '@public': resolve('public'),
             '@components': resolve('src/components'),
-            '@api': resolve('src/api'),
             '@utils': resolve('src/utils')
         }
     },

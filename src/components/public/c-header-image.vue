@@ -2,11 +2,11 @@
     <div class='c-header-image'>
         <el-dropdown>
             <div>
-                <img :src="(getUserInfo ? getUserInfo.avatarUrl : '') | addImagePrefix">
+                <img :src='(getUserInfo.avatar)'>
             </div>
             <el-dropdown-menu slot='dropdown' class='c-dropdown'>
                 <el-dropdown-item>邮箱：{{ (getUserInfo ? getUserInfo.email : '') | formatString(18) }}</el-dropdown-item>
-                <el-dropdown-item>昵称：{{ (getUserInfo ? getUserInfo.nickName : '') | formatString(18) }}
+                <el-dropdown-item>昵称：{{ (getUserInfo ? getUserInfo.name : '') | formatString(18) }}
                 </el-dropdown-item>
                 <el-dropdown-item divided @click.native='goToPersonal'>我的主页</el-dropdown-item>
                 <el-dropdown-item divided @click.native='logout'>登出</el-dropdown-item>
