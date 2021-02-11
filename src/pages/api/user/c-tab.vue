@@ -7,11 +7,6 @@
             <el-tab-pane :label='tabList[1]' :name="'1'">
                 <c-address-container />
             </el-tab-pane>
-            <el-tab-pane :label='tabList[2]' :name="'2'">
-                <iframe class='global-scrollbar api-doc'
-                        src='https://mall.cxmmao.com/cat-mall-api-doc/'>
-                </iframe>
-            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -39,9 +34,6 @@
             },
             selectedTab: function(val) {
                 this.tempTab = val + ''
-                if (val === 2) {
-                    window.open('https://mall.cxmmao.com/cat-mall-api-doc/')
-                }
             }
         },
         methods: {}

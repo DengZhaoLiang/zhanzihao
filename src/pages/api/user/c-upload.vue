@@ -7,8 +7,8 @@
             :on-success='handleAvatarSuccess'
             :show-file-list='false'
             class='avatar-uploader'
-            name='photos'>
-            <img v-if='imageUrl' :src='imageUrl | addImagePrefix' class='avatar'>
+            name='file'>
+            <img v-if='imageUrl' :src='imageUrl' class='avatar'>
             <i v-if='isUploading' class='el-icon-loading avatar-uploader-icon'></i>
             <img v-else class='el-icon-plus avatar-uploader-icon' src='../../../../public/images/my/reload.png'>
         </el-upload>
@@ -17,7 +17,6 @@
 
 <script>
     import dataStore from '@utils/dataStore'
-    import { BASE_URL } from '@/config'
 
     export default {
         name: 'CUpload',
@@ -25,7 +24,7 @@
             return {
                 imageUrl: '',
                 isUploading: false,
-                uploadUrl: BASE_URL + '/public/upload-image',
+                uploadUrl: 'http://localhost:9527/api/supplier/upload',
                 headers: {
                     'Authorization': dataStore.getToken() || ''
                 }
@@ -50,10 +49,9 @@
         },
         methods: {
             handleAvatarSuccess(res) {
-                console.log(res)
-                this.imageUrl = res.data.avatarUrl
+                this.imageUrl = res
                 this.isUploading = false
-                this.$emit('onUpload', this.imageUrl, res.data.avatarUrl)
+                this.$emit('onUpload', this.imageUrl, res)
             },
             beforeAvatarUpload(file) {
                 // console.log(file.type)

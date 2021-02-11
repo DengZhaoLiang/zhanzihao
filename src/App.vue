@@ -19,6 +19,7 @@
             this.$store.dispatch('saveUserInfo', dataStore.getUserInfo())
             this.$store.dispatch('setCarts', dataStore.getCarts())
             this.$bus.$emit('getCarts', true)
+            this.$bus.$emit('getUserInfo', true)
             this.getCarts()
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class='c-new-address x-center' @click.self='showEditAddress = true'>
+    <div class='c-new-address x-center' @click.self='show'>
         <span>添加新地址</span>
         <c-edit-address :is-add='true' :is-show='showEditAddress' @hide='showEditAddress = false' />
     </div>
@@ -16,6 +16,16 @@
         data() {
             return {
                 showEditAddress: false
+            }
+        },
+        methods: {
+            show() {
+                let id = this.$store.getters.getUserInfo.id
+                if (id === '' || typeof id === 'undefined') {
+                    this.$tips.error('请先登录后再试')
+                    return
+                }
+                this.showEditAddress = true
             }
         }
     }

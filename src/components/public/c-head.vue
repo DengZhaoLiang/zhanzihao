@@ -2,7 +2,7 @@
     <div class='c-head'>
         <div class='container'>
             <div class='head-left'>
-                <img src='./../../../public/images/public/github.png'>
+                <img src='./../../../public/images/public/logo.png'>
                 <div class='head-text xy-center'>
                     <span>ORANGE</span>
                     <span></span>

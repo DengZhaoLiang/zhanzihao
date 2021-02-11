@@ -60,6 +60,7 @@
         methods: {
             // 去购物车
             goToCart() {
+                localStorage.removeItem('buyOne')
                 this.$router.push('/cart')
             },
             addToCart() {

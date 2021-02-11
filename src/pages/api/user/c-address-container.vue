@@ -8,6 +8,8 @@
 <script>
     import CAddress from '@components/public/c-address'
     import CNewAddress from '../order/c-new-address'
+    import request from '@utils/request'
+    import dataStore from '@utils/dataStore'
 
     export default {
         name: 'CAddressContainer',
@@ -17,18 +19,28 @@
         },
         data() {
             return {
-                addressList: []
+                addressList: [],
+                userId: ''
             }
         },
         methods: {
             fetchAddressList() {
-                this.$api.user.getAddress().then(res => {
-                    console.log(res)
-                    this.addressList = res.addressList
-                })
+                if (this.userId === '' || typeof this.userId === 'undefined') {
+                    this.$tips.error('请先登录后再试')
+                    return
+                }
+                request.get(`/api/address/user/${this.userId}`)
+                    .then(res => {
+                        if (res.status === 200) {
+                            this.addressList = res.data
+                        } else {
+                            this.$message.error(res.message)
+                        }
+                    })
             }
         },
         mounted() {
+            this.userId = dataStore.userInfo.id
             this.fetchAddressList()
             this.$bus.$on('updateAddressList', () => {
                 this.fetchAddressList()

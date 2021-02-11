@@ -21,6 +21,7 @@
         },
         methods: {
             goToCart() {
+                localStorage.removeItem('buyOne')
                 this.$router.push('/cart')
             }
         }

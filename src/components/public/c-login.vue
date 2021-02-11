@@ -1,7 +1,7 @@
 <template>
     <div class='login xy-center'>
         <el-dialog
-            :title="isLogin ? '登录' : isResetPassword ? '重置密码' : '注册'"
+            :title="isLogin ? '登录' : '注册'"
             :visible.sync='dialogVisible'
             width='300px'>
             <div>
@@ -131,6 +131,7 @@
                             console.log(user)
                             this.$store.dispatch('saveUserInfo', user)
                             this.$bus.$emit('login')
+                            this.$bus.$emit('updateAddressList')
                         } else {
                             this.$message.error(res.message)
                         }

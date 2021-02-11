@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import tokenInstance from '@utils/dataStore'
+    import dataStore from '@utils/dataStore'
 
     export default {
         name: 'CHeaderImage',
@@ -31,8 +31,9 @@
         },
         methods: {
             logout() {
-                tokenInstance.deleteToken()
+                dataStore.deleteToken()
                 this.$store.dispatch('saveUserInfo', null)
+                this.$store.dispatch('setCarts', null)
                 if (this.$route.path !== '/') {
                     this.$router.replace('/')
                 }

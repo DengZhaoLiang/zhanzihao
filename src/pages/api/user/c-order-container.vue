@@ -7,20 +7,22 @@
             <el-col :span='4' class='x-center'>实付款</el-col>
             <el-col :span='4' class='x-center'>订单状态</el-col>
         </el-row>
-        <c-order-item v-for='(item,index) in orderList' :key='index' :order-item='item' @del='reGetOrderList(true)' />
+        <c-order-item v-for='(item,index) in orderList' :key='index' :order-item='item' />
         <div v-if='isLoaded && !orderList.length' class='none-data yx-center'>
-            <img src='../../../../public/images/my/none-data.svg'>
+            <img alt='' src='../../../../public/images/my/none-data.svg' />
             <span>暂无订单数据，赶快去下单吧~</span>
         </div>
         <div v-infinite-scroll='loadMore' class='load-infinite infinite-list'
              infinite-scroll-disabled='busy' infinite-scroll-distance='10'>
-            <img v-show='loading' src='../../../assets/loading-svg/dual-ball.svg'>
+            <img v-show='loading' alt='' src='../../../assets/loading-svg/dual-ball.svg' />
         </div>
     </div>
 </template>
 
 <script>
     import COrderItem from './c-order-item'
+    import request from '@utils/request'
+    import dataStore from '@utils/dataStore'
 
     export default {
         name: 'COrderContainer',
@@ -32,31 +34,46 @@
                 orderList: [],
                 loading: false,
                 busy: false,
-                isLoaded: false
+                isLoaded: false,
+                userId: '',
+                query: {
+                    page: 1,
+                    size: 5
+                }
             }
         },
         methods: {
-            fetchOrderList(isClearArr = false, isDel = false) {
-
+            fetchOrderList() {
+                request.get(`/api/order/${this.userId}`, this.query)
+                    .then(res => {
+                        if (res.status === 200) {
+                            let orders = res.data.content
+                            if (orders.length) {
+                                this.orderList = this.orderList.concat(orders)
+                            } else {
+                                this.load = false
+                            }
+                        }
+                    }).catch(err => {
+                        console.log(err)
+                        this.load = false
+                    })
+                this.loading = false
+                this.busy = false
             },
             loadMore() {
-                console.log('自动地加载')
-                this.busy = true
-                this.loading = true
-                setTimeout(() => {
-                    // ++pGetCartList.curPage
-                    this.fetchOrderList()
-                }, 500)
-            },
-            // 重新获取订单，监听订单被删除的情况
-            reGetOrderList(isDel = false) {
-                console.log('重置订单')
-                this.busy = false
-                this.loading = false
-                this.fetchOrderList(true, isDel)
+                if (this.load) {
+                    this.busy = true
+                    this.loading = true
+                    setTimeout(() => {
+                        this.query.page++
+                        this.fetchOrderList()
+                    }, 500)
+                }
             }
         },
         mounted() {
+            this.userId = dataStore.userInfo.id
             this.fetchOrderList()
         },
         destroyed() {

@@ -5,8 +5,8 @@
             <div slot='custom' class='edit-container'>
                 <div class='xy-center'>
                     <span class='left-title'>编辑昵称：</span>
-                    <el-input v-model='tempUserInfo.nickName'
-                              :suffix-icon="searchingNickname ? 'el-icon-loading' : nickNameCanUse ? 'el-icon-circle-check' : 'el-icon-circle-close'"
+                    <el-input v-model='tempUserInfo.name'
+                              :suffix-icon="searchingName ? 'el-icon-loading' : nameCanUse ? 'el-icon-circle-check' : 'el-icon-circle-close'"
                               class='right-container'
                               placeholder='请输入你的昵称'>
                     </el-input>
@@ -16,12 +16,12 @@
                     <div class='right-container'>
                         <div class='xy-center'>
                             <!--              <img src="./../../../../public/images/public/head-photo.png">-->
-                            <c-upload :avatar-url='tempUserInfo.avatarUrl' @onUpload='onUpload' />
+                            <c-upload :avatar-url='tempUserInfo.avatar' @onUpload='onUpload' />
                             <div class='yx-center'>
                                 <span>头像预览</span>
                                 <div>
-                                    <img :src='tempUserInfo.avatarUrl | addImagePrefix'>
-                                    <img :src='tempUserInfo.avatarUrl | addImagePrefix'>
+                                    <img :src='tempUserInfo.avatar'>
+                                    <img :src='tempUserInfo.avatar'>
                                 </div>
                             </div>
                         </div>
@@ -36,6 +36,8 @@
 <script>
     import CModal from '@components/public/c-modal'
     import CUpload from './c-upload'
+    import dataStore from '@utils/dataStore'
+    import request from '@utils/request'
 
     export default {
         name: 'CEditInfo',
@@ -55,59 +57,51 @@
                 temp: false,
                 radio: '1',
                 sex: -1,
-                nickNameCanUse: true,
-                searchingNickname: false,
-                baseAvatarUrl: '', // 保存头像的原始链接
+                nameCanUse: true,
+                searchingName: false,
+                baseAvatar: '', // 保存头像的原始链接
                 tempUserInfo: {
-                    nickName: '',
-                    gender: '',
-                    avatarUrl: ''
+                    id: '',
+                    name: '',
+                    avatar: ''
                 } // 用来保存编辑的中间值
             }
         },
         watch: {
             userInfo(val) {
                 this.tempUserInfo = Object.deepCopy(val)
-            },
-            'tempUserInfo.nickName': function(val) {
-                console.log(val)
-                this.checkNickNameCanUse(val)
             }
         },
         mounted() {
             this.tempUserInfo = Object.deepCopy(this.userInfo)
-            this.baseAvatarUrl = this.tempUserInfo.avatarUrl
+            this.baseAvatar = this.tempUserInfo.avatar
         },
         methods: {
             onHide() {
                 this.$emit('hide')
             },
             onUpload(imageUrl, baseUrl) {
-                this.tempUserInfo.avatarUrl = imageUrl
-                this.baseAvatarUrl = baseUrl
-            },
-            // 检查昵称是否可用
-            checkNickNameCanUse(val) {
-                if (this.searchingNickname || !val) {
-                    return
-                }
-                this.searchingNickname = true
+                this.tempUserInfo.avatar = imageUrl
+                this.baseAvatar = baseUrl
             },
             save() {
                 console.log(this.tempUserInfo)
                 this.updateUserInfo()
-                // return
-                // this.$message.success({
-                //     message: '保存成功',
-                //     duration: 1000
-                // })
-                // setTimeout(() => {
-                //     this.$emit('hide')
-                //     this.$emit('save', this.tempNickName, this.tempAvatarUrl)
-                // }, 1000)
             },
             updateUserInfo() {
-
+                let userId = dataStore.getUserInfo().id
+                if (typeof userId !== 'undefined' && userId !== null) {
+                    this.tempUserInfo.id = userId
+                    request.put('/api/user', this.tempUserInfo)
+                        .then(res => {
+                            if (res.status === 200) {
+                                let user = res.data
+                                this.$store.dispatch('saveUserInfo', user)
+                                dataStore.saveUserInfo(user)
+                            }
+                        })
+                }
+                this.$emit('hide')
             }
         }
     }

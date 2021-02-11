@@ -2,13 +2,9 @@
     <div class='c-user-info'>
         <div class='yx-center'>
             <img src='../../../../public/images/public/edit.png' @click='edit'>
-            <img v-if='getUserInfo' :src='getUserInfo.avatarUrl | addImagePrefix'>
+            <img v-if='getUserInfo' :src='getUserInfo.avatar'>
             <span v-if='getUserInfo'>{{ getTimeStr() }}</span>
-            <span class='nick-name'>{{ getUserInfo.nickName | formatString }}</span>
-        </div>
-        <div class='yx-center'>
-            <span v-for='(item, index) in tabList' :key='index' :class="selectedTab === index ? 'selected' : ''"
-                  @click='changeTab(index)'>{{ item }}</span>
+            <span class='nick-name'>{{ getUserInfo.name }}</span>
         </div>
         <c-edit-info v-if='getUserInfo' :is-show='isEdit' :user-info='getUserInfo' @hide='isEdit = false' />
     </div>

@@ -11,10 +11,6 @@
                                @click.native='selectedAddressIndex = index' />
                     <c-new-address />
                 </div>
-                <div class='down-more'>
-                    <span>更多地址</span>
-                    <img src='../../../../public/images/order/down-more.png' />
-                </div>
                 <button class='button-next' @click='changeStep(2)'>下一步</button>
             </div>
             <div v-if='step === 2' class='group-2'>
@@ -62,6 +58,8 @@
     import COrderSuccess from './c-order-success'
     import CGoodList from '../cart/c-good-list'
     import CModal from '@components/public/c-modal'
+    import request from '@utils/request'
+    import dataStore from '@utils/dataStore'
 
     export default {
         name: 'order',
@@ -78,15 +76,13 @@
         data() {
             return {
                 step: 1,
-                showPay: false,
                 selectedAddressIndex: 0,
                 addressList: [],
                 orderId: '', // 订单号
                 totalAmount: 0, // 待支付的金额
                 showModal: false,
                 isPayed: false,
-                isClearArr: false, // 是否清空密码输入框
-                isForgot: false // 是否为忘记密码
+                userId: ''
             }
         },
         methods: {
@@ -106,14 +102,28 @@
                 this.step = step
             },
             fetchAddressList() {
-                this.$api.user.getAddress().then(res => {
-                    console.log(res)
-                    this.addressList = res.addressList
-                    if (this.addressList.length) {
-                    }
-                })
+                if (this.userId === '' || typeof this.userId === 'undefined') {
+                    this.$tips.error('请先登录后再试')
+                    return
+                }
+                request.get(`/api/address/user/${this.userId}`)
+                    .then(res => {
+                        if (res.status === 200) {
+                            this.addressList = res.data
+                        } else {
+                            this.$message.error(res.message)
+                        }
+                    })
             },
             fetchGoodsInfo() {
+                let productId = this.$route.query.id
+                let purchaseNum = this.$route.query.purchaseNum
+                if (typeof productId !== 'undefined' && typeof purchaseNum !== 'undefined') {
+                    localStorage.setItem('buyOne', JSON.stringify({
+                        productId: productId,
+                        purchaseNum: purchaseNum
+                    }))
+                }
             },
             fetchBalance() {
                 this.$api.account.getBalance().then(res => {
@@ -121,7 +131,8 @@
                 })
             },
             createOrder() {
-
+                let addressId = this.addressList[this.selectedAddressIndex].id
+                console.log(addressId)
             },
             payForOrder(paykey) {
 
@@ -155,12 +166,7 @@
             },
             // 获取productsId列表
             _getGoodsIdList() {
-                const productsIdList = []
-                return productsIdList
-            },
-            // 合并商品信息列表，将购买数量加入商品信息列表中
-            _addNumToGoodsInfoList(products) {
-                return products
+                return []
             },
             // 显示密码输入框
             _controllerPayModal(isShow) {
@@ -168,6 +174,16 @@
             }
         },
         mounted() {
+            this.$bus.$on('getUserInfo', () => {
+                this.userId = dataStore.userInfo.id
+                this.fetchAddressList()
+            })
+            this.$bus.$on('updateAddressList', () => {
+                this.userId = dataStore.userInfo.id
+                this.fetchAddressList()
+            })
+            this.userId = dataStore.userInfo.id
+            this.fetchAddressList()
         },
         destroyed() {
         }

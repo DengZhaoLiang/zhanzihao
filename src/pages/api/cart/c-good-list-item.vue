@@ -80,6 +80,7 @@
     import CMoney from '@components/public/c-money'
     import CInputNumber from '@components/public/c-input-number'
     import CModal from '@components/public/c-modal.vue'
+    import request from '@utils/request'
 
     const maxImgLength = 10
     export default {
@@ -128,8 +129,10 @@
                 })
             },
             getcarts() {
-                /* eslint-disable */
-                this.carts = this.$store.getters.getCarts
+                if (this.carts.length === 0) {
+                    /* eslint-disable */
+                    this.carts = this.$store.getters.getCarts
+                }
                 return this.carts
             },
             // 计算已选商品的总金额、图片列表、购买数量
@@ -208,6 +211,10 @@
                     this.$tips.warn('您还未选中任何商品')
                     return
                 }
+                if (typeof this.$store.getters.getUserInfo.id === 'undefined') {
+                    this.$message.error('请先登录')
+                    return
+                }
                 this.$router.push({
                     path: 'order',
                     query: {
@@ -225,7 +232,20 @@
             }
         },
         mounted() {
-
+            let product = JSON.parse(localStorage.getItem('buyOne'))
+            if (typeof product !== 'undefined' && product !== null) {
+                /* eslint-disable */
+                request.get(`/api/product/${product.productId}`)
+                    .then(res => {
+                        if (res.status === 200) {
+                            this.carts = [{
+                                id: product.productId,
+                                product: res.data,
+                                purchaseNum: product.purchaseNum
+                            }]
+                        }
+                    })
+            }
         }
     }
 </script>

@@ -10,12 +10,6 @@ export const testPassword = (password) => {
     return reg.test(password)
 }
 
-// 验证验证码
-export const testVerifyCode = (verifyCode) => {
-    const reg = /^[0-9]{6}$/
-    return reg.test(verifyCode)
-}
-
 // 保存token
 export const saveToken = token => {
     localStorage.setItem('token', token)
@@ -24,9 +18,4 @@ export const saveToken = token => {
 // 删除token
 export const deleteToken = () => {
     localStorage.removeItem('token')
-}
-
-// 保存token
-export const getToken = () => {
-    return localStorage.getItem('token')
 }

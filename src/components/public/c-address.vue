@@ -5,21 +5,19 @@
                 <span>{{ address.name || '' }}</span>
             </div>
             <div>
-                <img src='../../../public/images/order/edit.svg' @click='isShowEdit = true' />
                 <img src='../../../public/images/order/cancel.svg' @click='showDel' />
             </div>
         </div>
         <div class='down-side'>
             <div>
                 <img src='../../../public/images/order/location.svg' />
-                <span>{{ address.completedAddress | formatString(14) }}</span>
+                <span>{{ address.detail | formatString(14) }}</span>
             </div>
             <div>
                 <img src='../../../public/images/order/phone.svg' />
                 <span>{{ address.phone || '' }}</span>
             </div>
         </div>
-        <c-edit-address :address='address' :is-show='isShowEdit' @hide='isShowEdit = false' />
         <c-modal :context="'是否删除这个地址？'" :is-show-cancel='true' :is-show-modal='isShowDel' @confirm='deleteAddress'
                  @hide='onHide' />
     </div>
@@ -27,13 +25,12 @@
 
 <script>
     import CModal from './c-modal.vue'
-    import CEditAddress from '@pages/api/user/c-edit-address'
+    import request from '@utils/request'
 
     export default {
         name: 'CAddress',
         components: {
-            CModal,
-            CEditAddress
+            CModal
         },
         props: {
             isSelected: {
@@ -44,8 +41,7 @@
         },
         data() {
             return {
-                isShowDel: false,
-                isShowEdit: false
+                isShowDel: false
             }
         },
         methods: {
@@ -56,7 +52,15 @@
                 this.isShowDel = false
             },
             deleteAddress() {
-
+                request.delete(`/api/address/${this.address.id}`)
+                    .then(res => {
+                        if (res.status === 200) {
+                            this.$message.success('删除成功')
+                            this.$bus.$emit('updateAddressList')
+                        } else {
+                            this.$message.error(res.message)
+                        }
+                    })
             }
         }
     }

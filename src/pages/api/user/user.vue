@@ -34,7 +34,10 @@
         },
         methods: {},
         mounted() {
-
+            this.$bus.$on('changeTab', value => {
+                console.log(value)
+                this.selectedTab = value
+            })
         }
 
     }

@@ -3,26 +3,18 @@
         <c-modal :is-custom='true' :is-show-confirm='false'
                  :is-show-modal='isShow' :title="'编辑收货地址'" :width="'640px'" bg-color='#fff' @hide='hide'>
             <div slot='custom' class='edit-address'>
-                <el-form ref='ruleForm' :model='pAddAddress' :rules='rules' class='demo-ruleForm' label-width='100px'>
+                <el-form :model='address' :rules='rules' class='demo-ruleForm' label-width='100px'>
                     <el-form-item label='联系人' prop='name'>
-                        <el-input v-model='pAddAddress.name'></el-input>
+                        <el-input v-model='address.name'></el-input>
                     </el-form-item>
                     <el-form-item label='联系方式' prop='phone'>
-                        <el-input v-model='pAddAddress.phone'></el-input>
+                        <el-input v-model='address.phone'></el-input>
                     </el-form-item>
-                    <el-form-item label='收货地址' prop='regionList'>
-                        <el-cascader
-                            v-model='pAddAddress.regionList'
-                            :options='regionOptions'
-                            size='large'
-                            @change='handleChange'>
-                        </el-cascader>
-                    </el-form-item>
-                    <el-form-item class='detail-address' label='详细地址' prop='detailedAddress'>
-                        <el-input v-model='pAddAddress.detailedAddress'></el-input>
+                    <el-form-item class='detail-address' label='详细地址' prop='detail'>
+                        <el-input v-model='address.detail'></el-input>
                     </el-form-item>
                 </el-form>
-                <button class='save' @click="submitForm('ruleForm')">保存</button>
+                <button class='save' @click='submitForm()'>保存</button>
             </div>
         </c-modal>
     </div>
@@ -30,7 +22,7 @@
 
 <script>
     import CModal from '@components/public/c-modal'
-    import { regionData } from 'element-china-area-data'
+    import request from '@utils/request'
 
     export default {
         name: 'CEditAddress',
@@ -41,12 +33,7 @@
             isShow: {
                 type: Boolean,
                 default: false
-            },
-            isAdd: {
-                type: Boolean,
-                default: false
-            },
-            address: Object
+            }
         },
         data() {
             const validatePhone = (rule, value, callback) => {
@@ -58,7 +45,7 @@
                 }
             }
             return {
-                regionOptions: regionData,
+                address: {},
                 rules: {
                     name: [{
                         required: true, message: '请输入收货人姓名', trigger: 'blur'
@@ -68,104 +55,35 @@
                     }, {
                         validator: validatePhone, trigger: 'blur'
                     }],
-                    regionList: [{
-                        type: 'array', required: true, message: '请选择您的地址', trigger: 'change'
-                    }],
-                    detailedAddress: [{
+                    detail: [{
                         required: true, message: '请输入您的详细地址', trigger: 'blur'
                     }]
                 }
             }
         },
-        watch: {
-            // 该数据为异步获取，监听该数据的变化
-            address() {
-                this.fillEditAddress()
-            }
-        },
+        watch: {},
         methods: {
-            handleChange() {
-                this._getRegion()
-            },
             hide() {
                 console.log('hide')
                 this.$emit('hide')
             },
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        // alert('submit!')
-                        if (this.isAdd) {
-                            this.addAddress()
-                        } else {
-                            this.updateAddress()
-                        }
-                    } else {
-                        // console.log('error submit!!')
-                        this.$tips.error('请输入完整的物流信息')
-                        return false
-                    }
-                })
+            submitForm() {
+                this.addAddress()
             },
             addAddress() {
-                this.$api.user.addAddress(this._getReqParam()).then(res => {
-                    console.log(res)
-                    this.hide()
-                    this.$bus.$emit('updateAddressList')
-                })
-            },
-            updateAddress() {
-                this.$api.user.updateAddress(this._getReqParam()).then(res => {
-                    console.log(res)
-                    this.hide()
-                    this.$bus.$emit('updateAddressList')
-                })
-            },
-            // 填充编辑的数据
-            fillEditAddress() {
-                if (!this.isAdd && this.address) {
-                    // 如果非新增，则是编辑，则填充相关的数据
-                    const region = this.address.addressTable
-                    const regionList = [region.province.value, region.city.value, region.area.value]
-                    this.pAddAddress = Object.assign({}, this.address, { regionList })
-                }
-            },
-            // 获取区域数据
-            _getRegion() {
-                const province = regionData.find(item => item.value === this.pAddAddress.regionList[0])
-                const city = province.children.find(item => item.value === this.pAddAddress.regionList[1])
-                const area = city.children.find(item => item.value === this.pAddAddress.regionList[2])
-                this.pAddAddress.addressTable = {
-                    province: {
-                        value: province.value,
-                        label: province.label
-                    },
-                    city: {
-                        value: city.value,
-                        label: city.label
-                    },
-                    area: {
-                        value: area.value,
-                        label: area.label
-                    }
-                }
-                console.log(this.pAddAddress.addressTable)
-            },
-            // 合成请求数据
-            _getReqParam() {
-                this._getCompleteAddress()
-                // 删除地区列表
-                const temp = Object.deepCopy(this.pAddAddress)
-                delete temp.regionList
-                return temp
-            },
-            _getCompleteAddress() {
-                const address = this.pAddAddress.addressTable
-                this.pAddAddress.completedAddress = address.province.label + address.city.label + address.area.label + this.pAddAddress.detailedAddress
+                this.address.userId = this.$store.getters.getUserInfo.id
+                request.post('/api/address', this.address)
+                    .then(res => {
+                        if (res.status === 200) {
+                            this.$bus.$emit('updateAddressList', true)
+                        } else {
+                            this.$message.error(res.message)
+                        }
+                    })
+                this.$emit('hide')
             }
         },
         mounted() {
-            this.fillEditAddress()
         }
     }
 </script>

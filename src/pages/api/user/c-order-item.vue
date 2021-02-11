@@ -6,7 +6,7 @@
                     <div class='order y-center'>
                         <img src='../../../../public/images/my/circle.png'>
                         <span class='date'>{{ orderItem.createdAt | formatDate }}</span>
-                        <span>订单号：{{ orderItem.orderId }}</span>
+                        <span>订单号：{{ orderItem.orderSn }}</span>
                     </div>
                 </el-col>
                 <el-col :offset='6' :span='2' class='x-center'>
@@ -15,7 +15,7 @@
                 </el-col>
             </el-row>
         </div>
-        <div :class="orderItem.paymentState === 'SUCCESSED' ? '' : 'components-blue-container'" class='order-container'>
+        <div :class="orderItem.status === '2' ? '' : 'components-blue-container'" class='order-container'>
             <el-row class='y-center'>
                 <el-col :span='16'>
                     <div ref='left'>

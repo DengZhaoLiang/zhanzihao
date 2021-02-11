@@ -5,9 +5,9 @@
             trigger='hover'
             width='250'>
             <div class='address-popover-container'>
-                <p>{{ address.name || '杨绍昕' }}</p>
-                <p>{{ address.completedAddress || '广东省茂名市电白区麻岗镇牛林村' }}</p>
-                <p>{{ address.phone || 15217808825 }}</p>
+                <p>{{ address.name || '' }}</p>
+                <p>{{ address.detail || '' }}</p>
+                <p>{{ address.phone || '' }}</p>
             </div>
             <span slot='reference' class='address-span'>物流信息</span>
         </el-popover>
