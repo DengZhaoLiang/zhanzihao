@@ -2,33 +2,33 @@
     <div class='c-good-list-item'>
         <div>
             <el-checkbox-group v-model='checkedGoods' @change='handleCheckedGoodsChange'>
-                <div v-for='(item,key) in getProducts' :key='key' class='c-row-container'>
+                <div v-for='(item,key) in getcarts' :key='key' class='c-row-container'>
                     <el-row class='c-row'>
                         <el-col v-if='showCheckBox' :span='isShowAccount ? 1 : 2'>
-                            <el-checkbox :label='item.productsId'></el-checkbox>
+                            <el-checkbox :label='item.id'></el-checkbox>
                         </el-col>
                         <el-col :span='4'>
-                            <img :src='item.masterImg'>
+                            <img :src='item.product.image'>
                         </el-col>
                         <el-col :span='4'>
-                            <div class='c-good-name'>{{ item.productsName }}</div>
+                            <div class='c-good-name'>{{ item.product.name }}</div>
                         </el-col>
                         <el-col :span='4'>
                             <div class='yx-center'>
-                                <c-money :money='item.discountPrice' size='sm'></c-money>
+                                <c-money :money='item.product.price' size='sm'></c-money>
                             </div>
                         </el-col>
                         <el-col :span='4'>
-                            <c-input-number v-if='isShowAccount' :index='key' :num='item.productsNum'
+                            <c-input-number v-if='isShowAccount' :index='key' :num='item.purchaseNum'
                                             @change='onInputChange' />
-                            <span v-else class='account-num'>{{ item.productsNum }}</span>
+                            <span v-else class='account-num'>{{ item.purchaseNum }}</span>
                         </el-col>
                         <el-col :span='isShowAccount ? 5 : 6' class='yx-center'>
-                            <c-money :money='item.discountPrice * (item.productsNum|| item.purchaseNum)'
+                            <c-money :money='item.product.price * (item.purchaseNum)'
                                      size='sm'></c-money>
                         </el-col>
                         <el-col v-if='isShowAccount' :span='2'>
-                            <div class='c-del-good' @click='showDelModal(item.productsId)'>
+                            <div class='c-del-good' @click='showDelModal(item.id)'>
                             </div>
                         </el-col>
                     </el-row>
@@ -113,11 +113,12 @@
                 leftIndex: 0,
                 rightIndex: maxImgLength,
                 isShowTotal: false, // 是否显示所有所选的
-                products: [],
+                carts: [],
                 totalMoney: 0,
                 imgList: [],
                 isShowDel: false,
-                purchaseList: []
+                purchaseList: [],
+                delId: ''
             }
         },
         computed: {
@@ -126,11 +127,10 @@
                     return index >= this.leftIndex && index < this.rightIndex
                 })
             },
-            getProducts() {
+            getcarts() {
                 /* eslint-disable */
-                this.products = this.$store.getters.getProducts
-                console.log(Object.deepCopy(this.products))
-                return this.products
+                this.carts = this.$store.getters.getCarts
+                return this.carts
             },
             // 计算已选商品的总金额、图片列表、购买数量
             countTotal() {
@@ -138,13 +138,13 @@
                 this.totalMoney = 0
                 this.imgList = []
                 this.purchaseList = []
-                this.checkedGoods.forEach(productsId => {
-                    const product = this.products.find(item => item.productsId === productsId)
-                    this.totalMoney += product.discountPrice * product.productsNum
-                    this.imgList.push(product.masterImg)
+                this.checkedGoods.forEach(id => {
+                    const cart = this.carts.find(item => item.id === id)
+                    this.totalMoney += cart.product.price * cart.purchaseNum
+                    this.imgList.push(cart.product.image)
                     this.purchaseList.push({
-                        productsId: product.productsId,
-                        purchaseNum: product.productsNum
+                        id: cart.product.id,
+                        purchaseNum: cart.purchaseNum
                     })
                 })
                 this.totalMoney = parseFloat(this.totalMoney.toFixed(2))
@@ -158,12 +158,10 @@
                 this.isIndeterminate = false
             },
             handleCheckedGoodsChange(value) {
+                console.log(value)
                 let checkedCount = value.length
-                this.checkAll = checkedCount === this.products.length
-                this.isIndeterminate = checkedCount > 0 && checkedCount < this.products.length
-            },
-            load() {
-                console.log('加载中')
+                this.checkAll = checkedCount === this.carts.length
+                this.isIndeterminate = checkedCount > 0 && checkedCount < this.carts.length
             },
             // 加载更多图片
             loadMoreImg(direction) {
@@ -179,29 +177,30 @@
                     ++this.leftIndex
                 }
             },
-            // 更新购物车的数量
-            updateCart() {
-                this.$api.cart.updateCart(pUpdateCart).then(res => {
-                    console.log(res)
-                })
-            },
             // 删除商品
             deleteFormCart() {
-                this.$api.cart.deleteFromCart(pDeleteFromCart).then(res => {
-                    this.$bus.$emit('updateCartLength')
-                    this.$bus.$emit('getCartList', true)
+                let old = this.$store.state.Carts
+                old.forEach((cur, index) => {
+                    if (cur.id === this.delId) {
+                        old.splice(index, 1)
+                    }
                 })
+                this.$store.dispatch('setCarts', old)
+                this.$bus.$emit('getCarts', true)
             },
-            showDelModal(productsId) {
-                pDeleteFromCart.productsId = productsId
+            showDelModal(id) {
+                this.delId = id
                 this.isShowDel = true
             },
             // 监听数量的变化
             onInputChange(num, index) {
-                this.products[index].productsNum = num
-                pUpdateCart.productsId = this.products[index].productsId
-                pUpdateCart.productsNum = num
-                this.updateCart()
+                let old = this.$store.state.Carts
+                old.forEach((cur) => {
+                    if (cur.id === this.carts[index].id) {
+                        old[index].purchaseNum = num
+                    }
+                })
+                this.$store.dispatch('setCarts', old)
             },
             //
             settleAccount() {
@@ -219,8 +218,8 @@
             // 获取商品id列表
             _getGoodsIdList() {
                 const temp = []
-                this.products.forEach(item => {
-                    temp.push(item.productsId)
+                this.carts.forEach(item => {
+                    temp.push(item.id)
                 })
                 return temp
             }

@@ -7,6 +7,7 @@
                 </div>
             </el-col>
             <el-col :span='4'>
+                <span>商品图片</span>
             </el-col>
             <el-col :span='4'>
                 <span>商品信息</span>

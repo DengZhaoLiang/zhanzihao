@@ -11,17 +11,15 @@
         // 监听路由的变化，有变化就加入path数组里面
         watch: {},
         methods: {
-            getCartList() {
-
+            getCarts() {
+                return this.$store.state.Carts
             }
         },
         mounted() {
             this.$store.dispatch('saveUserInfo', dataStore.getUserInfo())
             this.$store.dispatch('setCarts', dataStore.getCarts())
-            this.getCartList()
-            this.$bus.$on('updateCartLength', () => {
-                this.getCartList()
-            })
+            this.$bus.$emit('getCarts', true)
+            this.getCarts()
         }
     }
 </script>

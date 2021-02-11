@@ -170,7 +170,6 @@
         mounted() {
         },
         destroyed() {
-            this.$store.dispatch('setCarts', [])
         }
     }
 </script>

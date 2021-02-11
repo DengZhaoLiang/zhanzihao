@@ -37,36 +37,27 @@
             }
         },
         methods: {
+
+            // 是否清理数组，清理就置空数组看
+            getCarts() {
+                this.cartList = this.$store.state.Carts
+                console.log(this.cartList)
+                this.loading = false
+                this.busy = false
+                this.isLoadedCartList = true
+            },
             loadMore() {
-                this.busy = true
-                this.loading = true
-                setTimeout(() => {
-                    this.getCartList()
-                }, 500)
-            },
-            // 向商品列表中加入购买数量
-            _addNumToGoodsList(product) {
-                this.cartList.forEach(item => {
-                    item = Object.assign(item, product.find(elem => item.productsId === elem.productsId))
-                })
-                this.$store.dispatch('setCarts', this.cartList)
-            },
-            _getGoodsIdList(arr) {
-                const temp = []
-                arr.forEach(item => {
-                    temp.push(item.productsId)
-                })
-                return temp
+                if (this.isLoadedCartList === false) {
+                    this.loading = true
+                    this.busy = true
+                    this.getCarts()
+                }
             }
         },
-        mounted() {
-            this.getCartList()
-            this.$bus.$on('getCartList', (isDel = false) => {
-                this.getCartList(true, isDel)
+        created() {
+            this.$bus.$on('getCarts', () => {
+                this.getCarts()
             })
-        },
-        destroyed() {
-            this.$store.dispatch('setCarts', [])
         }
     }
 </script>
