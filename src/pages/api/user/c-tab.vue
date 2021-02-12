@@ -1,6 +1,6 @@
 <template>
     <div class='c-tab-container x-center'>
-        <el-tabs v-model='tempTab' class='c-tab'>
+        <el-tabs class='c-tab' v-model='tempTab'>
             <el-tab-pane :label='tabList[0]' :name="'0'">
                 <c-order-container />
             </el-tab-pane>
@@ -41,73 +41,73 @@
 </script>
 
 <style lang='scss'>
-.c-tab-container {
-    width: 1010px !important;
-    background: #fff !important;
-    padding: 44px 0;
-    margin-left: 15px;
-}
-
-.c-tab {
-    width: 880px;
-    /*padding: 44px 65px;*/
-    min-height: 418px;
-    background: #fff;
-}
-
-.el-tabs__nav {
-    .el-tabs__active-bar {
-        width: 100px !important;
-        height: 3px !important;
-        background: #FF4400 !important;
+    .c-tab-container {
+        width: 1010px !important;
+        background: #fff !important;
+        padding: 44px 0;
+        margin-left: 15px;
     }
 
-    .el-tabs__item {
-        padding: 0;
-        width: 100px;
-        height: 50px;
-        text-align: center;
-        font-size: 20px;
-        line-height: 50px;
-        color: #666;
+    .c-tab {
+        width: 880px;
+        /*padding: 44px 65px;*/
+        min-height: 418px;
+        background: #fff;
+    }
 
-        &:hover {
+    .el-tabs__nav {
+        .el-tabs__active-bar {
+            width: 100px !important;
+            height: 3px !important;
+            background: #FF4400 !important;
+        }
+
+        .el-tabs__item {
+            padding: 0;
+            width: 100px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            line-height: 50px;
+            color: #666;
+
+            &:hover {
+                color: #FF4400;
+            }
+        }
+
+        .el-tabs__item.is-active {
             color: #FF4400;
+            font-weight: 500;
         }
     }
 
-    .el-tabs__item.is-active {
-        color: #FF4400;
-        font-weight: 500;
+    .el-tabs__nav-wrap::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 3px !important;
+        background-color: #E4E7ED;
+        z-index: 1;
     }
-}
 
-.el-tabs__nav-wrap::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 3px !important;
-    background-color: #E4E7ED;
-    z-index: 1;
-}
+    .c-good-list {
+        margin-left: 0;
+    }
 
-.c-good-list {
-    margin-left: 0;
-}
+    .address-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 600px;
+        margin: 0 auto;
+    }
 
-.address-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 600px;
-    margin: 0 auto;
-}
-
-.api-doc {
-    width: 100%;
-    height: 500px;
-    border: 0;
-}
+    .api-doc {
+        width: 100%;
+        height: 500px;
+        border: 0;
+    }
 </style>

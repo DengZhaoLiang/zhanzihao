@@ -23,35 +23,35 @@
 </script>
 
 <style lang='scss' scoped>
-.c-image-picker {
+    .c-image-picker {
 
-    .up-side {
+        .up-side {
 
-        img {
-            width: 372px;
-            height: 372px;
-        }
-    }
-
-    .down-side {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-
-        /*div {*/
-        /*width: 62px;*/
-        /*height: 62px;*/
-        img {
-            width: 60px;
-            height: 60px;
-            border: 1px solid transparent;
-
-            &:hover {
-                border: 1px solid #ff4400;
+            img {
+                width: 372px;
+                height: 372px;
             }
         }
 
-        /*}*/
+        .down-side {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+
+            /*div {*/
+            /*width: 62px;*/
+            /*height: 62px;*/
+            img {
+                width: 60px;
+                height: 60px;
+                border: 1px solid transparent;
+
+                &:hover {
+                    border: 1px solid #ff4400;
+                }
+            }
+
+            /*}*/
+        }
     }
-}
 </style>

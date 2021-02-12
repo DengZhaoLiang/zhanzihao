@@ -10,7 +10,7 @@
             </div>
             <div>
                 <span>待支付：</span>
-                <c-money :money='totalAmount' class='c-money' />
+                <c-money :money=Number(totalAmount) class='c-money' />
             </div>
         </div>
     </div>
@@ -29,54 +29,54 @@
 </script>
 
 <style lang='scss' scoped>
-.c-order-success {
-    text-align: center;
-    font-family: Microsoft YaHei;
+    .c-order-success {
+        text-align: center;
+        font-family: Microsoft YaHei;
 
-    img {
-        width: 151px;
-        height: 166px;
-        margin-bottom: 28px;
-    }
-
-    .span1 {
-        font-size: 28px;
-        font-weight: bold;
-        color: rgba(255, 68, 0, 1);
-        margin: {
-            bottom: 28px;
-            left: 15px;
+        img {
+            width: 151px;
+            height: 166px;
+            margin-bottom: 28px;
         }
-    }
 
-    div {
-        display: flex;
-        margin-left: 20px;
+        .span1 {
+            font-size: 28px;
+            font-weight: bold;
+            color: rgba(255, 68, 0, 1);
+            margin: {
+                bottom: 28px;
+                left: 15px;
+            }
+        }
 
         div {
             display: flex;
-            align-items: center;
+            margin-left: 20px;
 
-            &:nth-child(1) {
-                margin-right: 20px;
-            }
+            div {
+                display: flex;
+                align-items: center;
 
-            .c-money {
-                margin-left: 0;
-            }
-
-            span {
                 &:nth-child(1) {
-                    color: #919191;
-                    font-size: 24px;
+                    margin-right: 20px;
                 }
 
-                &:nth-child(2) {
-                    color: #1A1A1A;
-                    font-size: 28px;
+                .c-money {
+                    margin-left: 0;
+                }
+
+                span {
+                    &:nth-child(1) {
+                        color: #919191;
+                        font-size: 24px;
+                    }
+
+                    &:nth-child(2) {
+                        color: #1A1A1A;
+                        font-size: 28px;
+                    }
                 }
             }
         }
     }
-}
 </style>

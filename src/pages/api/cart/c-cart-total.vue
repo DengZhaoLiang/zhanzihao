@@ -27,26 +27,26 @@
 
 <style lang='scss'>
 
-.c-total-container {
-    background: #494949;
+    .c-total-container {
+        background: #494949;
 
-    p {
-        font-size: 14px;
-        font-weight: 400;
-        color: rgba(102, 102, 102, 1);
+        p {
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(102, 102, 102, 1);
 
-        span {
-            color: #FF6B67;
-            font-size: 16px;
+            span {
+                color: #FF6B67;
+                font-size: 16px;
+            }
+
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
         }
 
     }
-
-    img {
-        width: 50px;
-        height: 50px;
-    }
-
-}
 
 </style>

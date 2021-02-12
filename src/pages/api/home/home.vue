@@ -3,13 +3,13 @@
         <c-head></c-head>
         <div class='products-list-container'>
             <div class='products-list'>
-                <div v-if='productsList.length' :class="(productsList.length % 5) !== 0 ? 'fill-space' : ''"
-                     class='good-container'>
-                    <c-good-item v-for='(item, key) in productsList' :key='key' :products-item='item' />
+                <div :class="(productsList.length % 5) !== 0 ? 'fill-space' : ''" class='good-container'
+                     v-if='productsList.length'>
+                    <c-good-item :key='key' :products-item='item' v-for='(item, key) in productsList' />
                 </div>
-                <div v-infinite-scroll='loadMore' class='load-infinite infinite-list'
-                     infinite-scroll-disabled='busy' infinite-scroll-distance='10'>
-                    <img v-show='loading' src='../../../assets/loading-svg/dual-ball-gray.svg' />
+                <div class='load-infinite infinite-list' infinite-scroll-disabled='busy'
+                     infinite-scroll-distance='10' v-infinite-scroll='loadMore'>
+                    <img src='../../../assets/loading-svg/dual-ball-gray.svg' v-show='loading' />
                 </div>
             </div>
         </div>
@@ -90,75 +90,75 @@
 </script>
 
 <style lang='scss' scoped>
-.home {
-    width: 100%;
-    background: rgba(246, 246, 246, 1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    .bread {
+    .home {
         width: 100%;
-        background: #F2F2F2;
+        background: rgba(246, 246, 246, 1);
         display: flex;
-        align-items: center;
         justify-content: center;
-    }
+        align-items: center;
+        flex-direction: column;
 
-    .products-list-container {
-        width: 100%;
-        display: flex;
-        justify-content: left;
-        margin-left: 250px;
-        margin-top: 10px;
-
-        .products-list {
+        .bread {
+            width: 100%;
+            background: #F2F2F2;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-            .sort-container {
-                width: 920px;
-                height: 53px;
-                margin-left: 26px;
-                justify-content: flex-end;
-                background: #fff;
+        .products-list-container {
+            width: 100%;
+            display: flex;
+            justify-content: left;
+            margin-left: 250px;
+            margin-top: 10px;
 
-                .products-sort {
-                    margin-right: 30px;
-                }
-            }
-
-            .good-container {
-                width: 1560px;
-                margin-left: 26px;
+            .products-list {
                 display: flex;
-                justify-content: space-between;
-                flex-wrap: wrap;
-            }
+                flex-direction: column;
 
-            .fill-space:after {
-                content: "";
-                width: 288px;
-                height: 496px;
-            }
+                .sort-container {
+                    width: 920px;
+                    height: 53px;
+                    margin-left: 26px;
+                    justify-content: flex-end;
+                    background: #fff;
 
-            .paging {
-                margin: 0 auto;
-            }
+                    .products-sort {
+                        margin-right: 30px;
+                    }
+                }
 
+                .good-container {
+                    width: 1560px;
+                    margin-left: 26px;
+                    display: flex;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                }
+
+                .fill-space:after {
+                    content: "";
+                    width: 288px;
+                    height: 496px;
+                }
+
+                .paging {
+                    margin: 0 auto;
+                }
+
+            }
         }
     }
-}
 
-.load-infinite {
-    margin-top: 50px;
-    height: 100px;
-    text-align: center;
+    .load-infinite {
+        margin-top: 50px;
+        height: 100px;
+        text-align: center;
 
-    img {
-        width: 50px;
-        height: 50px;
+        img {
+            width: 50px;
+            height: 50px;
+        }
     }
-}
 </style>

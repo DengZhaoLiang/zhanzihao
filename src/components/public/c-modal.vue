@@ -1,17 +1,17 @@
 <template>
-    <div v-if='isShowModal' :class="isShowMask ? '' : 'hide-mask'" class='c-dialog'>
+    <div :class="isShowMask ? '' : 'hide-mask'" class='c-dialog' v-if='isShowModal'>
         <div :style='setStyle' class='c-dialog-container'>
-            <div v-if='isShowTitle' class='c-dialog-title'>
-                <span v-if='showClose' class='close' @click="cancel('close')"></span>
+            <div class='c-dialog-title' v-if='isShowTitle'>
+                <span @click="cancel('close')" class='close' v-if='showClose'></span>
                 <span :class="showClose ? '' : 'c-dialog-title-span'" :style='setTitleFontWeight'>{{ title }}</span>
             </div>
-            <p v-if='!isCustom' slot='context'>{{ context }}</p>
+            <p slot='context' v-if='!isCustom'>{{ context }}</p>
             <!-- 自定义内容-->
-            <slot v-else name='custom'></slot>
-            <div v-if='!isCustom' :class="(isShowConfirm && isShowCancel) ? '' : 'c-dialog-lg-btn'"
-                 class='c-dialog-btn'>
-                <button v-if='isShowConfirm' @click='confirm'>{{ confirmText }}</button>
-                <button v-if='isShowCancel' @click='cancel'>{{ cancelText }}</button>
+            <slot name='custom' v-else></slot>
+            <div :class="(isShowConfirm && isShowCancel) ? '' : 'c-dialog-lg-btn'" class='c-dialog-btn'
+                 v-if='!isCustom'>
+                <button @click='confirm' v-if='isShowConfirm'>{{ confirmText }}</button>
+                <button @click='cancel' v-if='isShowCancel'>{{ cancelText }}</button>
             </div>
         </div>
     </div>
@@ -128,135 +128,135 @@
 </script>
 
 <style scoped>
-.c-dialog {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 100;
-}
-
-.hide-mask {
-    background-color: rgba(255, 255, 255, 0);
-}
-
-.c-dialog-container {
-    background: #fff;
-    /*width: 450px;*/
-    border-radius: 5px;
-}
-
-.c-dialog-title {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.c-dialog-title-span {
-    margin-top: 15px;
-}
-
-.c-dialog-container p {
-    font-size: 24px;
-    font-weight: lighter;
-    margin-bottom: 50px;
-    margin-top: 30px;
-    margin-left: 22px;
-}
-
-.c-dialog-container .close {
-    text-align: right;
-    margin-right: 8px;
-    margin-top: 8px;
-    border-radius: 12px;
-    line-height: 20px;
-    font-size: 18px;
-}
-
-.close::before {
-    content: "\2716";
-}
-
-.c-dialog-container span:active {
-    animation: fade .4s infinite;
-    -webkit-animation: fade .4s infinite;
-}
-
-.c-dialog-container span:nth-child(2) {
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.c-dialog-btn {
-    width: 100%;
-    height: 60px;
-    background: #cccccc;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-.c-dialog-btn button {
-    width: 50%;
-    height: 60px;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    outline: none;
-    color: #fff;
-    font-size: 22px;
-}
-
-.c-dialog-lg-btn button {
-    width: 100%;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-.c-dialog-btn button:active {
-    animation: fade .4s infinite;
-    -webkit-animation: fade .4s infinite;
-}
-
-.c-dialog-btn button:nth-child(1) {
-    background: #FF7C25;
-    border-bottom-left-radius: 5px;
-}
-
-.c-dialog-btn button:nth-child(2) {
-    background: #B5BECD;
-    border-bottom-right-radius: 5px;
-}
-
-@keyframes fade {
-    from {
-        opacity: 1.0;
+    .c-dialog {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 100;
     }
-    50% {
-        opacity: 0;
-    }
-    to {
-        opacity: 1.0;
-    }
-}
 
-@-webkit-keyframes fade {
-    from {
-        opacity: 1.0;
+    .hide-mask {
+        background-color: rgba(255, 255, 255, 0);
     }
-    50% {
-        opacity: 0;
+
+    .c-dialog-container {
+        background: #fff;
+        /*width: 450px;*/
+        border-radius: 5px;
     }
-    to {
-        opacity: 1.0;
+
+    .c-dialog-title {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
-}
+
+    .c-dialog-title-span {
+        margin-top: 15px;
+    }
+
+    .c-dialog-container p {
+        font-size: 24px;
+        font-weight: lighter;
+        margin-bottom: 50px;
+        margin-top: 30px;
+        margin-left: 22px;
+    }
+
+    .c-dialog-container .close {
+        text-align: right;
+        margin-right: 8px;
+        margin-top: 8px;
+        border-radius: 12px;
+        line-height: 20px;
+        font-size: 18px;
+    }
+
+    .close::before {
+        content: "\2716";
+    }
+
+    .c-dialog-container span:active {
+        animation: fade .4s infinite;
+        -webkit-animation: fade .4s infinite;
+    }
+
+    .c-dialog-container span:nth-child(2) {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .c-dialog-btn {
+        width: 100%;
+        height: 60px;
+        background: #cccccc;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .c-dialog-btn button {
+        width: 50%;
+        height: 60px;
+        border: 0;
+        margin: 0;
+        padding: 0;
+        outline: none;
+        color: #fff;
+        font-size: 22px;
+    }
+
+    .c-dialog-lg-btn button {
+        width: 100%;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .c-dialog-btn button:active {
+        animation: fade .4s infinite;
+        -webkit-animation: fade .4s infinite;
+    }
+
+    .c-dialog-btn button:nth-child(1) {
+        background: #FF7C25;
+        border-bottom-left-radius: 5px;
+    }
+
+    .c-dialog-btn button:nth-child(2) {
+        background: #B5BECD;
+        border-bottom-right-radius: 5px;
+    }
+
+    @keyframes fade {
+        from {
+            opacity: 1.0;
+        }
+        50% {
+            opacity: 0;
+        }
+        to {
+            opacity: 1.0;
+        }
+    }
+
+    @-webkit-keyframes fade {
+        from {
+            opacity: 1.0;
+        }
+        50% {
+            opacity: 0;
+        }
+        to {
+            opacity: 1.0;
+        }
+    }
 
 </style>

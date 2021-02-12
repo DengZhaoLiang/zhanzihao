@@ -1,9 +1,9 @@
 <template>
     <div class='c-barrage'>
-        <c-tag v-for='(item,index) in tempBriefList' :key='index' :detail='item' :index='index'
-               :products-id='productsId'
-               @change='onLikeNumChange' />
-        <c-input-tag class='c-input-tag' @inputTag='onTagInput' />
+        <c-tag :detail='item' :index='index' :key='index' :products-id='productsId'
+               @change='onLikeNumChange'
+               v-for='(item,index) in tempBriefList' />
+        <c-input-tag @inputTag='onTagInput' class='c-input-tag' />
     </div>
 </template>
 
@@ -68,14 +68,14 @@
 </script>
 
 <style lang='scss' scoped>
-.c-barrage {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    .c-barrage {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
 
-    .c-input-tag {
-        display: inline-block;
+        .c-input-tag {
+            display: inline-block;
+        }
     }
-}
 </style>

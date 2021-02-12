@@ -5,7 +5,7 @@
                 <span>{{ address.name || '' }}</span>
             </div>
             <div>
-                <img src='../../../public/images/order/cancel.svg' @click='showDel' />
+                <img @click='showDel' src='../../../public/images/order/cancel.svg' />
             </div>
         </div>
         <div class='down-side'>
@@ -67,72 +67,72 @@
 </script>
 
 <style lang='scss' scoped>
-.c-address {
-    width: 266px;
-    height: 145px;
-    margin-top: 20px;
-    font-family: Source Han Sans CN;
-    // border: 1px solid #ccc;
-    padding: 11px 14px;
-    border-radius: 2px;
-    background: url("../../../public/images/order/border-0.png") center no-repeat;
+    .c-address {
+        width: 266px;
+        height: 145px;
+        margin-top: 20px;
+        font-family: Source Han Sans CN;
+        // border: 1px solid #ccc;
+        padding: 11px 14px;
+        border-radius: 2px;
+        background: url("../../../public/images/order/border-0.png") center no-repeat;
 
-    .up-side {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-
-        div {
-            &:nth-child(1) {
-                display: flex;
-                align-items: flex-end;
-
-                img {
-                    width: 62px;
-                    height: 62px;
-                    border-radius: 100%;
-                }
-
-                span {
-                    margin-left: 20px;
-                    font-size: 30px;
-                    color: #666666;
-                }
-            }
-
-            &:nth-child(2) {
-                display: flex;
-                height: 16px;
-
-                img {
-                    margin-left: 10px;
-                    width: 16px;
-                    height: 16px;
-                }
-            }
-        }
-    }
-
-    .down-side {
-        margin-top: 27px;
-        font-size: 14px;
-        font-weight: 300;
-        color: #666;
-
-        span {
-            margin-left: 12px;
-        }
-
-        div {
-            margin-bottom: 18px;
+        .up-side {
             display: flex;
-            align-items: center;
-            background: center no-repeat;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            div {
+                &:nth-child(1) {
+                    display: flex;
+                    align-items: flex-end;
+
+                    img {
+                        width: 62px;
+                        height: 62px;
+                        border-radius: 100%;
+                    }
+
+                    span {
+                        margin-left: 20px;
+                        font-size: 30px;
+                        color: #666666;
+                    }
+                }
+
+                &:nth-child(2) {
+                    display: flex;
+                    height: 16px;
+
+                    img {
+                        margin-left: 10px;
+                        width: 16px;
+                        height: 16px;
+                    }
+                }
+            }
+        }
+
+        .down-side {
+            margin-top: 27px;
+            font-size: 14px;
+            font-weight: 300;
+            color: #666;
+
+            span {
+                margin-left: 12px;
+            }
+
+            div {
+                margin-bottom: 18px;
+                display: flex;
+                align-items: center;
+                background: center no-repeat;
+            }
         }
     }
-}
 
-.selected-address {
-    background: url("../../../public/images/order/border-1.png") center no-repeat;
-}
+    .selected-address {
+        background: url("../../../public/images/order/border-1.png") center no-repeat;
+    }
 </style>

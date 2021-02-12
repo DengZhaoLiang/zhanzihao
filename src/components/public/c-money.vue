@@ -30,65 +30,65 @@
 </script>
 
 <style lang='scss' scoped>
-.money {
-    display: flex;
-    align-items: center;
-    font-family: Source Han Sans CN;
+    .money {
+        display: flex;
+        align-items: center;
+        font-family: Source Han Sans CN;
 
-    span {
-        color: #DD524D;
-        padding: 0;
-        display: block;
+        span {
+            color: #DD524D;
+            padding: 0;
+            display: block;
+        }
+
+        .money-icon {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+
+        .money-text {
+            font-size: 30px;
+        }
     }
 
-    .money-icon {
-        font-size: 20px;
-        margin-right: 5px;
+    .md {
+        .money-icon {
+            font-size: 18px;
+        }
+
+        .money-text {
+            font-size: 28px;
+        }
     }
 
-    .money-text {
-        font-size: 30px;
-    }
-}
+    .sm {
+        .money-icon {
+            font-size: 16px;
+        }
 
-.md {
-    .money-icon {
-        font-size: 18px;
-    }
-
-    .money-text {
-        font-size: 28px;
-    }
-}
-
-.sm {
-    .money-icon {
-        font-size: 16px;
+        .money-text {
+            font-size: 24px;
+        }
     }
 
-    .money-text {
-        font-size: 24px;
-    }
-}
+    .xs {
+        .money-icon {
+            font-size: 14px;
+        }
 
-.xs {
-    .money-icon {
-        font-size: 14px;
+        .money-text {
+            font-size: 20px;
+        }
     }
 
-    .money-text {
-        font-size: 20px;
-    }
-}
+    /*删除线*/
 
-/*删除线*/
-
-.d-xs {
-    span {
-        font-size: 20px !important;
-        margin-right: 0 !important;
-        color: #999999 !important;
-        text-decoration: line-through;
+    .d-xs {
+        span {
+            font-size: 20px !important;
+            margin-right: 0 !important;
+            color: #999999 !important;
+            text-decoration: line-through;
+        }
     }
-}
 </style>

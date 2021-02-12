@@ -1,6 +1,6 @@
 <template>
     <div class='address-container'>
-        <c-address v-for='(item, index) in addressList' :key='index' :address='item' />
+        <c-address :address='item' :key='index' v-for='(item, index) in addressList' />
         <c-new-address />
     </div>
 </template>
@@ -51,11 +51,11 @@
 
 <style lang='scss' scoped>
 
-.address-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 600px;
-    margin: 0 auto;
-}
+    .address-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 600px;
+        margin: 0 auto;
+    }
 </style>

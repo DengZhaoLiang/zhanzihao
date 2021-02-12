@@ -1,9 +1,9 @@
 <template>
     <div class='c-input-number'>
-        <button class='btn-minus' @click='minus'>
+        <button @click='minus' class='btn-minus'>
         </button>
         <span>{{ getNum }}</span>
-        <button class='btn-add' @click='add'>
+        <button @click='add' class='btn-add'>
         </button>
     </div>
 </template>
@@ -67,42 +67,42 @@
 
 <style lang='scss'>
 
-.c-input-number {
-    display: flex;
-    align-items: center;
-    border: 2px solid #f0f0f0;
-    border-radius: 4px;
-
-    span {
-        display: inline-block;
-        padding: 0 15px;
-        font-size: 16px;
+    .c-input-number {
+        display: flex;
+        align-items: center;
+        border: 2px solid #f0f0f0;
         border-radius: 4px;
-        color: #000;
-    }
 
-    button {
-        width: 25px;
-        height: 25px;
-        border: none;
-        outline: none;
-    }
+        span {
+            display: inline-block;
+            padding: 0 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            color: #000;
+        }
 
-    button:active {
-        animation: fade .6s infinite;
-        -webkit-animation: fade .6s infinite;
-    }
+        button {
+            width: 25px;
+            height: 25px;
+            border: none;
+            outline: none;
+        }
 
-    .btn-minus {
-        background: #f0f0f0 url("./../../../public/svgs/minus.svg") no-repeat center;
-        background-size: 15px 15px;
-    }
+        button:active {
+            animation: fade .6s infinite;
+            -webkit-animation: fade .6s infinite;
+        }
 
-    .btn-add {
-        background: #f0f0f0 url("./../../../public/svgs/add.svg") center no-repeat;
-        background-size: 15px 15px;
-    }
+        .btn-minus {
+            background: #f0f0f0 url("./../../../public/svgs/minus.svg") no-repeat center;
+            background-size: 15px 15px;
+        }
 
-}
+        .btn-add {
+            background: #f0f0f0 url("./../../../public/svgs/add.svg") center no-repeat;
+            background-size: 15px 15px;
+        }
+
+    }
 
 </style>

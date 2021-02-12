@@ -1,6 +1,6 @@
 <template>
     <div class='c-good-parent xy-center'>
-        <div class='c-good-item' @click='goToDetail'>
+        <div @click='goToDetail' class='c-good-item'>
             <div class='cat-img'>
                 <img :src='product.image'>
             </div>
@@ -17,8 +17,8 @@
                 <button @click.stop='addToCart'>加入购物车</button>
             </div>
         </div>
-        <c-modal :is-show-cancel='true' :is-show-modal='showToast' confirm-text='去购物车' context='加入购物车成功'
-                 @confirm='goToCart' @hide='showToast = false' />
+        <c-modal :is-show-cancel='true' :is-show-modal='showToast' @confirm='goToCart' @hide='showToast = false'
+                 confirm-text='去购物车' context='加入购物车成功' />
     </div>
 </template>
 
@@ -95,134 +95,134 @@
 
 <style lang='scss' scoped>
 
-.c-good-parent {
-    width: 288px;
-    height: 505px;
-    margin-top: 10px;
-}
-
-.c-good-item {
-    width: 265px;
-    height: 435px;
-    background: #fff;
-    /*box-shadow:0 1px 0 0 rgba(221,221,221,0.75);*/
-    border-radius: 8px;
-    padding: 0 4px;
-    /*flex-direction: column;*/
-    font-family: Source Han Sans CN;
-    /*border:8px solid transparent;*/
-    transition: all .2s ease-out;
-    -webkit-transition: all .2s ease-out;
-
-    &:hover {
-        border: 2px solid #FF7C25;
-        /*margin-top: -10px;*/
-        box-shadow: 0 0 5px #ff5400;
+    .c-good-parent {
+        width: 288px;
+        height: 505px;
+        margin-top: 10px;
     }
 
-    .cat-img {
-        width: 260px;
-        height: 258px;
-        border-radius: 10px;
-        display: block;
-        margin: 10px auto;
-        overflow: hidden;
-        box-sizing: border-box;
+    .c-good-item {
+        width: 265px;
+        height: 435px;
+        background: #fff;
+        /*box-shadow:0 1px 0 0 rgba(221,221,221,0.75);*/
+        border-radius: 8px;
+        padding: 0 4px;
+        /*flex-direction: column;*/
+        font-family: Source Han Sans CN;
+        /*border:8px solid transparent;*/
+        transition: all .2s ease-out;
+        -webkit-transition: all .2s ease-out;
 
-        img {
+        &:hover {
+            border: 2px solid #FF7C25;
+            /*margin-top: -10px;*/
+            box-shadow: 0 0 5px #ff5400;
+        }
+
+        .cat-img {
             width: 260px;
             height: 258px;
-            transition: transform 1s;
+            border-radius: 10px;
+            display: block;
+            margin: 10px auto;
+            overflow: hidden;
+            box-sizing: border-box;
 
-            &:hover {
-                transform: scale(1.2);
+            img {
+                width: 260px;
+                height: 258px;
+                transition: transform 1s;
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+
+        }
+
+        .good-brief {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .good-name {
+                display: flex;
+                align-items: flex-start;
+
+                span {
+                    &:nth-child(1) {
+                        font-size: 24px;
+                        font-weight: 400;
+                        color: rgba(46, 46, 46, 1);
+                    }
+
+                    &:nth-child(2) {
+                        display: inline-block;
+                        background: #FF7C25;
+                        font-size: 12px;
+                        border-radius: 4px;
+                        padding: 1px 5px;
+                        color: #fff;
+                        margin-top: 5px;
+                        margin-left: 10px;
+                        /*letter-spacing: 2px;*/
+                    }
+                }
             }
         }
 
-    }
-
-    .good-brief {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .good-name {
+        .good-price {
+            margin-top: 10px;
             display: flex;
-            align-items: flex-start;
+            align-items: flex-end;
+
+            .discount {
+                padding-bottom: 3px;
+                margin-left: 10px;
+            }
+        }
+
+        .member {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+
+            img {
+                width: 20px;
+                height: 17px;
+            }
 
             span {
-                &:nth-child(1) {
-                    font-size: 24px;
-                    font-weight: 400;
-                    color: rgba(46, 46, 46, 1);
-                }
-
-                &:nth-child(2) {
-                    display: inline-block;
-                    background: #FF7C25;
-                    font-size: 12px;
-                    border-radius: 4px;
-                    padding: 1px 5px;
-                    color: #fff;
-                    margin-top: 5px;
-                    margin-left: 10px;
-                    /*letter-spacing: 2px;*/
+                font-size: 16px;
+                color: rgba(102, 102, 102, 1);
+                margin: {
+                    left: 10px;
+                    right: 37px;
                 }
             }
         }
-    }
 
-    .good-price {
-        margin-top: 10px;
-        display: flex;
-        align-items: flex-end;
-
-        .discount {
-            padding-bottom: 3px;
-            margin-left: 10px;
-        }
-    }
-
-    .member {
-        margin-top: 10px;
-        display: flex;
-        align-items: center;
-
-        img {
-            width: 20px;
-            height: 17px;
-        }
-
-        span {
-            font-size: 16px;
-            color: rgba(102, 102, 102, 1);
-            margin: {
-                left: 10px;
-                right: 37px;
-            }
-        }
-    }
-
-    .add-to-card {
-        margin-top: 15px;
-        border-top: 1px solid #ccc;
-
-        button {
-            width: 273px;
-            height: 43px;
+        .add-to-card {
             margin-top: 15px;
-            background: rgba(255, 107, 103, 1);
-            border-radius: 10px;
-            border: none;
-            outline: none;
-            color: rgba(255, 254, 254, 1);
-            font-size: 20px;
-        }
+            border-top: 1px solid #ccc;
 
-        button:active {
-            animation: fade .8s infinite;
-            -webkit-animation: fade .8s infinite;
+            button {
+                width: 273px;
+                height: 43px;
+                margin-top: 15px;
+                background: rgba(255, 107, 103, 1);
+                border-radius: 10px;
+                border: none;
+                outline: none;
+                color: rgba(255, 254, 254, 1);
+                font-size: 20px;
+            }
+
+            button:active {
+                animation: fade .8s infinite;
+                -webkit-animation: fade .8s infinite;
+            }
         }
     }
-}
 </style>

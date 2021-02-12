@@ -7,14 +7,14 @@
             <el-col :span='4' class='x-center'>实付款</el-col>
             <el-col :span='4' class='x-center'>订单状态</el-col>
         </el-row>
-        <c-order-item v-for='(item,index) in orderList' :key='index' :order-item='item' />
-        <div v-if='isLoaded && !orderList.length' class='none-data yx-center'>
+        <c-order-item :key='index' :order-item='item' v-for='(item,index) in orderList' />
+        <div class='none-data yx-center' v-if='!load && !orderList.length'>
             <img alt='' src='../../../../public/images/my/none-data.svg' />
             <span>暂无订单数据，赶快去下单吧~</span>
         </div>
-        <div v-infinite-scroll='loadMore' class='load-infinite infinite-list'
-             infinite-scroll-disabled='busy' infinite-scroll-distance='10'>
-            <img v-show='loading' alt='' src='../../../assets/loading-svg/dual-ball.svg' />
+        <div class='load-infinite infinite-list' infinite-scroll-disabled='busy'
+             infinite-scroll-distance='10' v-infinite-scroll='loadMore'>
+            <img alt='' src='../../../assets/loading-svg/dual-ball.svg' v-show='loading' />
         </div>
     </div>
 </template>
@@ -34,7 +34,7 @@
                 orderList: [],
                 loading: false,
                 busy: false,
-                isLoaded: false,
+                load: true,
                 userId: '',
                 query: {
                     page: 1,
@@ -54,6 +54,7 @@
                                 this.load = false
                             }
                         }
+                        console.log(this.orderList)
                     }).catch(err => {
                         console.log(err)
                         this.load = false
@@ -82,40 +83,40 @@
 </script>
 
 <style lang='scss' scoped>
-$width: 880px;
-$background: #f5f5f5;
+    $width: 880px;
+    $background: #f5f5f5;
 
-.c-order-container {
-    width: $width;
+    .c-order-container {
+        width: $width;
 
-    .order-title {
-        background: $background;
-        color: #333;
-        font-size: 16px;
-        padding: 8px 0;
-        margin-bottom: 10px;
+        .order-title {
+            background: $background;
+            color: #333;
+            font-size: 16px;
+            padding: 8px 0;
+            margin-bottom: 10px;
+        }
     }
-}
 
-.load-infinite {
-    margin-top: 50px;
-    height: 100px;
-    text-align: center;
+    .load-infinite {
+        margin-top: 50px;
+        height: 100px;
+        text-align: center;
 
-    img {
-        width: 50px;
-        height: 50px;
+        img {
+            width: 50px;
+            height: 50px;
+        }
     }
-}
 
-.none-data {
-    margin-top: 80px;
+    .none-data {
+        margin-top: 80px;
 
-    span {
-        margin-top: 20px;
-        font-size: 16px;
-        color: #aaa;
-        font-weight: 300;
+        span {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #aaa;
+            font-weight: 300;
+        }
     }
-}
 </style>

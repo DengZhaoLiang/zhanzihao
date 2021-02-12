@@ -1,11 +1,11 @@
 <template>
     <div :style='countImgHeight'>
         <el-carousel :height='imgHeight'>
-            <el-carousel-item v-for='item in 3' :key='item'>
+            <el-carousel-item :key='item' v-for='item in 3'>
                 <!--            <img style="width: 100%" ref="imgHeight" v-lazy="require(`./../../../public/images/banner/banner_0${item}.png`)">-->
-                <el-image ref='imgHeight'
-                          :src='require(`./../../../public/images/banner/banner_0${item}.png`)'
-                          fit='fill' @load='loadedImg'></el-image>
+                <el-image :src='require(`./../../../public/images/banner/banner_0${item}.png`)'
+                          @load='loadedImg'
+                          fit='fill' ref='imgHeight'></el-image>
             </el-carousel-item>
         </el-carousel>
     </div>
@@ -43,11 +43,11 @@
 
 <style lang='scss'>
 
-.el-carousel ul li .el-carousel__button {
-    width: 3.375rem;
-    height: 0.25rem;
-    background: #FF7C25;
-    border-radius: 0.09375rem;
-}
+    .el-carousel ul li .el-carousel__button {
+        width: 3.375rem;
+        height: 0.25rem;
+        background: #FF7C25;
+        border-radius: 0.09375rem;
+    }
 
 </style>

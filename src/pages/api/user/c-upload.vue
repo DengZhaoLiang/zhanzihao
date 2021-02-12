@@ -8,9 +8,9 @@
             :show-file-list='false'
             class='avatar-uploader'
             name='file'>
-            <img v-if='imageUrl' :src='imageUrl' class='avatar'>
-            <i v-if='isUploading' class='el-icon-loading avatar-uploader-icon'></i>
-            <img v-else class='el-icon-plus avatar-uploader-icon' src='../../../../public/images/my/reload.png'>
+            <img :src='imageUrl' class='avatar' v-if='imageUrl'>
+            <i class='el-icon-loading avatar-uploader-icon' v-if='isUploading'></i>
+            <img class='el-icon-plus avatar-uploader-icon' src='../../../../public/images/my/reload.png' v-else>
         </el-upload>
     </div>
 </template>
@@ -83,47 +83,47 @@
 </script>
 
 <style>
-.c-upload {
-    background-image: url("../../../../public/images/public/head-photo.png");
-    width: 187px !important;
-    height: 187px !important;
-    background-size: 187px 187px;
-    border-radius: 8px;
-    background-position: center;
-    background-repeat: no-repeat;
-}
+    .c-upload {
+        background-image: url("../../../../public/images/public/head-photo.png");
+        width: 187px !important;
+        height: 187px !important;
+        background-size: 187px 187px;
+        border-radius: 8px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
 
-.avatar-uploader .el-upload {
-    /*border: 1px dashed #d9d9d9;*/
-    border-radius: 8px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    background: rgba(211, 211, 211, 1);
-    width: 187px !important;
-    height: 187px !important;
-    opacity: 0.76;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+    .avatar-uploader .el-upload {
+        /*border: 1px dashed #d9d9d9;*/
+        border-radius: 8px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        background: rgba(211, 211, 211, 1);
+        width: 187px !important;
+        height: 187px !important;
+        opacity: 0.76;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-.avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-}
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
 
-.avatar-uploader-icon {
-    width: 60px !important;
-    height: 60px !important;
-    position: absolute;
-    font-size: 60px;
-    color: #fff;
-    z-index: 10;
-}
+    .avatar-uploader-icon {
+        width: 60px !important;
+        height: 60px !important;
+        position: absolute;
+        font-size: 60px;
+        color: #fff;
+        z-index: 10;
+    }
 
-.avatar {
-    width: 187px !important;
-    height: 187px !important;
-    display: block;
-}
+    .avatar {
+        width: 187px !important;
+        height: 187px !important;
+        display: block;
+    }
 </style>

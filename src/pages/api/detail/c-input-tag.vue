@@ -1,22 +1,22 @@
 <template>
     <div class='input-tag'>
-        <div v-if='inputVisible' :style='setStyle' class='input-container'>
+        <div :style='setStyle' class='input-container' v-if='inputVisible'>
             <div>
                 <el-color-picker v-model='pickerColor' />
             </div>
             <div class='input-right'>
-                <input ref='input' v-model='inputValue'
-                       :style='setColor'
+                <input :style='setColor' @keyup.enter='handleInputConfirm'
                        autofocus='autofocus'
                        maxlength='10'
+                       ref='input'
                        size='small'
-                       @keyup.enter='handleInputConfirm' />
-                <i :style="isHover ? setBackground : ''" class='iconfont icon-cuo'
+                       v-model='inputValue' />
+                <i :style="isHover ? setBackground : ''" @click.self='closeInput'
                    @mouseout='isHover = false' @mouseover='isHover = true'
-                   @click.self='closeInput'></i>
+                   class='iconfont icon-cuo'></i>
             </div>
         </div>
-        <button v-else class='button-tag' @click='showInput'>+ 新弹幕</button>
+        <button @click='showInput' class='button-tag' v-else>+ 新弹幕</button>
     </div>
 </template>
 
@@ -77,88 +77,88 @@
 
 <style lang='scss'>
 
-.input-tag {
-    display: inline-block;
-    margin: 5px 8px;
-    height: 34px;
+    .input-tag {
+        display: inline-block;
+        margin: 5px 8px;
+        height: 34px;
 
-    .input-container {
-        $default-color: #409EFF;
-        $height: 32px;
-        display: flex;
-        border: 1.2px solid $default-color;
-        border-radius: 4px;
-        height: $height;
-        width: 150px;
-        color: $default-color;
-
-        .el-color-picker__trigger {
-            width: $height !important;
-            height: $height !important;
-            padding: 0;
-            border: 0;
-            border-radius: 4px;
-
-            .el-color-picker__color {
-                border: 0;
-            }
-
-            .el-color-picker__icon::before {
-                content: '';
-            }
-        }
-
-        .input-right {
+        .input-container {
+            $default-color: #409EFF;
+            $height: 32px;
             display: flex;
-            align-items: center;
-            padding: 0 5px;
+            border: 1.2px solid $default-color;
+            border-radius: 4px;
+            height: $height;
+            width: 150px;
+            color: $default-color;
 
-            input {
-                height: 30px;
-                line-height: 30px;
-                width: 90px;
-                margin: 0 !important;
-                padding: 0 !important;
+            .el-color-picker__trigger {
+                width: $height !important;
+                height: $height !important;
+                padding: 0;
                 border: 0;
-                outline: none;
-                font-size: 14px;
-            }
+                border-radius: 4px;
 
-            i {
-                font-size: 16px;
-                font-weight: 300;
-                border-radius: 100%;
+                .el-color-picker__color {
+                    border: 0;
+                }
 
-                &:hover {
-                    width: 18px;
-                    height: 18px;
-                    display: inline-block;
-                    text-align: center;
-                    color: #fff;
-                    border-radius: 100%;
+                .el-color-picker__icon::before {
+                    content: '';
                 }
             }
+
+            .input-right {
+                display: flex;
+                align-items: center;
+                padding: 0 5px;
+
+                input {
+                    height: 30px;
+                    line-height: 30px;
+                    width: 90px;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    border: 0;
+                    outline: none;
+                    font-size: 14px;
+                }
+
+                i {
+                    font-size: 16px;
+                    font-weight: 300;
+                    border-radius: 100%;
+
+                    &:hover {
+                        width: 18px;
+                        height: 18px;
+                        display: inline-block;
+                        text-align: center;
+                        color: #fff;
+                        border-radius: 100%;
+                    }
+                }
+            }
+
         }
 
-    }
+        .button-tag {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 34px !important;
+            font-size: 14px;
+            background: #fff;
+            outline: none;
+            border: 1px solid #409EFF;
+            border-radius: 4px;
+            color: #606266;
+            padding: 0 20px;
 
-    .button-tag {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 34px !important;
-        font-size: 14px;
-        background: #fff;
-        outline: none;
-        border: 1px solid #409EFF;
-        border-radius: 4px;
-        color: #606266;
-        padding: 0 20px;
-
-        &:hover {
-            background: rgb(236, 245, 255);
+            &:hover {
+                background: rgb(236, 245, 255);
+            }
         }
     }
-}
 
 </style>

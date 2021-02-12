@@ -4,12 +4,12 @@
             <div>
                 <img :src='(getUserInfo.avatar)'>
             </div>
-            <el-dropdown-menu slot='dropdown' class='c-dropdown'>
+            <el-dropdown-menu class='c-dropdown' slot='dropdown'>
                 <el-dropdown-item>邮箱：{{ (getUserInfo ? getUserInfo.email : '') | formatString(18) }}</el-dropdown-item>
                 <el-dropdown-item>昵称：{{ (getUserInfo ? getUserInfo.name : '') | formatString(18) }}
                 </el-dropdown-item>
-                <el-dropdown-item divided @click.native='goToPersonal'>我的主页</el-dropdown-item>
-                <el-dropdown-item divided @click.native='logout'>登出</el-dropdown-item>
+                <el-dropdown-item @click.native='goToPersonal' divided>我的主页</el-dropdown-item>
+                <el-dropdown-item @click.native='logout' divided>登出</el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
     </div>
@@ -48,24 +48,24 @@
 </script>
 
 <style lang='scss' scoped>
-.c-header-image {
-    img {
-        width: 50px;
-        height: 50px;
-        border-radius: 100%;
-        margin-top: 8px;
-        margin-right: 10px;
+    .c-header-image {
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            margin-top: 8px;
+            margin-right: 10px;
+        }
     }
-}
 
-.c-dropdown {
-    width: 240px;
-}
+    .c-dropdown {
+        width: 240px;
+    }
 
-.recharge {
-    width: 50px;
-    margin-left: auto;
-    padding: 4px 0;
-}
+    .recharge {
+        width: 50px;
+        margin-left: auto;
+        padding: 4px 0;
+    }
 
 </style>

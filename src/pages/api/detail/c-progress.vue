@@ -1,8 +1,8 @@
 <template>
     <div class='c-progress'>
-        <div ref='progress' :style='setProgressBgStyle' class='c-progress-outer'>
+        <div :style='setProgressBgStyle' class='c-progress-outer' ref='progress'>
             <div :style='setProgressStyle' class='c-progress-inner'></div>
-            <div v-if='showSlider' ref='slider' :style='setSliderStyle' class='c-progress-slider'></div>
+            <div :style='setSliderStyle' class='c-progress-slider' ref='slider' v-if='showSlider'></div>
         </div>
         <span v-if='showPerText'>{{ tempPercent }}%</span>
     </div>
@@ -154,44 +154,44 @@
 </script>
 
 <style lang='scss' scoped>
-.c-progress {
-    $width: 300px;
-    $radius: 5px;
-    display: flex;
-    align-items: center;
-
-    span {
-        margin-left: 5px;
-        font-size: 14px;
-        color: #666;
-    }
-
-    .c-progress-outer {
-        width: $width;
-        height: 10px;
-        border-radius: $radius;
-        background: #ebeef5;
-        position: relative;
+    .c-progress {
+        $width: 300px;
+        $radius: 5px;
         display: flex;
         align-items: center;
 
-        .c-progress-inner {
-            width: 100px;
-            height: 10px;
-            background: #409EFF;
-            border-radius: $radius;
+        span {
+            margin-left: 5px;
+            font-size: 14px;
+            color: #666;
         }
 
-        .c-progress-slider {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #fff;
-            border: 1px solid #409EFF;
-            position: absolute;
-            z-index: 10;
-            left: 10px;
+        .c-progress-outer {
+            width: $width;
+            height: 10px;
+            border-radius: $radius;
+            background: #ebeef5;
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            .c-progress-inner {
+                width: 100px;
+                height: 10px;
+                background: #409EFF;
+                border-radius: $radius;
+            }
+
+            .c-progress-slider {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: #fff;
+                border: 1px solid #409EFF;
+                position: absolute;
+                z-index: 10;
+                left: 10px;
+            }
         }
     }
-}
 </style>

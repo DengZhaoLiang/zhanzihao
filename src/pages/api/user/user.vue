@@ -44,29 +44,29 @@
 </script>
 
 <style lang='scss' scoped>
-.my {
-    width: 100%;
-    background: #f2f2f2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    .bread {
+    .my {
         width: 100%;
-        background: #F2F2F2;
+        background: #f2f2f2;
         display: flex;
-        align-items: center;
         justify-content: center;
-    }
+        align-items: center;
+        flex-direction: column;
 
-    .container {
-        align-items: flex-start;
-        margin: 10px 0;
+        .bread {
+            width: 100%;
+            background: #F2F2F2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        .c-tab {
-            margin-left: 15px;
+        .container {
+            align-items: flex-start;
+            margin: 10px 0;
+
+            .c-tab {
+                margin-left: 15px;
+            }
         }
     }
-}
 </style>

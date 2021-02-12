@@ -1,14 +1,14 @@
 <template>
-    <div v-if='isShow' class='c-edit-info'>
+    <div class='c-edit-info' v-if='isShow'>
         <c-modal :is-custom='true' :is-show-confirm='false'
-                 :is-show-modal='isShow' :title="'编辑个人信息'" :width="'800px'" bg-color='#eee' @hide='onHide'>
-            <div slot='custom' class='edit-container'>
+                 :is-show-modal='isShow' :title="'编辑个人信息'" :width="'800px'" @hide='onHide' bg-color='#eee'>
+            <div class='edit-container' slot='custom'>
                 <div class='xy-center'>
                     <span class='left-title'>编辑昵称：</span>
-                    <el-input v-model='tempUserInfo.name'
-                              :suffix-icon="searchingName ? 'el-icon-loading' : nameCanUse ? 'el-icon-circle-check' : 'el-icon-circle-close'"
+                    <el-input :suffix-icon="searchingName ? 'el-icon-loading' : nameCanUse ? 'el-icon-circle-check' : 'el-icon-circle-close'"
                               class='right-container'
-                              placeholder='请输入你的昵称'>
+                              placeholder='请输入你的昵称'
+                              v-model='tempUserInfo.name'>
                     </el-input>
                 </div>
                 <div class='xy-center'>
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <button class='save' @click='save'>保存</button>
+                <button @click='save' class='save'>保存</button>
             </div>
         </c-modal>
     </div>
@@ -109,136 +109,136 @@
 
 <style lang='scss'>
 
-.edit-container {
-    display: flex;
-    flex-direction: column;
-    margin: {
-        top: 20px;
-        bottom: 20px;
-    }
-    width: 760px;
-    padding: 0 20px;
-    background: #eee;
-
-    .save {
-        width: 200px;
-        height: 50px;
-        line-height: 50px;
-        color: #fff;
-        border-radius: 8px;
-        background: #ff6900;
-        border: 0;
-        outline: none;
-        font-size: 22px;
+    .edit-container {
+        display: flex;
+        flex-direction: column;
         margin: {
-            top: 40px;
-            left: auto;
-            right: auto;
-        };
-    }
+            top: 20px;
+            bottom: 20px;
+        }
+        width: 760px;
+        padding: 0 20px;
+        background: #eee;
 
-    > div {
-        justify-content: left;
-        margin-top: 46px;
-
-        .left-title {
-            display: inline-block;
-            text-align: left;
-            width: 120px;
+        .save {
+            width: 200px;
+            height: 50px;
+            line-height: 50px;
+            color: #fff;
+            border-radius: 8px;
+            background: #ff6900;
+            border: 0;
+            outline: none;
+            font-size: 22px;
+            margin: {
+                top: 40px;
+                left: auto;
+                right: auto;
+            };
         }
 
-        .right-container {
-            width: 600px;
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-        }
+        > div {
+            justify-content: left;
+            margin-top: 46px;
 
-        &:nth-child(1) {
-            margin-bottom: 10px;
-
-            .el-input {
-                .el-input__inner {
-                    border: 0;
-                    border-radius: 0;
-                    border-bottom: 1px solid #888;
-                    background: #eee;
-                }
+            .left-title {
+                display: inline-block;
+                text-align: left;
+                width: 120px;
             }
 
-            .el-input__suffix {
-                font-size: 30px;
-
-                .el-icon-circle-check {
-                    color: #49D866;
-                }
-
-                .el-icon-circle-close {
-                    color: #F56C6C;
-                }
-
-                /*.el-icon-loading {*/
-                /*  color: #fff;*/
-                /*}*/
-            }
-        }
-
-        &:nth-child(2) {
-            margin-bottom: 10px;
-
-            .xy-center {
-                justify-content: center;
-                margin-right: 42px;
-
-                img {
-                    width: 35px;
-                    height: 35px;
-                    object-fit: scale-down;
-                    margin-right: 10px;
-                }
-            }
-        }
-
-        &:nth-child(3) {
-            img {
-                width: 182px;
-                height: 182px;
-                border-radius: 10px;
+            .right-container {
+                width: 600px;
+                align-items: flex-start !important;
+                justify-content: flex-start !important;
             }
 
-            .xy-center {
-                justify-content: flex-start;
-            }
+            &:nth-child(1) {
+                margin-bottom: 10px;
 
-            .yx-center {
-                width: 243px;
-                height: 164px;
-                padding: 0 22px;
-                background: #fff;
-                border-radius: 8px;
-                margin-left: 56px;
-                justify-content: left;
-                align-items: flex-start;
-
-                img {
-                    width: 103px;
-                    height: 103px;
-
-                    &:nth-child(2) {
-                        margin-left: 36px;
-                        border-radius: 100%;
+                .el-input {
+                    .el-input__inner {
+                        border: 0;
+                        border-radius: 0;
+                        border-bottom: 1px solid #888;
+                        background: #eee;
                     }
                 }
 
-                span {
-                    font-size: 14px;
-                    font-family: Source Han Sans CN;
-                    color: rgba(136, 136, 136, 1);
-                    margin: 14px 0;
+                .el-input__suffix {
+                    font-size: 30px;
+
+                    .el-icon-circle-check {
+                        color: #49D866;
+                    }
+
+                    .el-icon-circle-close {
+                        color: #F56C6C;
+                    }
+
+                    /*.el-icon-loading {*/
+                    /*  color: #fff;*/
+                    /*}*/
                 }
             }
-        }
 
+            &:nth-child(2) {
+                margin-bottom: 10px;
+
+                .xy-center {
+                    justify-content: center;
+                    margin-right: 42px;
+
+                    img {
+                        width: 35px;
+                        height: 35px;
+                        object-fit: scale-down;
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            &:nth-child(3) {
+                img {
+                    width: 182px;
+                    height: 182px;
+                    border-radius: 10px;
+                }
+
+                .xy-center {
+                    justify-content: flex-start;
+                }
+
+                .yx-center {
+                    width: 243px;
+                    height: 164px;
+                    padding: 0 22px;
+                    background: #fff;
+                    border-radius: 8px;
+                    margin-left: 56px;
+                    justify-content: left;
+                    align-items: flex-start;
+
+                    img {
+                        width: 103px;
+                        height: 103px;
+
+                        &:nth-child(2) {
+                            margin-left: 36px;
+                            border-radius: 100%;
+                        }
+                    }
+
+                    span {
+                        font-size: 14px;
+                        font-family: Source Han Sans CN;
+                        color: rgba(136, 136, 136, 1);
+                        margin: 14px 0;
+                    }
+                }
+            }
+
+        }
     }
-}
 
 </style>

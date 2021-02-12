@@ -6,39 +6,39 @@
             width='300px'>
             <div>
                 <el-input
-                    v-model='input.email'
-                    placeholder='请输入邮箱'>
+                    placeholder='请输入邮箱'
+                    v-model='input.email'>
                     <img slot='prefix' src='./../../../public/images/public/email.png' />
                 </el-input>
-                <div v-show='errTip[0]' class='err-tip'>
+                <div class='err-tip' v-show='errTip[0]'>
                     <i class='el-icon-warning'>邮箱格式不正确</i>
                 </div>
                 <el-input
-                    v-model='input.password'
                     :type="isShowPwd ? 'text' : 'password'"
-                    placeholder='请输入新密码'>
+                    placeholder='请输入新密码'
+                    v-model='input.password'>
                     <img slot='prefix' src='./../../../public/images/public/pwd.png' />
-                    <img slot='suffix' :src='require(`./../../../public/images/public/show${isShowPwd}.png`)'
-                         @click='isShowPwd = !isShowPwd' />
+                    <img :src='require(`./../../../public/images/public/show${isShowPwd}.png`)' @click='isShowPwd = !isShowPwd'
+                         slot='suffix' />
                 </el-input>
-                <div v-show='errTip[1]' class='err-tip'>
+                <div class='err-tip' v-show='errTip[1]'>
                     <i class='el-icon-warning'>账号密码格式不正确</i>
                 </div>
-                <el-input v-if='!isLogin'
-                          v-model='input.repeatPwd'
-                          :type="isShowPwd ? 'text' : 'password'"
-                          placeholder='请再次输入密码'>
+                <el-input :type="isShowPwd ? 'text' : 'password'"
+                          placeholder='请再次输入密码'
+                          v-if='!isLogin'
+                          v-model='input.repeatPwd'>
                     <img slot='prefix' src='./../../../public/images/public/pwd.png' />
-                    <img slot='suffix' :src='require(`./../../../public/images/public/show${isShowPwd}.png`)'
-                         @click='isShowPwd = !isShowPwd' />
+                    <img :src='require(`./../../../public/images/public/show${isShowPwd}.png`)' @click='isShowPwd = !isShowPwd'
+                         slot='suffix' />
                 </el-input>
-                <div v-show='errTip[2]' class='err-tip'>
+                <div class='err-tip' v-show='errTip[2]'>
                     <i class='el-icon-warning'>两次密码不一致</i>
                 </div>
                 <div class='yx-center'>
-                    <el-button round @click='submit'>{{ isLogin ? '登录' : '注册' }}</el-button>
+                    <el-button @click='submit' round>{{ isLogin ? '登录' : '注册' }}</el-button>
                     <div class='footer-btn'>
-                        <el-button type='text' @click='changeMode'>立即{{ isLogin ? '注册' : '登录' }}</el-button>
+                        <el-button @click='changeMode' type='text'>立即{{ isLogin ? '注册' : '登录' }}</el-button>
                     </div>
                 </div>
             </div>
@@ -162,102 +162,102 @@
 </script>
 
 <style lang='scss'>
-.login {
+    .login {
 
-    .el-dialog__header {
-        text-align: center;
-    }
-
-    .el-dialog {
-        border-radius: 10px;
-    }
-
-    .el-dialog__title {
-        font-size: 26px;
-    }
-
-    .el-input {
-        input {
-            border: none;
-            border-bottom: 1px solid #ccc;
-            color: #ee4400;
-            margin-bottom: 15px;
-            font-size: 16px;
-            border-radius: 0;
+        .el-dialog__header {
+            text-align: center;
         }
 
-        img {
-            width: 22px;
-            height: 22px;
-            padding-top: 7px;
+        .el-dialog {
+            border-radius: 10px;
         }
 
-        .el-input__inner {
-            padding-left: 40px;
+        .el-dialog__title {
+            font-size: 26px;
         }
 
-        .get-verify-code {
-            margin-top: 4px;
-            background: #ff4400;
-            color: #fff;
-            padding: 8px 10px;
-            font-size: 12px;
-            border-radius: 20px;
-            display: inline-block;
-            border: none;
-            outline: none;
+        .el-input {
+            input {
+                border: none;
+                border-bottom: 1px solid #ccc;
+                color: #ee4400;
+                margin-bottom: 15px;
+                font-size: 16px;
+                border-radius: 0;
+            }
 
-            &:active {
-                animation: fade .6s infinite;
-                -moz-animation: fade .6s infinite;
+            img {
+                width: 22px;
+                height: 22px;
+                padding-top: 7px;
+            }
+
+            .el-input__inner {
+                padding-left: 40px;
+            }
+
+            .get-verify-code {
+                margin-top: 4px;
+                background: #ff4400;
+                color: #fff;
+                padding: 8px 10px;
+                font-size: 12px;
+                border-radius: 20px;
+                display: inline-block;
+                border: none;
+                outline: none;
+
+                &:active {
+                    animation: fade .6s infinite;
+                    -moz-animation: fade .6s infinite;
+                }
+            }
+
+            .get-verify-code-span {
+                padding: 10px 0;
+                font-size: 14px;
+                color: #ff4400;
+                display: inline-block;
             }
         }
 
-        .get-verify-code-span {
-            padding: 10px 0;
-            font-size: 14px;
-            color: #ff4400;
-            display: inline-block;
-        }
-    }
+        .el-button.is-round {
+            width: 85%;
+            margin-top: 15px;
+            background: #ff6900;
+            color: #fff;
+            outline: none;
+            font-size: 18px;
 
-    .el-button.is-round {
-        width: 85%;
-        margin-top: 15px;
-        background: #ff6900;
-        color: #fff;
-        outline: none;
-        font-size: 18px;
+            &:active {
+                border: 1px solid #ff6900;
+            }
 
-        &:active {
-            border: 1px solid #ff6900;
         }
 
-    }
+        .footer-btn {
+            width: 85%;
+            display: flex;
+            justify-content: space-between;
+            margin: {
+                top: 10px;
+                bottom: -20px;
+                left: auto;
+                right: auto;
+            };
 
-    .footer-btn {
-        width: 85%;
-        display: flex;
-        justify-content: space-between;
-        margin: {
-            top: 10px;
-            bottom: -20px;
-            left: auto;
-            right: auto;
-        };
-
-        .el-button--text {
-            color: #ff4400;
+            .el-button--text {
+                color: #ff4400;
+            }
         }
-    }
 
-    .err-tip {
-        text-align: left;
-        margin-bottom: 2px;
-        margin-top: -5px;
-        padding-left: 8px;
-        color: #F56C6C;
-    }
+        .err-tip {
+            text-align: left;
+            margin-bottom: 2px;
+            margin-top: -5px;
+            padding-left: 8px;
+            color: #F56C6C;
+        }
 
-}
+    }
 </style>

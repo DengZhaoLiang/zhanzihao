@@ -1,5 +1,5 @@
 <template>
-    <div class='c-new-address x-center' @click.self='show'>
+    <div @click.self='show' class='c-new-address x-center'>
         <span>添加新地址</span>
         <c-edit-address :is-add='true' :is-show='showEditAddress' @hide='showEditAddress = false' />
     </div>
@@ -32,18 +32,18 @@
 </script>
 
 <style lang='scss' scoped>
-.c-new-address {
-    width: 294px;
-    height: 167px;
-    margin-top: 20px;
-    font-family: Source Han Sans CN;
-    font-size: 14px;
-    font-weight: 300;
-    color: #666;
-    background: url("../../../../public/images/order/border-add.png") center no-repeat;
+    .c-new-address {
+        width: 294px;
+        height: 167px;
+        margin-top: 20px;
+        font-family: Source Han Sans CN;
+        font-size: 14px;
+        font-weight: 300;
+        color: #666;
+        background: url("../../../../public/images/order/border-add.png") center no-repeat;
 
-    span {
-        margin-top: 140px;
+        span {
+            margin-top: 140px;
+        }
     }
-}
 </style>

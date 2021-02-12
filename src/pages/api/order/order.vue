@@ -3,30 +3,30 @@
         <c-head></c-head>
         <c-timeline :cur-step='step'></c-timeline>
         <div class='step-group'>
-            <div v-if='step === 1' class='group-1 yx-center'>
+            <div class='group-1 yx-center' v-if='step === 1'>
                 <div :class="(5 % 3) !== 0 ? 'fill-space' : ''" class='address-container'>
-                    <c-address v-for='(item, index) in addressList' :key='index'
-                               :address='item'
-                               :is-selected='index === selectedAddressIndex'
-                               @click.native='selectedAddressIndex = index' />
+                    <c-address :address='item' :is-selected='index === selectedAddressIndex'
+                               :key='index'
+                               @click.native='selectedAddressIndex = index'
+                               v-for='(item, index) in addressList' />
                     <c-new-address />
                 </div>
-                <button class='button-next' @click='changeStep(2)'>下一步</button>
+                <button @click='changeStep(2)' class='button-next'>下一步</button>
             </div>
-            <div v-if='step === 2' class='group-2'>
+            <div class='group-2' v-if='step === 2'>
                 <c-good-list :show-check-box='false' class='c-good-list' />
                 <div class='btn-group1'>
                     <button @click='changeStep(1)'>返回</button>
                     <button @click='changeStep(3)'>提交订单</button>
                 </div>
             </div>
-            <div v-if='step === 3' class='group-3 xy-center'>
-                <c-order-success :is-payed='false' :order-id='orderId' :total-amount='totalAmount' />
+            <div class='group-3 xy-center' v-if='step === 3'>
+                <c-order-success :is-payed='false' :order-id='orderSn' :total-amount='totalPrice' />
                 <div class='btn-group2'>
                 </div>
             </div>
-            <div v-if='step === 4' class='group-3 xy-center'>
-                <c-order-success :is-payed='true' :order-id='orderId' :total-amount='totalAmount' />
+            <div class='group-3 xy-center' v-if='step === 4'>
+                <c-order-success :is-payed='true' :order-id='orderSn' :total-amount='totalPrice' />
                 <div class='btn-group2'>
                     <button @click='goBack'>继续购物</button>
                     <button @click='goToMy'>查看订单</button>
@@ -35,17 +35,17 @@
         </div>
         <div class='bottom-line'></div>
         <c-foot></c-foot>
-        <c-modal v-if='showModal'
-                 :is-show-cancel='true'
+        <c-modal :is-show-cancel='true'
                  :is-show-modal='showModal'
                  :show-close='false'
                  cancel-text='残忍离开'
                  confirm-text='去支付'
                  context='您有未支付的订单，忍心离开吗'
                  title='温馨提示'
-                 width='400px'
+                 v-if='showModal'
                  v-on:cancel='onCancel'
-                 v-on:confirm='onConfirm' />
+                 v-on:confirm='onConfirm'
+                 width='400px' />
     </div>
 </template>
 
@@ -78,8 +78,8 @@
                 step: 1,
                 selectedAddressIndex: 0,
                 addressList: [],
-                orderId: '', // 订单号
-                totalAmount: 0, // 待支付的金额
+                orderSn: '', // 订单号
+                totalPrice: 0, // 待支付的金额
                 showModal: false,
                 isPayed: false,
                 userId: ''
@@ -147,7 +147,7 @@
                 console.log('跳转至下一步')
             },
             goToMy() {
-                if (this.$route.query.orderId) {
+                if (this.$route.query.orderSn) {
                     this.$router.replace('/my')
                 } else {
                     this.$router.push('/my')
@@ -167,10 +167,6 @@
             // 获取productsId列表
             _getGoodsIdList() {
                 return []
-            },
-            // 显示密码输入框
-            _controllerPayModal(isShow) {
-                this.showPay = isShow
             }
         },
         mounted() {
@@ -184,6 +180,15 @@
             })
             this.userId = dataStore.userInfo.id
             this.fetchAddressList()
+
+            this.orderSn = this.$route.query.orderSn
+            this.totalPrice = this.$route.query.totalPrice
+            if ((typeof this.orderSn === 'undefined' || this.orderSn === '') &&
+                (typeof this.totalPrice === 'undefined' || this.totalPrice === 0)) {
+                return
+            }
+            this.step = 3
+            console.log(this.step)
         },
         destroyed() {
         }
@@ -191,111 +196,111 @@
 </script>
 
 <style lang='scss' scoped>
-.order {
-    width: 100%;
-    /*background: #42b983;*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    .bread {
+    .order {
         width: 100%;
-        background: #F2F2F2;
+        /*background: #42b983;*/
         display: flex;
-        align-items: center;
         justify-content: center;
-    }
-
-    .step-group {
-        width: 1150px;
-        padding: 0 25px;
-        display: flex;
+        align-items: center;
         flex-direction: column;
-        flex: 1;
-        margin-bottom: 20px;
 
-        button {
-            width: 183px;
-            height: 45px;
-            line-height: 45px;
-            background: #FF4400;
-            color: #fff;
-            font-size: 18px;
-            border-radius: 2px;
-            outline: none;
-            border: 0;
-        }
-
-        .button-next {
-            margin-left: auto;
-        }
-
-        button:active {
-            animation: fade .4s infinite;
-            -webkit-animation: fade .4s infinite;
-        }
-
-        .group-2 {
-            width: 1200px;
-            display: flex;
-            flex-direction: column;
-
-            .c-good-list {
-                margin-top: 20px;
-            }
-
-            .btn-group1 {
-                width: 1150px;
-                display: flex;
-                justify-content: space-between;
-            }
-        }
-
-        .group-3 {
+        .bread {
             width: 100%;
-            margin-top: 20px;
+            background: #F2F2F2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-group {
+            width: 1150px;
+            padding: 0 25px;
             display: flex;
             flex-direction: column;
+            flex: 1;
+            margin-bottom: 20px;
 
-            .btn-group2 {
-                width: 550px;
+            button {
+                width: 183px;
+                height: 45px;
+                line-height: 45px;
+                background: #FF4400;
+                color: #fff;
+                font-size: 18px;
+                border-radius: 2px;
+                outline: none;
+                border: 0;
+            }
+
+            .button-next {
+                margin-left: auto;
+            }
+
+            button:active {
+                animation: fade .4s infinite;
+                -webkit-animation: fade .4s infinite;
+            }
+
+            .group-2 {
+                width: 1200px;
+                display: flex;
+                flex-direction: column;
+
+                .c-good-list {
+                    margin-top: 20px;
+                }
+
+                .btn-group1 {
+                    width: 1150px;
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+
+            .group-3 {
+                width: 100%;
                 margin-top: 20px;
                 display: flex;
-                justify-content: space-between;
+                flex-direction: column;
+
+                .btn-group2 {
+                    width: 550px;
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+
+        }
+
+        .address-container {
+            width: 950px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .fill-space::after {
+            content: "";
+            width: 294px;
+            height: 167px;
+        }
+
+        .down-more {
+            width: 950px;
+            margin: 0 auto 20px auto;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 300;
+            color: rgba(136, 136, 136, 1);
+
+            img {
+                margin-left: 5px;
+                width: 12px;
+                height: 7px;
             }
         }
-
     }
-
-    .address-container {
-        width: 950px;
-        margin: 20px auto;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-
-    .fill-space::after {
-        content: "";
-        width: 294px;
-        height: 167px;
-    }
-
-    .down-more {
-        width: 950px;
-        margin: 0 auto 20px auto;
-        text-align: left;
-        font-size: 14px;
-        font-weight: 300;
-        color: rgba(136, 136, 136, 1);
-
-        img {
-            margin-left: 5px;
-            width: 12px;
-            height: 7px;
-        }
-    }
-}
 
 </style>

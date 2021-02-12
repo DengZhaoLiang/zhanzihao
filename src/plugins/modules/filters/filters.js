@@ -48,7 +48,7 @@ const formatString = function(str, maxLength = 20) {
 
 // 格式化日期
 const formatDate = (dateStr) => {
-    const date = new Date(dateStr)
+    const date = new Date(dateStr * 1000)
     return `${date.getFullYear()}-${String(date.getMonth() + 1).addZero()}-${String(date.getDate()).addZero()}  ${String(date.getHours()).addZero()}:${String(date.getMinutes()).addZero()}:${String(date.getSeconds()).addZero()}`
 }
 
