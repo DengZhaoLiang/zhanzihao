@@ -21,12 +21,12 @@
                 </div>
             </div>
             <div class='group-3 xy-center' v-if='step === 3'>
-                <c-order-success :is-payed='false' :order-id='orderSn' :total-amount='totalPrice' />
+                <c-order-success :is-payed='false' :order-id='orderSn' :total-amount='totalPrice' :alipay='alipayWap' />
                 <div class='btn-group2'>
                 </div>
             </div>
             <div class='group-3 xy-center' v-if='step === 4'>
-                <c-order-success :is-payed='true' :order-id='orderSn' :total-amount='totalPrice' />
+                <c-order-success :is-payed='true' :order-id='orderSn' :total-amount='totalPrice' :alipay='alipayWap' />
                 <div class='btn-group2'>
                     <button @click='goBack'>继续购物</button>
                     <button @click='goToMy'>查看订单</button>
@@ -82,7 +82,13 @@
                 totalPrice: 0, // 待支付的金额
                 showModal: false,
                 isPayed: false,
-                userId: ''
+                userId: '',
+                alipayWap: '',
+                query: {
+                    userId: '',
+                    addressId: '',
+                    products: []
+                }
             }
         },
         methods: {
@@ -99,7 +105,9 @@
                         this.createOrder()
                         break
                 }
-                this.step = step
+                setTimeout(() => {
+                    this.step = step
+                }, 1000)
             },
             fetchAddressList() {
                 if (this.userId === '' || typeof this.userId === 'undefined') {
@@ -125,21 +133,30 @@
                     }))
                 }
             },
-            fetchBalance() {
-                this.$api.account.getBalance().then(res => {
-                    console.log(res)
-                })
-            },
             createOrder() {
                 let addressId = this.addressList[this.selectedAddressIndex].id
-                console.log(addressId)
-            },
-            payForOrder(paykey) {
-
+                let one = JSON.parse(localStorage.getItem('buyOne'))
+                if (typeof one !== 'undefined' && one !== null) {
+                    this.query.addressId = addressId
+                    this.query.products = [{ productId: one.productId, purchaseNum: one.purchaseNum }]
+                    this.query.userId = dataStore.userInfo.id
+                    /* eslint-disable */
+                    request.post(`/api/order/buy`, this.query)
+                        .then(res => {
+                            if (res.status === 200) {
+                                let response = res.data
+                                this.orderSn = response.orderSn
+                                this.totalPrice = response.totalPrice
+                                this.alipayWap = response.response
+                            } else {
+                                this.step = 2
+                                this.$message.error(res.message)
+                            }
+                        })
+                }
             },
             onConfirm() {
                 this.showModal = false
-                this.showPay = true
             },
             onCancel() {
                 this.showModal = false
@@ -154,7 +171,7 @@
                 }
             },
             goBack() {
-                this.$router.go(-1)
+                this.$router.push('/')
             },
             // 检查收获地址是否存在
             _checkAddressIsExist() {
@@ -163,13 +180,12 @@
                     return false
                 }
                 return true
-            },
-            // 获取productsId列表
-            _getGoodsIdList() {
-                return []
             }
         },
         mounted() {
+            this.orderSn = ''
+            this.totalPrice = 0
+
             this.$bus.$on('getUserInfo', () => {
                 this.userId = dataStore.userInfo.id
                 this.fetchAddressList()
@@ -183,12 +199,21 @@
 
             this.orderSn = this.$route.query.orderSn
             this.totalPrice = this.$route.query.totalPrice
-            if ((typeof this.orderSn === 'undefined' || this.orderSn === '') &&
-                (typeof this.totalPrice === 'undefined' || this.totalPrice === 0)) {
-                return
+            if ((typeof this.orderSn !== 'undefined' && this.orderSn !== '') &&
+                (typeof this.totalPrice !== 'undefined' && this.totalPrice !== 0)) {
+                this.step = 3
             }
-            this.step = 3
-            console.log(this.step)
+
+            let step = this.$route.query.step
+            if (step === '4') {
+                this.orderSn = this.$route.query.out_trade_no
+                this.totalPrice = this.$route.query.total_amount
+                if ((typeof this.orderSn !== 'undefined' && this.orderSn !== '') &&
+                    (typeof this.totalPrice !== 'undefined' && this.totalPrice !== 0)) {
+                    request.get(`/api/alipay/notify?orderSn=${this.orderSn}`)
+                    this.step = 4
+                }
+            }
         },
         destroyed() {
         }

@@ -9,9 +9,10 @@
                 <span>{{ orderId }}</span>
             </div>
             <div>
-                <span>待支付：</span>
+                <span>{{ isPayed ? '已支付:' : '待支付:' }}</span>
                 <c-money :money=Number(totalAmount) class='c-money' />
             </div>
+            <div v-html="alipay" ref="alipay"></div>
         </div>
     </div>
 </template>
@@ -24,7 +25,22 @@
         components: {
             CMoney
         },
-        props: ['orderId', 'totalAmount', 'isPayed']
+        props: ['orderId', 'totalAmount', 'isPayed', 'alipay'],
+        data() {
+            return {
+                payed: this.isPayed,
+                result: this.alipay
+            }
+        },
+        mounted() {
+            if (!this.payed) {
+                if (typeof this.result !== 'undefined' && this.result !== '') {
+                    this.$nextTick(() => {
+                        this.$refs.alipay.children[0].submit()
+                    })
+                }
+            }
+        }
     }
 </script>
 
