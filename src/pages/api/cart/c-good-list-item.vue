@@ -53,7 +53,8 @@
             </div>
             <!-- 全选 -->
             <div class='selected-all xy-center' v-if='isShowAccount'>
-                <el-checkbox :indeterminate='isIndeterminate' @change='handleCheckAllChange' class='c-all-checkbox xy-center'
+                <el-checkbox :indeterminate='isIndeterminate' @change='handleCheckAllChange'
+                             class='c-all-checkbox xy-center'
                              v-model='checkAll'>全选
                 </el-checkbox>
                 <div class='selected-right xy-center'>
@@ -232,7 +233,9 @@
             }
         },
         mounted() {
+            this.carts = []
             let product = JSON.parse(localStorage.getItem('buyOne'))
+            let purchaseList = JSON.parse(localStorage.getItem('purchaseList'))
             if (typeof product !== 'undefined' && product !== null) {
                 /* eslint-disable */
                 request.get(`/api/product/${product.productId}`)
@@ -245,7 +248,27 @@
                             }]
                         }
                     })
+            } else if (typeof purchaseList !== 'undefined' && purchaseList !== null) {
+                purchaseList.forEach(it => {
+                    /* eslint-disable */
+                    request.get(`/api/product/${it.id}`)
+                        .then(res => {
+                            if (res.status === 200) {
+                                this.carts = [{
+                                    id: it.id,
+                                    product: res.data,
+                                    purchaseNum: it.purchaseNum
+                                }]
+                            }
+                        })
+                })
+            } else {
+                this.carts = []
             }
+        },
+        beforeDestroy() {
+            localStorage.removeItem('buyOne')
+            localStorage.removeItem('purchaseList')
         }
     }
 </script>

@@ -78,7 +78,7 @@
                 this.cartInfo.id = this.product.id
                 this.cartInfo.product = this.product
 
-                let old = this.$store.state.Carts
+                let old = this.$store.state.Carts ? this.$store.state.Carts : []
                 let append = true
                 old.forEach((cur, index) => {
                     if (cur.id === this.cartInfo.id) {

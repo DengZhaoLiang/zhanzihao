@@ -2,8 +2,7 @@
     <div :style='countImgHeight'>
         <el-carousel :height='imgHeight'>
             <el-carousel-item :key='item' v-for='item in 3'>
-                <!--            <img style="width: 100%" ref="imgHeight" v-lazy="require(`./../../../public/images/banner/banner_0${item}.png`)">-->
-                <el-image :src='require(`./../../../public/images/banner/banner_0${item}.png`)'
+                <el-image :src='require(`./../../../public/images/banner/banner0${item}.jpg`)'
                           @load='loadedImg'
                           fit='fill' ref='imgHeight'></el-image>
             </el-carousel-item>

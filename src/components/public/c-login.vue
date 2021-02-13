@@ -18,7 +18,8 @@
                     placeholder='请输入新密码'
                     v-model='input.password'>
                     <img slot='prefix' src='./../../../public/images/public/pwd.png' />
-                    <img :src='require(`./../../../public/images/public/show${isShowPwd}.png`)' @click='isShowPwd = !isShowPwd'
+                    <img :src='require(`./../../../public/images/public/show${isShowPwd}.png`)'
+                         @click='isShowPwd = !isShowPwd'
                          slot='suffix' />
                 </el-input>
                 <div class='err-tip' v-show='errTip[1]'>
@@ -29,7 +30,8 @@
                           v-if='!isLogin'
                           v-model='input.repeatPwd'>
                     <img slot='prefix' src='./../../../public/images/public/pwd.png' />
-                    <img :src='require(`./../../../public/images/public/show${isShowPwd}.png`)' @click='isShowPwd = !isShowPwd'
+                    <img :src='require(`./../../../public/images/public/show${isShowPwd}.png`)'
+                         @click='isShowPwd = !isShowPwd'
                          slot='suffix' />
                 </el-input>
                 <div class='err-tip' v-show='errTip[2]'>

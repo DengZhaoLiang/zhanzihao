@@ -5,10 +5,11 @@
             <div class='edit-container' slot='custom'>
                 <div class='xy-center'>
                     <span class='left-title'>编辑昵称：</span>
-                    <el-input :suffix-icon="searchingName ? 'el-icon-loading' : nameCanUse ? 'el-icon-circle-check' : 'el-icon-circle-close'"
-                              class='right-container'
-                              placeholder='请输入你的昵称'
-                              v-model='tempUserInfo.name'>
+                    <el-input
+                        :suffix-icon="searchingName ? 'el-icon-loading' : nameCanUse ? 'el-icon-circle-check' : 'el-icon-circle-close'"
+                        class='right-container'
+                        placeholder='请输入你的昵称'
+                        v-model='tempUserInfo.name'>
                     </el-input>
                 </div>
                 <div class='xy-center'>

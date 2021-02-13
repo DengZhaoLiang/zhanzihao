@@ -21,12 +21,12 @@
                 </div>
             </div>
             <div class='group-3 xy-center' v-if='step === 3'>
-                <c-order-success :is-payed='false' :order-id='orderSn' :total-amount='totalPrice' :alipay='alipayWap' />
+                <c-order-success :alipay='alipayWap' :is-payed='false' :order-id='orderSn' :total-amount='totalPrice' />
                 <div class='btn-group2'>
                 </div>
             </div>
             <div class='group-3 xy-center' v-if='step === 4'>
-                <c-order-success :is-payed='true' :order-id='orderSn' :total-amount='totalPrice' :alipay='alipayWap' />
+                <c-order-success :alipay='alipayWap' :is-payed='true' :order-id='orderSn' :total-amount='totalPrice' />
                 <div class='btn-group2'>
                     <button @click='goBack'>继续购物</button>
                     <button @click='goToMy'>查看订单</button>
@@ -87,7 +87,9 @@
                 query: {
                     userId: '',
                     addressId: '',
-                    products: []
+                    products: [],
+                    orderSn: '', // 订单号
+                    totalPrice: 0
                 }
             }
         },
@@ -126,19 +128,44 @@
             fetchGoodsInfo() {
                 let productId = this.$route.query.id
                 let purchaseNum = this.$route.query.purchaseNum
+                let purchaseList = this.$route.query.purchaseList
                 if (typeof productId !== 'undefined' && typeof purchaseNum !== 'undefined') {
                     localStorage.setItem('buyOne', JSON.stringify({
                         productId: productId,
                         purchaseNum: purchaseNum
                     }))
+                } else if (typeof purchaseList !== 'undefined' && purchaseList !== null) {
+                    localStorage.setItem('purchaseList', JSON.stringify(purchaseList))
                 }
             },
             createOrder() {
                 let addressId = this.addressList[this.selectedAddressIndex].id
                 let one = JSON.parse(localStorage.getItem('buyOne'))
+                let purchaseList = JSON.parse(localStorage.getItem('purchaseList'))
                 if (typeof one !== 'undefined' && one !== null) {
                     this.query.addressId = addressId
                     this.query.products = [{ productId: one.productId, purchaseNum: one.purchaseNum }]
+                    this.query.userId = dataStore.userInfo.id
+                    /* eslint-disable */
+                    request.post(`/api/order/buy`, this.query)
+                        .then(res => {
+                            if (res.status === 200) {
+                                let response = res.data
+                                this.orderSn = response.orderSn
+                                this.totalPrice = response.totalPrice
+                                this.alipayWap = response.response
+                            } else {
+                                this.step = 2
+                                this.$message.error(res.message)
+                            }
+                        })
+                } else if (typeof purchaseList !== 'undefined' && purchaseList !== null) {
+                    this.query.addressId = addressId
+                    // 设置购买列表
+                    purchaseList.forEach(it => {
+                        this.query.products = []
+                        this.query.products.push({ productId: it.id, purchaseNum: it.purchaseNum })
+                    })
                     this.query.userId = dataStore.userInfo.id
                     /* eslint-disable */
                     request.post(`/api/order/buy`, this.query)
@@ -201,7 +228,24 @@
             this.totalPrice = this.$route.query.totalPrice
             if ((typeof this.orderSn !== 'undefined' && this.orderSn !== '') &&
                 (typeof this.totalPrice !== 'undefined' && this.totalPrice !== 0)) {
-                this.step = 3
+                this.query.orderSn = this.orderSn
+                this.query.totalPrice = this.totalPrice
+                /* eslint-disable */
+                request.post(`/api/order/buy`, this.query)
+                    .then(res => {
+                        if (res.status === 200) {
+                            let response = res.data
+                            this.orderSn = response.orderSn
+                            this.totalPrice = response.totalPrice
+                            this.alipayWap = response.response
+                            setTimeout(() => {
+                                this.step = 3
+                            }, 1000)
+                        } else {
+                            this.step = 2
+                            this.$message.error(res.message)
+                        }
+                    })
             }
 
             let step = this.$route.query.step
@@ -216,6 +260,7 @@
             }
         },
         destroyed() {
+            localStorage.removeItem('purchaseList')
         }
     }
 </script>

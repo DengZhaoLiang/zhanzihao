@@ -12,7 +12,7 @@
                 <span>{{ isPayed ? '已支付:' : '待支付:' }}</span>
                 <c-money :money=Number(totalAmount) class='c-money' />
             </div>
-            <div v-html="alipay" ref="alipay"></div>
+            <div ref="alipay" v-html="alipay"></div>
         </div>
     </div>
 </template>
