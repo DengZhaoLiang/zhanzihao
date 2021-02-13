@@ -183,7 +183,7 @@
             },
             // 删除商品
             deleteFormCart() {
-                let old = this.$store.state.Carts
+                let old = this.$store.state.Carts ? this.$store.state.Carts : []
                 old.forEach((cur, index) => {
                     if (cur.id === this.delId) {
                         old.splice(index, 1)
@@ -198,7 +198,7 @@
             },
             // 监听数量的变化
             onInputChange(num, index) {
-                let old = this.$store.state.Carts
+                let old = this.$store.state.Carts ? this.$store.state.Carts : []
                 old.forEach((cur) => {
                     if (cur.id === this.carts[index].id) {
                         old[index].purchaseNum = num

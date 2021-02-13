@@ -12,7 +12,7 @@
         watch: {},
         methods: {
             getCarts() {
-                return this.$store.state.Carts
+                return this.$store.state.Carts ? this.$store.state.Carts : []
             }
         },
         mounted() {
