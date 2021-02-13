@@ -24,6 +24,7 @@
             </div>
         </div>
         <div class='detail-bottom-line'></div>
+        <div style='width: 50%; padding-left: 10%; padding-right: 10%; background-color: #ffffff' v-html='product.detail'></div>
         <c-foot></c-foot>
         <c-modal :is-show-cancel='true' :is-show-modal='showToast' @confirm='goToCart' @hide='showToast = false'
                  confirm-text='去购物车' context='加入购物车成功' />
